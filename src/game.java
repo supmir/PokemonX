@@ -15,23 +15,8 @@ import java.util.Scanner;
  * @author amir
  */
 public class game {
-//
-//    private static void prt(String text, int row, int col) {
-//        char escCode = 0x1B;
-//        System.out.print(String.format("%c[%d;%df", escCode, row, col));
-//        System.out.println(text);
-//    }
-//
-//    public static void cls() {
-//        System.out.print("\033[H\033[2J");
-//        System.out.flush();
-//    }
+    public static void game() {
 
-    public static void game() throws FileNotFoundException {
-        
-        
-        
-        
         Scanner s = new Scanner(System.in);
         ArrayList<String> pList = new PokeList().getList();
         

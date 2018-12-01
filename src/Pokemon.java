@@ -9,17 +9,21 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 /**
- *
  * @author amir
  */
 public class Pokemon {
 
     private String name, type;
-    private int attack, defense, hp, speed, skillCount;
+    private double hp;
+    private int attack, defense, speed, skillCount;
     private String[] skillName = new String[4], skillType = new String[4];
     private int[] power = new int[4], accuracy = new int[4];
 
-    public Pokemon(String name) throws FileNotFoundException {
+    public String getName() {
+        return name;
+    }
+
+    public Pokemon(String name) {
 
         InputStream IS = getClass().getResourceAsStream("Pokemons.txt");
         //try (Scanner is = new Scanner(new FileInputStream("Pokemons/" + name + ".txt"))) {
@@ -32,7 +36,7 @@ public class Pokemon {
                     break;
                 }
             }
-            
+
             this.name = line;
             this.type = is.nextLine();
             this.attack = Integer.parseInt(is.nextLine());
@@ -41,8 +45,8 @@ public class Pokemon {
             this.speed = Integer.parseInt(is.nextLine());
             for (skillCount = 0; is.hasNextLine(); skillCount++) {
                 String str = is.nextLine();
-                
-                if ("".equals(str)||"$".equals(str)) {
+
+                if ("".equals(str) || "$".equals(str)) {
                     skillCount--;
                     break;
                 }
@@ -54,16 +58,16 @@ public class Pokemon {
         }
     }
 
-    public int getHp() {
+    public double getHp() {
         return hp;
     }
 
-    public void setHp(int hp) {
+    public void setHp(double hp) {
         this.hp = hp;
     }
 
-    public double attack(int skillN, int oppDef, String oppType) {
-        return (((attack * power[skillN] / oppDef) / 20) + 2) * multiplier(oppType);
+    public void attack(int skillN, int oppDef, String oppType, Pokemon attacked) {
+        attacked.setHp(attacked.getHp() - (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type));
     }
 
     @Override
