@@ -13,14 +13,19 @@ import java.util.Scanner;
 public class Pokemon {
 
     final private String name, type;
-    private double hp;
     final private int attack, defense, speed;
     final private String[] skillName = new String[4], skillType = new String[4];
     final private int[] power = new int[4], accuracy = new int[4];
     private int accSp, skillCount;
+    private double hp;
+    private boolean alive = true;
 
-    public int getSpeed() {
-        return speed;
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 
     public int getAccSp() {
@@ -83,6 +88,9 @@ public class Pokemon {
 
     public void attack(int skillN, int oppDef, String oppType, Pokemon attacked) {
         attacked.setHp(attacked.getHp() - (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type));
+        if (attacked.getHp() <= 0) {
+            attacked.setAlive(false);
+        }
         accSp -= 100;
     }
 

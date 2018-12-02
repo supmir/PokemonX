@@ -36,11 +36,15 @@ public class combatP {
             turn = false;
         }
 
-        return !turn;
+        return turn;
     }
 
 
     public static Scene combatP(int left, int right, boolean turn) {
+        if (!lifeCheck()) {
+            endGame();
+        }
+
         String str = "PvP modeeee\n";
         final int width = 600;
 
@@ -66,7 +70,9 @@ public class combatP {
         top.setAlignment(LStatus, Pos.CENTER_LEFT);
         top.setAlignment(RStatus, Pos.CENTER_RIGHT);
         int i = 0, j = 0;
-        if (!turn)
+
+
+        if (!accumulator(left, right, turn))
             j = 1;
 
 
@@ -81,7 +87,9 @@ public class combatP {
         skillSet.getChildren().addAll(skill);
         skillSet.getChildren().add(change);
         bottom.getChildren().add(skillSet);
-        if (!turn)
+
+
+        if (!accumulator(left, right, turn))
             skillSet.setAlignment(Pos.CENTER_RIGHT);
 
 
@@ -91,7 +99,7 @@ public class combatP {
 
         Scene tempScene = new Scene(holder, 800, 800);
 
-        if (turn) {//set button turn and position according to speed accumulator
+        if (accumulator(left, right, turn)) {//set button turn and position according to speed accumulator
             skill[0].setOnAction(event -> {
                 controller[0][left].attack(0, 10, "Normal", controller[1][right]);
                 RStatus.setText(healthCheck(1, right));
@@ -158,7 +166,25 @@ public class combatP {
         return tempScene;
     }
 
+    private static void endGame() {
+        System.out.println("end");
+    }
+
     public static String healthCheck(int who, int which) {
         return controller[who][which].getName() + "\nHP : " + controller[who][which].getHp() + "\nAccumulated Speed : " + controller[who][which].getAccSp();
+    }
+
+    public static boolean lifeCheck() {
+        boolean left = false, right = false;
+        for (int j = 0; j < controller[0].length; j++) {
+            left = left || controller[0][j].isAlive();
+        }
+
+        for (int j = 0; j < controller[1].length; j++) {
+            right = right || controller[1][j].isAlive();
+        }
+
+
+        return right && left;
     }
 }
