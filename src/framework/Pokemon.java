@@ -12,11 +12,24 @@ import java.util.Scanner;
  */
 public class Pokemon {
 
-    private String name, type;
+    final private String name, type;
     private double hp;
-    private int attack, defense, speed, skillCount;
-    private String[] skillName = new String[4], skillType = new String[4];
-    private int[] power = new int[4], accuracy = new int[4];
+    final private int attack, defense, speed;
+    final private String[] skillName = new String[4], skillType = new String[4];
+    final private int[] power = new int[4], accuracy = new int[4];
+    private int accSp, skillCount;
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getAccSp() {
+        return accSp;
+    }
+
+    public void adder() {
+        this.accSp += speed;
+    }
 
     public String getSkillName(int skillIndex) {
         return skillName[skillIndex];
@@ -70,6 +83,7 @@ public class Pokemon {
 
     public void attack(int skillN, int oppDef, String oppType, Pokemon attacked) {
         attacked.setHp(attacked.getHp() - (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type));
+        accSp -= 100;
     }
 
     @Override

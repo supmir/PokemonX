@@ -54,19 +54,35 @@ public class selection {
 
 
         //choose pokemon drop down and stuff
-        choose.setOnAction(e -> {
-            SceneHandler.allList.remove(pokeList.getValue());
-            if (count == 2) {
-                SceneHandler.setController(new Pokemon(pokeList.getValue()), 0, count);
-                for (int i = 0; i < 3; i++) {
-                    SceneHandler.setController(new Pokemon(SceneHandler.allList.get(r.nextInt(SceneHandler.allList.size()))), 1, i);
+        if (mode == "computer") {
+            System.out.println("computer mode");
+            choose.setOnAction(e -> {
+                SceneHandler.allList.remove(pokeList.getValue());
+                if (count == 2) {
+                    SceneHandler.setController(new Pokemon(pokeList.getValue()), 0, count);
+                    for (int i = 0; i < 3; i++) {
+                        SceneHandler.setController(new Pokemon(SceneHandler.allList.get(r.nextInt(SceneHandler.allList.size()))), 1, i);
+                    }
+                    framework.main.window.setScene(SceneHandler.combat());
+                } else {
+                    SceneHandler.setController(new Pokemon(pokeList.getValue()), 0, count);
+                    framework.main.window.setScene(selection(count + 1, mode));
                 }
-                framework.main.window.setScene(SceneHandler.combat());
-            } else {
-                SceneHandler.setController(new Pokemon(pokeList.getValue()), 0, count);
-                framework.main.window.setScene(selection(count + 1, mode));
-            }
-        });
+            });
+        } else {
+            System.out.println("else");
+            choose.setOnAction(e -> {
+                SceneHandler.allList.remove(pokeList.getValue());
+                if (count == 2 && mode.equals("two")) {
+                    SceneHandler.setController(new Pokemon(pokeList.getValue()), 0, count);
+                    framework.main.window.setScene(SceneHandler.combat("yessu"));
+                } else {
+                    SceneHandler.setController(new Pokemon(pokeList.getValue()), mode.equals("one") ? 1 : 0, count);
+                    framework.main.window.setScene(selection(mode.equals("one") ? count : count + 1, mode.equals("one") ? "two" : "one"));
+                }
+            });
+
+        }
 
 
         pokeList.setOnAction(e -> {

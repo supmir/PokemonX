@@ -25,8 +25,7 @@ public class gameMode {
 
 
         PvP.setOnAction(e -> {
-            System.out.println("Not yet");
-            framework.main.window.setScene(gameMode());
+            framework.main.window.setScene(SceneHandler.selection(0, "one"));
         });
         PvC.setOnAction(e -> {
             framework.main.window.setScene(SceneHandler.selection(0, "computer"));
