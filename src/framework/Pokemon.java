@@ -1,10 +1,9 @@
-/*
+package framework;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -19,6 +18,10 @@ public class Pokemon {
     private String[] skillName = new String[4], skillType = new String[4];
     private int[] power = new int[4], accuracy = new int[4];
 
+    public String getSkillName(int skillIndex) {
+        return skillName[skillIndex];
+    }
+
     public String getName() {
         return name;
     }
@@ -26,7 +29,6 @@ public class Pokemon {
     public Pokemon(String name) {
 
         InputStream IS = getClass().getResourceAsStream("Pokemons.txt");
-        //try (Scanner is = new Scanner(new FileInputStream("Pokemons/" + name + ".txt"))) {
         try (Scanner is = new Scanner(IS)) {
             String line = null;
             //read pokemon
