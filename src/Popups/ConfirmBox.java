@@ -4,6 +4,7 @@ package Popups;/*
  * and open the template in the editor.
  */
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,6 +31,7 @@ public class ConfirmBox {
         window.setMinWidth(250);
 
         Label label = new Label(message);
+        label.setAlignment(Pos.CENTER);
         Button yes = new Button("Yes");
         yes.setOnAction(e -> {
             answer = true;
@@ -45,6 +47,8 @@ public class ConfirmBox {
         butts.setAlignment(Pos.CENTER);
         butts.getChildren().addAll(yes, no);
         layout.getChildren().addAll(label, butts);
+        layout.setPadding(new Insets(20));
+
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);

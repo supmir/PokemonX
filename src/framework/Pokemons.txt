@@ -274,3 +274,30 @@ Cut
 normal
 50
 65
+$
+Jeff
+normal
+60
+100
+10
+10
+Be Stupid
+normal
+10
+10
+$
+Trump
+normal
+60
+100
+10
+10
+Be Stupid
+normal
+10
+10
+China
+normal
+10
+20
+$

@@ -20,6 +20,51 @@ public class Pokemon {
     private double hp;
     private boolean alive = true;
 
+    public Pokemon(String name) {
+
+        InputStream IS = getClass().getResourceAsStream("Pokemons.txt");
+        try (Scanner is = new Scanner(IS)) {
+            String line = null;
+            //read pokemon
+            while (is.hasNext()) {
+                line = is.nextLine();
+                if (line.contains(name)) {
+                    break;
+                }
+            }
+
+            this.name = line;
+            this.type = is.nextLine();
+            this.attack = Integer.parseInt(is.nextLine());
+            this.defense = Integer.parseInt(is.nextLine());
+            this.hp = Integer.parseInt(is.nextLine());
+            this.speed = Integer.parseInt(is.nextLine());
+            for (skillCount = 0; is.hasNextLine(); skillCount++) {
+                String str = is.nextLine();
+
+                if ("".equals(str) || "$".equals(str)) {
+                    int x = 0;
+                    while (skillCount < 4) {
+                        this.skillName[skillCount] = "...";
+                        skillCount++;
+                        x++;
+                    }
+                    skillCount -= x;
+                    break;
+                }
+                this.skillName[skillCount] = str;
+                this.skillType[skillCount] = is.nextLine();
+                this.power[skillCount] = Integer.parseInt(is.nextLine());
+                this.accuracy[skillCount] = Integer.parseInt(is.nextLine());
+            }
+        }
+    }
+
+
+    public int getSpeed() {
+        return speed;
+    }
+
     public boolean isAlive() {
         return alive;
     }
@@ -44,39 +89,7 @@ public class Pokemon {
         return name;
     }
 
-    public Pokemon(String name) {
 
-        InputStream IS = getClass().getResourceAsStream("Pokemons.txt");
-        try (Scanner is = new Scanner(IS)) {
-            String line = null;
-            //read pokemon
-            while (is.hasNext()) {
-                line = is.nextLine();
-                if (line.contains(name)) {
-                    break;
-                }
-            }
-
-            this.name = line;
-            this.type = is.nextLine();
-            this.attack = Integer.parseInt(is.nextLine());
-            this.defense = Integer.parseInt(is.nextLine());
-            this.hp = Integer.parseInt(is.nextLine());
-            this.speed = Integer.parseInt(is.nextLine());
-            for (skillCount = 0; is.hasNextLine(); skillCount++) {
-                String str = is.nextLine();
-
-                if ("".equals(str) || "$".equals(str)) {
-                    skillCount--;
-                    break;
-                }
-                this.skillName[skillCount] = str;
-                this.skillType[skillCount] = is.nextLine();
-                this.power[skillCount] = Integer.parseInt(is.nextLine());
-                this.accuracy[skillCount] = Integer.parseInt(is.nextLine());
-            }
-        }
-    }
 
     public double getHp() {
         return hp;
@@ -87,7 +100,7 @@ public class Pokemon {
     }
 
     public void attack(int skillN, int oppDef, String oppType, Pokemon attacked) {
-        attacked.setHp(attacked.getHp() - (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type));
+        attacked.setHp(attacked.getHp() - (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type) * 10);
         if (attacked.getHp() <= 0) {
             attacked.setAlive(false);
         }

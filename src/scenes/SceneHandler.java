@@ -19,6 +19,10 @@ public class SceneHandler {
         return controller;
     }
 
+
+    public static Scene administrator() {
+        return administrator.administrator();
+    }
     public static Scene menu() {
         return menu.menu();
     }
@@ -27,8 +31,8 @@ public class SceneHandler {
         return gameMode.gameMode();
     }
 
-    public static Scene credits() {
-        return credits.credits();
+    public static void credits() {
+        credits.credits();
     }
 
     public static Scene selection(int x, String y) {
@@ -42,4 +46,10 @@ public class SceneHandler {
     public static Scene combat(String x) {
         return combat.combat(x);
     }
+
+    public static Scene endGame(String x) {
+        return endGame.endGame(x);
+    }
+
+
 }

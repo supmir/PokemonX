@@ -42,6 +42,11 @@ public class selection {
                 "\nSkill 2 : \nType : \nPower : \nAccuracy : " +
                 "\nSkill 3 : \nType : \nPower : \nAccuracy : " +
                 "\nSkill 4 : \nType : \nPower : \nAccuracy : ");
+        System.out.println("Name : \nType : \nAttack : \nDefense : \nHP : \nSpeed : " +
+                "\nSkill 1 : \nType : \nPower : \nAccuracy : " +
+                "\nSkill 2 : \nType : \nPower : \nAccuracy : " +
+                "\nSkill 3 : \nType : \nPower : \nAccuracy : " +
+                "\nSkill 4 : \nType : \nPower : \nAccuracy : ");
         bottom.setMinSize(400, 430);
         bottom.setPadding(new Insets(10));
         bottom.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
@@ -49,7 +54,7 @@ public class selection {
 
         GridPane.setConstraints(bottom, 0, 11);
         ////item config
-        pokeList.setPromptText("Choose your " + (count == 0 ? "first" : (count == 1 ? "second" : "third")) + " Pokemon! ");
+        pokeList.setPromptText("Choose your " + (count == 0 ? "first" : (count == 1 ? "second" : "third")) + " Pokémon! ");
         pokeList.getItems().addAll(SceneHandler.allList);
 
 
@@ -74,10 +79,10 @@ public class selection {
             choose.setOnAction(e -> {
                 SceneHandler.allList.remove(pokeList.getValue());
                 if (count == 2 && mode.equals("two")) {
-                    SceneHandler.setController(new Pokemon(pokeList.getValue()), 0, count);
+                    SceneHandler.setController(new Pokemon(pokeList.getValue()), 1, count);
                     framework.main.window.setScene(SceneHandler.combat("yessu"));
                 } else {
-                    SceneHandler.setController(new Pokemon(pokeList.getValue()), mode.equals("one") ? 1 : 0, count);
+                    SceneHandler.setController(new Pokemon(pokeList.getValue()), mode.equals("one") ? 0 : 1, count);
                     framework.main.window.setScene(selection(mode.equals("one") ? count : count + 1, mode.equals("one") ? "two" : "one"));
                 }
             });

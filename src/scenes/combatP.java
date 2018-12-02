@@ -14,8 +14,8 @@ public class combatP {
     private static Pokemon controller[][] = SceneHandler.getController();
 
 
-    private static boolean accumulator(int left, int right, boolean turn) {
-        boolean speedCompare, less;
+    public static boolean accumulator(int left, int right, boolean turn) {
+        boolean less;
         less = controller[0][left].getAccSp() < 100 && controller[1][right].getAccSp() < 100;
         while (less) {
 
@@ -31,7 +31,17 @@ public class combatP {
         if (accCompare > 0) {
             turn = true;
         } else if (accCompare == 0) {
-            turn = !turn;
+            int speedCompare;
+            speedCompare = controller[0][left].getSpeed() - controller[1][right].getSpeed();
+
+            if (speedCompare > 0) {
+                turn = true;
+            } else if (speedCompare == 0) {
+                turn = !turn;
+            } else {
+                turn = false;
+            }
+
         } else {
             turn = false;
         }
@@ -41,8 +51,11 @@ public class combatP {
 
 
     public static Scene combatP(int left, int right, boolean turn) {
-        if (!lifeCheck()) {
-            endGame();
+        if ((lifeCheck() & 0b00000001) == 0) {//check right
+            return SceneHandler.endGame("one");
+        }
+        if ((lifeCheck() >> 4 & 0b00000001) == 0) {//check left
+            return SceneHandler.endGame("two");
         }
 
         String str = "PvP modeeee\n";
@@ -124,11 +137,10 @@ public class combatP {
 
             });
             change.setOnAction(event -> {
-                System.out.println("hi");
                 if (left == 2)
-                    framework.main.window.setScene(combatP(0, right, true));
+                    framework.main.window.setScene(combatP(0, right, accumulator(left, right, turn)));
                 else
-                    framework.main.window.setScene(combatP(left + 1, right, true));
+                    framework.main.window.setScene(combatP(left + 1, right, accumulator(left, right, turn)));
             });
         } else {//set button turn and position according to speed accumulator
             skill[0].setOnAction(event -> {
@@ -155,36 +167,46 @@ public class combatP {
 
             });
             change.setOnAction(event -> {
-                System.out.println("hi");
-                if (left == 2)
-                    framework.main.window.setScene(combatP(left, 0, false));
+                if (right == 2)
+                    framework.main.window.setScene(combatP(left, 0, accumulator(left, right, turn)));
                 else
-                    framework.main.window.setScene(combatP(left, right + 1, false));
+                    framework.main.window.setScene(combatP(left, right + 1, accumulator(left, right, turn)));
             });
 
         }
         return tempScene;
     }
 
-    private static void endGame() {
-        System.out.println("end");
-    }
 
     public static String healthCheck(int who, int which) {
         return controller[who][which].getName() + "\nHP : " + controller[who][which].getHp() + "\nAccumulated Speed : " + controller[who][which].getAccSp();
     }
 
-    public static boolean lifeCheck() {
-        boolean left = false, right = false;
+    public static int lifeCheck() {
+        int stat = 0;
         for (int j = 0; j < controller[0].length; j++) {
-            left = left || controller[0][j].isAlive();
-        }
 
+            stat = stat | (controller[0][j].isAlive() ? 1 : 0);
+            stat = stat << 1;
+            System.out.println(Integer.toBinaryString(stat));
+        }
+        if (stat != 0b0000) {
+            stat = stat | 1;
+            stat = stat << 1;
+        }
         for (int j = 0; j < controller[1].length; j++) {
-            right = right || controller[1][j].isAlive();
+            stat = stat | (controller[1][j].isAlive() ? 1 : 0);
+            stat = stat << 1;
+            System.out.println(Integer.toBinaryString(stat));
         }
 
+        if ((stat & 0b00001111) != 0b0000) {
+            stat = stat | 1;
+            System.out.println(Integer.toBinaryString(stat));
 
-        return right && left;
+        }
+
+        System.out.println("Final " + Integer.toBinaryString(stat));
+        return stat;
     }
 }
