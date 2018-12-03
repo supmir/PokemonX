@@ -1,6 +1,7 @@
 package scenes;
 
 import framework.main;
+import framework.pokeWriter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -129,7 +130,7 @@ public class administrator {
 
         back.setOnAction(event -> main.window.setScene(SceneHandler.menu()));
         save.setOnAction(event -> {
-            if (framework.userPokemon.verify(textFields, type)) {
+            if (pokeWriter.verify(textFields, type)) {
                 System.out.println("saved");
             } else {
                 txt.setText("Your input is invalid");

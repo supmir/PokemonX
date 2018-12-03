@@ -4,8 +4,11 @@ package framework;/*
  * and open the template in the editor.
  */
 
-import scenes.combatP;
+import scenes.combat;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -14,8 +17,8 @@ import java.util.Scanner;
  */
 public class Pokemon {
 
-    final private String name, type;
-    final private int attack, defense, speed;
+    private String name, type;
+    private int attack, defense, speed;
     final private String[] skillName = new String[4], skillType = new String[4];
     final private int[] power = new int[4], accuracy = new int[4];
     private int accSp, skillCount;
@@ -23,41 +26,82 @@ public class Pokemon {
     private boolean alive = true;
 
     public Pokemon(String name) {
-
-        InputStream IS = getClass().getResourceAsStream("Pokemons.txt");
-        try (Scanner is = new Scanner(IS)) {
-            String line = null;
-            //read pokemon
-            while (is.hasNext()) {
-                line = is.nextLine();
-                if (line.contains(name)) {
-                    break;
+        if (name.endsWith("(Custom)")) {
+            try (Scanner is = new Scanner(new FileInputStream(System.getProperty("user.home") + "/PokemonX/Pokemons.txt"))) {
+                String line = null;
+                //read pokemon
+                while (is.hasNext()) {
+                    line = is.nextLine();
+                    if (line.contains(name)) {
+                        break;
+                    }
                 }
+
+                this.name = line;
+                this.type = is.nextLine();
+                this.attack = Integer.parseInt(is.nextLine());
+                this.defense = Integer.parseInt(is.nextLine());
+                this.hp = Integer.parseInt(is.nextLine());
+                this.speed = Integer.parseInt(is.nextLine());
+                for (skillCount = 0; is.hasNextLine(); skillCount++) {
+                    String str = is.nextLine();
+
+                    if ("".equals(str) || "$".equals(str)) {
+                        int x = 0;
+                        while (skillCount < 4) {
+                            this.skillName[skillCount] = "...";
+                            skillCount++;
+                            x++;
+                        }
+                        skillCount -= x;
+                        break;
+                    }
+                    this.skillName[skillCount] = str;
+                    this.skillType[skillCount] = is.nextLine();
+                    this.power[skillCount] = Integer.parseInt(is.nextLine());
+                    this.accuracy[skillCount] = Integer.parseInt(is.nextLine());
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
 
-            this.name = line;
-            this.type = is.nextLine();
-            this.attack = Integer.parseInt(is.nextLine());
-            this.defense = Integer.parseInt(is.nextLine());
-            this.hp = Integer.parseInt(is.nextLine());
-            this.speed = Integer.parseInt(is.nextLine());
-            for (skillCount = 0; is.hasNextLine(); skillCount++) {
-                String str = is.nextLine();
+        } else {
+            InputStream IS = getClass().getResourceAsStream("Pokemons.txt");
 
-                if ("".equals(str) || "$".equals(str)) {
-                    int x = 0;
-                    while (skillCount < 4) {
-                        this.skillName[skillCount] = "...";
-                        skillCount++;
-                        x++;
+            try (Scanner is = new Scanner(IS)) {
+                String line = null;
+                //read pokemon
+                while (is.hasNext()) {
+                    line = is.nextLine();
+                    if (line.contains(name)) {
+                        break;
                     }
-                    skillCount -= x;
-                    break;
                 }
-                this.skillName[skillCount] = str;
-                this.skillType[skillCount] = is.nextLine();
-                this.power[skillCount] = Integer.parseInt(is.nextLine());
-                this.accuracy[skillCount] = Integer.parseInt(is.nextLine());
+
+                this.name = line;
+                this.type = is.nextLine();
+                this.attack = Integer.parseInt(is.nextLine());
+                this.defense = Integer.parseInt(is.nextLine());
+                this.hp = Integer.parseInt(is.nextLine());
+                this.speed = Integer.parseInt(is.nextLine());
+                for (skillCount = 0; is.hasNextLine(); skillCount++) {
+                    String str = is.nextLine();
+
+                    if ("".equals(str) || "$".equals(str)) {
+                        int x = 0;
+                        while (skillCount < 4) {
+                            this.skillName[skillCount] = "...";
+                            skillCount++;
+                            x++;
+                        }
+                        skillCount -= x;
+                        break;
+                    }
+                    this.skillName[skillCount] = str;
+                    this.skillType[skillCount] = is.nextLine();
+                    this.power[skillCount] = Integer.parseInt(is.nextLine());
+                    this.accuracy[skillCount] = Integer.parseInt(is.nextLine());
+                }
             }
         }
     }
@@ -100,7 +144,7 @@ public class Pokemon {
         this.hp = hp;
     }
 
-    public void attack(int skillN, int oppDef, String oppType, Pokemon attacked) {
+    public void attack(int skillN, Pokemon attacked) {
         String line = name + " used " + skillName[skillN] + " and it is ";
         if (multiplier(attacked.type) == 0) {
             line += "not effective";
@@ -116,10 +160,13 @@ public class Pokemon {
         attacked.setHp(attacked.getHp() - (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type));
         if (attacked.getHp() <= 0) {
             attacked.setAlive(false);
+            line += attacked.name + " has fainted.\n";
         }
+
+
         accSp -= 100;
 
-        combatP.setStr(line);
+        combat.setStr(line);
 
     }
 

@@ -4,8 +4,7 @@ package framework;/*
  * and open the template in the editor.
  */
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,24 +33,29 @@ public class PokeList {
             e.printStackTrace();
         }
 
-        //get user defined pokemon here
-        /*
-        InputStream IS2 = getClass().getResourceAsStream("~Pokemons.txt");
-        try (Scanner is = new Scanner(IS)) {
-            //read pokemon
-            while (is.hasNext()) {
-                if (is.nextLine().contains("$")) {
-                    if (is.hasNextLine())
-                        pList.add(is.nextLine());
+
+        String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt";
+        File temp = new File(path);
+        System.out.println(temp.exists());
+        if (temp.exists()) {
+            try (Scanner is = new Scanner(new FileInputStream(path))) {
+                //read pokemon
+                while (is.hasNext()) {
+                    if (is.nextLine().contains("$")) {
+                        if (is.hasNextLine())
+                            pList.add(is.nextLine());
+                    }
                 }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                IS.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        try {
-            IS.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
+
 
         return pList;
     }

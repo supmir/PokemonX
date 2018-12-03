@@ -32,7 +32,6 @@ public class main extends Application {
         });
 
         window.setScene(SceneHandler.menu());
-//        window.setScene(SceneHandler.endGame("one"));
         window.setTitle("Pokémon X");
 
 

@@ -36,19 +36,20 @@ public class SceneHandler {
     }
 
     public static Scene selection(int x, String y) {
+        allList = new framework.PokeList().getList();
         return selection.selection(x, y);
     }
 
-    public static Scene combat() {
-        return combat.combat();
-    }
-
-    public static Scene combat(String x) {
-        return combat.combat(x);
+    public static Scene combat(Boolean notComputer) {
+        return combat.combat(notComputer);
     }
 
     public static Scene endGame(String x) {
         return endGame.endGame(x);
+    }
+
+    public static Scene Continue() {
+        return null;
     }
 
 

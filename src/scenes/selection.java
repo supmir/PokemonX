@@ -68,7 +68,7 @@ public class selection {
                     for (int i = 0; i < 3; i++) {
                         SceneHandler.setController(new Pokemon(SceneHandler.allList.get(r.nextInt(SceneHandler.allList.size()))), 1, i);
                     }
-                    framework.main.window.setScene(SceneHandler.combat());
+                    framework.main.window.setScene(SceneHandler.combat(false));
                 } else {
                     SceneHandler.setController(new Pokemon(pokeList.getValue()), 0, count);
                     framework.main.window.setScene(selection(count + 1, mode));
@@ -80,7 +80,7 @@ public class selection {
                 SceneHandler.allList.remove(pokeList.getValue());
                 if (count == 2 && mode.equals("two")) {
                     SceneHandler.setController(new Pokemon(pokeList.getValue()), 1, count);
-                    framework.main.window.setScene(SceneHandler.combat("yessu"));
+                    framework.main.window.setScene(SceneHandler.combat(true));
                 } else {
                     SceneHandler.setController(new Pokemon(pokeList.getValue()), mode.equals("one") ? 0 : 1, count);
                     framework.main.window.setScene(selection(mode.equals("one") ? count : count + 1, mode.equals("one") ? "two" : "one"));

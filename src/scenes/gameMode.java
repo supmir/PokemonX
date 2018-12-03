@@ -22,12 +22,16 @@ public class gameMode {
         Button PvP = new Button("VS Player");
         Button PvC = new Button("VS Computer");
         Button back = new Button("Back");
-
+        PvP.setMinWidth(200);
+        PvC.setMinWidth(200);
+        back.setMinWidth(200);
 
         PvP.setOnAction(e -> {
+            //reset();
             framework.main.window.setScene(SceneHandler.selection(0, "one"));
         });
         PvC.setOnAction(e -> {
+            //reset();
             framework.main.window.setScene(SceneHandler.selection(0, "computer"));
         });
 
