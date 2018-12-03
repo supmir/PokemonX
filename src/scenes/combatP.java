@@ -6,25 +6,29 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.TextAlignment;
 
 public class combatP {
     private static Pokemon[][] controller = SceneHandler.getController();
+    private static String str = "PvP modeeee\n";
 
+    public static void setStr(String str) {
+        combatP.str += str;
+    }
 
     public static boolean accumulator(int left, int right, boolean turn) {
         boolean less;
-        less = controller[0][left].getAccSp() < 100 && controller[1][right].getAccSp() < 100;
+        less = controller[0][left].getAccSp() <= 100 && controller[1][right].getAccSp() <= 100;
         while (less) {
 
             controller[0][left].adder();
             controller[1][right].adder();
-            less = controller[0][left].getAccSp() < 100 && controller[1][right].getAccSp() < 100;
+            less = controller[0][left].getAccSp() <= 100 && controller[1][right].getAccSp() <= 100;
         }
-
-
         int accCompare;
         accCompare = controller[0][left].getAccSp() - controller[1][right].getAccSp();
 
@@ -59,26 +63,26 @@ public class combatP {
         }
 
 
-        int temp = lifeCheck();
-        if ((temp & 0b00001111) != 15) {//check right
-
-
-        }
-        temp >>= 4;
-        if ((temp & 0b00001111) != 15) {//check left
-
-        }
-
-
-        String str = "PvP modeeee\n";
-        final int width = 600;
-
-
+        final int width = 600, height = 300, dW = width + 20, dH = height;
         Label fightLog = new Label(str);
-        fightLog.setMinSize(width, 300);
-        fightLog.setMaxSize(width, 300);
-        fightLog.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
-        fightLog.setAlignment(Pos.TOP_LEFT);
+        fightLog.setMinSize(width, height);
+        fightLog.setAlignment(Pos.BOTTOM_LEFT);
+        ScrollPane middle = new ScrollPane();
+        middle.setMinSize(dW, dH);
+        middle.setPrefSize(dW, dH);
+        middle.setMaxSize(dW, dH);
+        middle.setContent(fightLog);
+        middle.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        middle.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        middle.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        middle.setVvalue(middle.getVmax());
+
+        middle.addEventFilter(ScrollEvent.SCROLL, event -> {
+            if (event.getDeltaY() != 0) {
+                event.consume();
+            }
+        });
+
         Button[] skill = new Button[4];
         Button change = new Button("Switch");
 
@@ -118,34 +122,28 @@ public class combatP {
             skillSet.setAlignment(Pos.CENTER_RIGHT);
 
 
-        VBox holder = new VBox(top, fightLog, bottom);
+        VBox holder = new VBox(top, middle, bottom);
         holder.setSpacing(10);
         holder.setAlignment(Pos.CENTER);
 
-        Scene tempScene = new Scene(holder, 800, 800);
 
         if (accumulator(left, right, turn)) {//set button turn and position according to speed accumulator
             skill[0].setOnAction(event -> {
-                //str+controller script
                 controller[0][left].attack(0, 10, "Normal", controller[1][right]);
-                RStatus.setText(healthCheck(1, right));
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn)));
             });
             skill[1].setOnAction(event -> {
                 controller[0][left].attack(1, 10, "Normal", controller[1][right]);
-                RStatus.setText(healthCheck(1, right));
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn)));
 
             });
             skill[2].setOnAction(event -> {
                 controller[0][left].attack(2, 10, "Normal", controller[1][right]);
-                RStatus.setText(healthCheck(1, right));
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn)));
 
             });
             skill[3].setOnAction(event -> {
                 controller[0][left].attack(3, 10, "Normal", controller[1][right]);
-                RStatus.setText(healthCheck(1, right));
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn)));
 
             });
@@ -158,24 +156,20 @@ public class combatP {
         } else {//set button turn and position according to speed accumulator
             skill[0].setOnAction(event -> {
                 controller[1][right].attack(0, 10, "Normal", controller[0][left]);
-                LStatus.setText(healthCheck(0, left));
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn)));
             });
             skill[1].setOnAction(event -> {
                 controller[1][right].attack(1, 10, "Normal", controller[0][left]);
-                LStatus.setText(healthCheck(0, left));
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn)));
 
             });
             skill[2].setOnAction(event -> {
                 controller[1][right].attack(2, 10, "Normal", controller[0][left]);
-                LStatus.setText(healthCheck(0, left));
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn)));
 
             });
             skill[3].setOnAction(event -> {
                 controller[1][right].attack(3, 10, "Normal", controller[0][left]);
-                LStatus.setText(healthCheck(0, left));
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn)));
 
             });
@@ -189,6 +183,7 @@ public class combatP {
         }
 
 
+        Scene tempScene = new Scene(holder, 800, 800);
         if (!controller[0][left].isAlive()) {
             if (left != 2) {
                 tempScene = start(left + 1, right, accumulator(left + 1, right, turn));
@@ -196,7 +191,6 @@ public class combatP {
                 tempScene = start(0, right, accumulator(0, right, turn));
             }
         }
-
         if (!controller[1][right].isAlive()) {
             if (right != 2) {
                 tempScene = start(left, right + 1, accumulator(left, right + 1, turn));
@@ -204,7 +198,6 @@ public class combatP {
                 tempScene = start(right, 0, accumulator(left, 0, turn));
             }
         }
-
         return tempScene;
     }
 

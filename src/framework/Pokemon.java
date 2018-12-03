@@ -4,6 +4,8 @@ package framework;/*
  * and open the template in the editor.
  */
 
+import scenes.combatP;
+
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -90,7 +92,6 @@ public class Pokemon {
     }
 
 
-
     public double getHp() {
         return hp;
     }
@@ -100,15 +101,26 @@ public class Pokemon {
     }
 
     public void attack(int skillN, int oppDef, String oppType, Pokemon attacked) {
-        System.out.println((((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type));
+        String line = name + " used " + skillName[skillN] + " and it is ";
+        if (multiplier(attacked.type) == 0) {
+            line += "not effective";
+        } else if (multiplier(attacked.type) == 0.5) {
+            line += "not very effective";
+        } else if (multiplier(attacked.type) == 1) {
+            line += "effective";
+        } else if (multiplier(attacked.type) == 2) {
+            line += "super effective";
+        }
+        line += " dealing " + (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type) + " damage!\n";
+
         attacked.setHp(attacked.getHp() - (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type));
         if (attacked.getHp() <= 0) {
             attacked.setAlive(false);
         }
         accSp -= 100;
 
+        combatP.setStr(line);
 
-        //return attack line
     }
 
     @Override
