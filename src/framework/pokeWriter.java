@@ -11,34 +11,49 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class pokeWriter {
-    private String name, type;
-    private int attack, defense, speed;
-    final private String[] skillName = new String[4], skillType = new String[4];
-    final private int[] power = new int[4], accuracy = new int[4];
-    private double hp;
+    private static String name, type;
+    private static int attack, defense, speed;
+    final private static String[] skillName = new String[4], skillType = new String[4];
+    final private static int[] power = new int[4], accuracy = new int[4];
+    private static double hp;
 
-    public pokeWriter(ArrayList<TextField> a, ArrayList<ComboBox<String>> b) {
+    private static int verify(ArrayList<TextField> a, ArrayList<ComboBox<String>> b) {
+        int code = 0b10000000;//128 (no problem)
         String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt";
-        File temp = new File(path);
 
-        this.name = temp.exists() ? "" : "$\n" + a.get(0).getText() + " (Custom)";
-        this.type = b.get(0).getValue();
-        this.attack = Integer.parseInt(a.get(2).getText());
-        this.defense = Integer.parseInt(a.get(3).getText());
-        this.hp = Integer.parseInt(a.get(4).getText());
-        this.speed = Integer.parseInt(a.get(5).getText());
+        File temp = new File(path);
+        if (a.get(0).getText().contains("(Custom)")) {
+
+        }
+        name = temp.exists() ? "" : "$\n" + a.get(0).getText() + " (Custom)";
+        type = b.get(0).getValue();
+        attack = Integer.parseInt(a.get(2).getText());
+        defense = Integer.parseInt(a.get(3).getText());
+        hp = Integer.parseInt(a.get(4).getText());
+        speed = Integer.parseInt(a.get(5).getText());
 
         for (int i = 1; i < 5; i++) {
-            this.skillName[i - 1] = a.get(2 + (i * 4)).getText();
-            this.skillType[i - 1] = b.get(i).getValue();
-            this.power[i - 1] = Integer.parseInt(a.get(3 + (i * 4)).getText());
-            this.accuracy[i - 1] = Integer.parseInt(a.get(4 + (i * 4)).getText());
+            skillName[i - 1] = a.get(2 + (i * 4)).getText();
+            skillType[i - 1] = b.get(i).getValue();
+            power[i - 1] = Integer.parseInt(a.get(3 + (i * 4)).getText());
+            accuracy[i - 1] = Integer.parseInt(a.get(4 + (i * 4)).getText());
         }
+
+
+        if (a.get(0).getText() == (null)) {
+
+
+        } else {
+            code &= 0b10000000;
+        }
+
+        return code;
 
 
     }
 
-    public static boolean verify(ArrayList<TextField> a, ArrayList<ComboBox<String>> b) {
+    public static int write(ArrayList<TextField> a, ArrayList<ComboBox<String>> b) {
+        int code = verify(a, b);
         String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt";
         File temp = new File(path);
         System.out.println(temp.exists());
@@ -72,21 +87,22 @@ public class pokeWriter {
 
 
         System.out.println(str);
-
-        try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream(path, true));
-            pw.println(str);
-            pw.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (true)
+            try {
+                PrintWriter pw = new PrintWriter(new FileOutputStream(path, true));
+                pw.println(str);
+                pw.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        else {
+            return code;
         }
 
 
         //data validation return false if fail
-        //save into user home
-        //might upgrade to int verification system
 
 
-        return false;
+        return 0;
     }
 }

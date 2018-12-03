@@ -181,6 +181,7 @@ public class Pokemon {
 
     private double multiplier(String oppType) {
         double x = 1;
+        //TODO create enum or array?
 
         return x;
     }

@@ -14,7 +14,14 @@ import javafx.scene.text.TextAlignment;
 
 public class combat {
     private static Pokemon[][] controller = SceneHandler.getController();
-    private static String str = "PvP modeeee\n";
+    private static String str = "Let the battle begin!!!\n";
+
+    public static void setController(Pokemon[][] controller) {
+        combat.controller = controller;
+    }
+
+
+
 
     public static void setStr(String str) {
         combat.str += str;
@@ -148,10 +155,11 @@ public class combat {
 
             });
             change.setOnAction(event -> {
-                if (left == 2)
+                if (left == 2) {
                     framework.main.window.setScene(start(0, right, accumulator(0, right, turn), notComputer));
-                else
+                } else {
                     framework.main.window.setScene(start(left + 1, right, accumulator(left + 1, right, turn), notComputer));
+                }
             });
         } else if (notComputer) {//set button turn and position according to speed accumulator
             skill[0].setOnAction(event -> {

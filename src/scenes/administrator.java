@@ -130,7 +130,8 @@ public class administrator {
 
         back.setOnAction(event -> main.window.setScene(SceneHandler.menu()));
         save.setOnAction(event -> {
-            if (pokeWriter.verify(textFields, type)) {
+            //TODO: fix this
+            if (5 == pokeWriter.write(textFields, type)) {
                 System.out.println("saved");
             } else {
                 txt.setText("Your input is invalid");
