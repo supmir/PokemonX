@@ -100,11 +100,15 @@ public class Pokemon {
     }
 
     public void attack(int skillN, int oppDef, String oppType, Pokemon attacked) {
-        attacked.setHp(attacked.getHp() - (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type) * 10);
+        System.out.println((((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type));
+        attacked.setHp(attacked.getHp() - (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type));
         if (attacked.getHp() <= 0) {
             attacked.setAlive(false);
         }
         accSp -= 100;
+
+
+        //return attack line
     }
 
     @Override

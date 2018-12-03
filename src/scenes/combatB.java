@@ -14,7 +14,7 @@ public class combatB {
     private static Pokemon controller[][] = SceneHandler.getController();
 
 
-    public static Scene combatB(int left, int right, boolean turn) {
+    public static Scene start(int left, int right, boolean turn) {
         //true is left,false is right
         String str = "Hello\n";
         final int width = 600;
@@ -74,37 +74,37 @@ public class combatB {
             skill[0].setOnAction(event -> {
                 controller[0][left].attack(0, 10, "Normal", controller[1][right]);
                 RStatus.setText(controller[1][right].getName() + "\n" + controller[1][right].getHp());
-                framework.main.window.setScene(combatB(left, right, false));
+                framework.main.window.setScene(start(left, right, false));
             });
             skill[1].setOnAction(event -> {
                 controller[0][left].attack(1, 10, "Normal", controller[1][right]);
                 RStatus.setText(controller[1][right].getName() + "\n" + controller[1][right].getHp());
-                framework.main.window.setScene(combatB(left, right, false));
+                framework.main.window.setScene(start(left, right, false));
 
             });
             skill[2].setOnAction(event -> {
                 controller[0][left].attack(2, 10, "Normal", controller[1][right]);
                 RStatus.setText(controller[1][right].getName() + "\n" + controller[1][right].getHp());
-                framework.main.window.setScene(combatB(left, right, false));
+                framework.main.window.setScene(start(left, right, false));
 
             });
             skill[3].setOnAction(event -> {
                 controller[0][left].attack(3, 10, "Normal", controller[1][right]);
                 RStatus.setText(controller[1][right].getName() + "\n" + controller[1][right].getHp());
-                framework.main.window.setScene(combatB(left, right, false));
+                framework.main.window.setScene(start(left, right, false));
 
             });
             change.setOnAction(event -> {
                 System.out.println("hi");
                 if (left == 2)
-                    framework.main.window.setScene(combatB(0, right, true));
+                    framework.main.window.setScene(start(0, right, true));
                 else
-                    framework.main.window.setScene(combatB(left + 1, right, true));
+                    framework.main.window.setScene(start(left + 1, right, true));
             });
         } else {
             System.out.println("Computer turn");
-            tempScene = combatB(left, right, true);
-            //framework.main.window.setScene(combatB(left, right,true));
+            tempScene = start(left, right, true);
+            //framework.main.window.setScene(start(left, right,true));
 
 
         }
