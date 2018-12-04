@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class administrator {
-    static Random r = new Random();
+    private static Random r = new Random();
 
 
     public static Scene administrator() {
@@ -458,9 +458,7 @@ public class administrator {
     private static String rInt(int min, int max) {
 
         int range = max - min + 1;
-        String x = String.valueOf(r.nextInt(range) + 10);
-
-        return x;
+        return String.valueOf(r.nextInt(range) + 10);
     }
 
 }

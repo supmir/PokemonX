@@ -77,7 +77,7 @@ public class combat {
         if ((lifeCheck() >> 4 & 0b00000001) == 0) {//check left
             return SceneHandler.endGame("two");
         }
-        final int width = 600, height = 300, dW = width + 20, dH = height;
+        final int width = 600, height = 300, dW = width + 20, dH = height - 1;
         Label fightLog = new Label(str);
         fightLog.setMinSize(width, height);
         fightLog.setAlignment(Pos.BOTTOM_LEFT);

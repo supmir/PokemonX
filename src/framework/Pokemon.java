@@ -145,7 +145,7 @@ public class Pokemon {
 
     public void attacks(int skillN, Pokemon attacked) {
         String line = name + " used " + skillName[skillN] + " and it is ", attackSFX = "";
-        if (skillName[skillN] == "...") {
+        if (skillName[skillN].equals("...")) {
             accSp -= speed;
             line = "Why are you using a skill that doesn't exist..?";
             combat.appendStr(line);
@@ -201,6 +201,8 @@ public class Pokemon {
     private double multiplier(String oppType) {
         double x = 1;
         //TODO create enum or array?
+
+
         return x;
     }
 

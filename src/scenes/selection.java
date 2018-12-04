@@ -55,7 +55,7 @@ public class selection {
 
 
         //choose pokemon drop down and stuff
-        if (mode == "computer") {
+        if (mode.equals("computer")) {
             choose.setOnAction(e -> {
                 SceneHandler.allList.remove(pokeList.getValue());
                 if (count == 2) {
