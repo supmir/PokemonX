@@ -27,11 +27,11 @@ public class gameMode {
         back.setMinWidth(200);
 
         PvP.setOnAction(e -> {
-            //reset();
+            combat.reset();
             framework.main.window.setScene(SceneHandler.selection(0, "one"));
         });
         PvC.setOnAction(e -> {
-            //reset();
+            combat.reset();
             framework.main.window.setScene(SceneHandler.selection(0, "computer"));
         });
 

@@ -12,6 +12,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.TextAlignment;
 
+import java.util.Random;
+
 public class combat {
     private static Pokemon[][] controller = SceneHandler.getController();
     private static String str = "Let the battle begin!!!\n";
@@ -21,10 +23,12 @@ public class combat {
     }
 
 
-
+    public static void appendStr(String str) {
+        combat.str += str;
+    }
 
     public static void setStr(String str) {
-        combat.str += str;
+        combat.str = str;
     }
 
     public static boolean accumulator(int left, int right, boolean turn) {
@@ -104,7 +108,7 @@ public class combat {
         Button[] skill = new Button[4];
         Button change = new Button("Switch");
 
-        //computer mode setup
+        //pvp mode setup
         if (notComputer)
             if (!accumulator(left, right, turn))
                 j = 1;
@@ -124,9 +128,23 @@ public class combat {
 
 
         //computer mode setup
-        if (notComputer)
+        if (notComputer) {
             if (!accumulator(left, right, turn))
                 skillSet.setAlignment(Pos.CENTER_RIGHT);
+        } else {
+            if (!accumulator(left, right, turn)) {
+                skillSet.setAlignment(Pos.CENTER);
+                change.setText("Move computer");
+                skill[0].setVisible(false);
+                skill[1].setVisible(false);
+                skill[2].setVisible(false);
+                skill[3].setVisible(false);
+                skillSet.getChildren().removeAll(skill[2], skill[3]);
+                skillSet.getChildren().addAll(skill[2], skill[3]);
+            }
+
+        }
+
 
         //back to both
         VBox holder = new VBox(top, middle, bottom);
@@ -136,21 +154,21 @@ public class combat {
 
         if (accumulator(left, right, turn)) {//set button turn and position according to speed accumulator
             skill[0].setOnAction(event -> {
-                controller[0][left].attack(0, controller[1][right]);
+                controller[0][left].attacks(0, controller[1][right]);
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
             });
             skill[1].setOnAction(event -> {
-                controller[0][left].attack(1, controller[1][right]);
+                controller[0][left].attacks(1, controller[1][right]);
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
             skill[2].setOnAction(event -> {
-                controller[0][left].attack(2, controller[1][right]);
+                controller[0][left].attacks(2, controller[1][right]);
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
             skill[3].setOnAction(event -> {
-                controller[0][left].attack(3, controller[1][right]);
+                controller[0][left].attacks(3, controller[1][right]);
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
@@ -163,25 +181,26 @@ public class combat {
             });
         } else if (notComputer) {//set button turn and position according to speed accumulator
             skill[0].setOnAction(event -> {
-                controller[1][right].attack(0, controller[0][left]);
+                controller[1][right].attacks(0, controller[0][left]);
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
             });
             skill[1].setOnAction(event -> {
-                controller[1][right].attack(1, controller[0][left]);
+                controller[1][right].attacks(1, controller[0][left]);
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
             skill[2].setOnAction(event -> {
-                controller[1][right].attack(2, controller[0][left]);
+                controller[1][right].attacks(2, controller[0][left]);
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
             skill[3].setOnAction(event -> {
-                controller[1][right].attack(3, controller[0][left]);
+                controller[1][right].attacks(3, controller[0][left]);
                 framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
             change.setOnAction(event -> {
+
                 if (right == 2)
                     framework.main.window.setScene(start(left, 0, accumulator(left, 0, turn), notComputer));
                 else
@@ -189,8 +208,17 @@ public class combat {
             });
 
         } else {
-            controller[1][right].attack(1, controller[0][left]);
-            return start(left, right, accumulator(left, right, turn), notComputer);
+            change.setOnAction(event -> {
+                Random r = new Random();
+                if (r.nextInt(10) == 0) {
+                    if (right == 2)
+                        framework.main.window.setScene(start(left, 0, accumulator(left, 0, turn), notComputer));
+                    else
+                        framework.main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), notComputer));
+                } else
+                    controller[1][right].attacks(r.nextInt(4), controller[0][left]);
+                framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+            });
         }
 
 
@@ -237,5 +265,10 @@ public class combat {
 
         System.out.println("Final " + Integer.toBinaryString(stat));
         return stat;
+    }
+
+    public static void reset() {
+        setStr("");
+//        setController(new Pokemon());
     }
 }

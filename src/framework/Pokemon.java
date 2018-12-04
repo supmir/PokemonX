@@ -6,7 +6,6 @@ package framework;/*
 
 import scenes.combat;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -144,8 +143,15 @@ public class Pokemon {
         this.hp = hp;
     }
 
-    public void attack(int skillN, Pokemon attacked) {
+    public void attacks(int skillN, Pokemon attacked) {
         String line = name + " used " + skillName[skillN] + " and it is ", attackSFX = "";
+        if (skillName[skillN] == "...") {
+            accSp -= speed;
+            line = "Why are you using a skill that doesn't exist..?";
+            combat.appendStr(line);
+            return;
+        }
+
         if (multiplier(attacked.type) == 0) {
             line += "not effective";
 //            attackSFX += "boo.m4a";
@@ -179,7 +185,7 @@ public class Pokemon {
 
         accSp -= 100;
 
-        combat.setStr(line);
+        combat.appendStr(line);
 
     }
 
