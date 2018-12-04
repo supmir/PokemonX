@@ -1,5 +1,6 @@
 package scenes;
 
+import framework.Pokemon;
 import framework.main;
 import framework.pokeWriter;
 import javafx.geometry.Insets;
@@ -22,8 +23,8 @@ public class administrator {
     public static Scene administrator() {
         Label txt = new Label("Create your own Pokémon!");
         Button back = new Button("Back");
-        Button save = new Button("Save");
-        HBox bottom = new HBox(20, back, save);
+        Button next = new Button("Next");
+        HBox bottom = new HBox(20, back, next);
         bottom.setAlignment(Pos.CENTER_RIGHT);
 
 
@@ -34,22 +35,18 @@ public class administrator {
 
         ArrayList<Label> labels = new ArrayList<>();
         ArrayList<TextField> textFields = new ArrayList<>();
-        ArrayList<ComboBox<String>> type = new ArrayList<>();
+        ArrayList<ComboBox<String>> comboBoxes = new ArrayList<>();
 
-
-        for (int i = 0; i < 5; i++) {
-            type.add(new ComboBox<>());
-            type.get(i).setPrefWidth(150);
-            type.get(i).setPromptText((i == 0 ? "Pokemon" : "Skill") + " type");
-            type.get(i).getItems().addAll(framework.typeList.typeList());
-            type.get(i).getSelectionModel().selectFirst();
-        }
-        type.add(new ComboBox<>());
-        type.get(5).setPrefWidth(150);
-        type.get(5).setPromptText("Select number of skills");
-        type.get(5).getSelectionModel().selectFirst();
-
-
+        comboBoxes.add(new ComboBox<>());
+        comboBoxes.get(0).setPrefWidth(300);
+        comboBoxes.get(0).setPromptText(("Pokemon type"));
+        comboBoxes.get(0).getItems().addAll(framework.typeList.typeList());
+        comboBoxes.get(0).getSelectionModel().selectFirst();
+        comboBoxes.add(new ComboBox<>());
+        comboBoxes.get(1).setPrefWidth(300);
+        comboBoxes.get(1).setPromptText("Select number of skills");
+        comboBoxes.get(1).getItems().addAll("1", "2", "3", "4");
+        comboBoxes.get(1).getSelectionModel().selectLast();
 
         txt.setMinSize(400, 50);
         txt.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
@@ -61,79 +58,171 @@ public class administrator {
         labels.add(new Label("Defense :"));
         labels.add(new Label("HP :"));
         labels.add(new Label("Speed :"));
-        labels.add(new Label("Skill 1 :"));
+        labels.add(new Label("Number of Skills :"));
+        labels.get(6).setPrefWidth(200);
+
+
+        textFields.add(new TextField(rName()));//pokemon name CANNOT contain () because it is used as (custom) during game
+        textFields.add(new TextField(rInt()));//Attack
+        textFields.add(new TextField(rInt()));//Defense
+        textFields.add(new TextField(rInt()));//HP
+        textFields.add(new TextField(rInt()));//Speed
+
+        center.add(labels.get(0), 0, 0);
+        center.add(labels.get(1), 0, 1);
+        center.add(labels.get(2), 0, 2);
+        center.add(labels.get(3), 0, 3);
+        center.add(labels.get(4), 0, 4);
+        center.add(labels.get(5), 0, 5);
+        center.add(labels.get(6), 0, 6, 2, 1);
+
+        center.add(textFields.get(0), 1, 0);
+        center.add(comboBoxes.get(0), 1, 1);
+        center.add(textFields.get(1), 1, 2);
+        center.add(textFields.get(2), 1, 3);
+        center.add(textFields.get(3), 1, 4);
+        center.add(textFields.get(4), 1, 5);
+
+        center.add(comboBoxes.get(1), 0, 7, 2, 1);
+        center.add(bottom, 0, 8, 2, 1);
+
+
+        final int labWid = 80, fieldWid = 200;
+        center.getColumnConstraints().add(new ColumnConstraints(labWid));
+        center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
+
+        VBox layout1 = new VBox(20);
+        layout1.setPadding(new Insets(20));
+        layout1.getChildren().addAll(txt, center);
+        layout1.setAlignment(Pos.CENTER);
+        back.setOnAction(event -> main.window.setScene(SceneHandler.menu()));
+        next.setOnAction(event -> {
+
+            main.window.setScene(skillPage(
+                    textFields.get(0).getText() + "(Custom)" + "\n" +
+                            comboBoxes.get(0).getValue() + "\n" +
+                            textFields.get(1).getText() + "\n" +
+                            textFields.get(2).getText() + "\n" +
+                            textFields.get(3).getText() + "\n" +
+                            textFields.get(4).getText() + "\n",
+                    Integer.parseInt(comboBoxes.get(1).getValue()),
+                    textFields.get(0).getText() + "(Custom)"));
+        });
+
+
+        return new Scene(layout1, 800, 800);
+
+    }
+
+    private static Scene skillPage(String line, int skillCount, String name) {
+        if (skillCount == 0) {
+            return done(line + "$", name);
+        }
+
+        GridPane center = new GridPane();
+        center.setPadding(new Insets(10));
+        center.setVgap(10);
+        center.setHgap(10);
+
+        center.setAlignment(Pos.CENTER);
+        final int labWid = 80, fieldWid = 200;
+        center.getColumnConstraints().add(new ColumnConstraints(labWid));
+        center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
+
+        Label txt = new Label("Create your own Pokémon!");
+        txt.setMinSize(400, 50);
+        txt.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        txt.setAlignment(Pos.CENTER);
+
+        ArrayList<Label> labels = new ArrayList<>();
+        ArrayList<TextField> textFields = new ArrayList<>();
+        Button cancel = new Button("Cancel");
+        Button next = new Button("Next");
+
+
+        labels.add(new Label("Skill " + (5 - skillCount) + " :"));
         labels.add(new Label("Type :"));
         labels.add(new Label("Power :"));
         labels.add(new Label("Accuracy :"));
-        labels.add(new Label("Skill 2 :"));
-        labels.add(new Label("Type :"));
-        labels.add(new Label("Power :"));
-        labels.add(new Label("Accuracy :"));
-        labels.add(new Label("Skill 3 :"));
-        labels.add(new Label("Type :"));
-        labels.add(new Label("Power :"));
-        labels.add(new Label("Accuracy :"));
-        labels.add(new Label("Skill 4 :"));
-        labels.add(new Label("Type :"));
-        labels.add(new Label("Power :"));
-        labels.add(new Label("Accuracy :"));
+
+        textFields.add(new TextField(rName()));//Skill i
+        ComboBox<String> comboBox = new ComboBox<>();
+        textFields.add(new TextField(rInt()));//Power
+        textFields.add(new TextField(rInt()));//Accuracy
+
+        comboBox.getItems().addAll(framework.typeList.typeList());
+        comboBox.setPrefWidth(300);
+        comboBox.getSelectionModel().selectFirst();
 
 
-        textFields.add(new TextField());//pokemon name CANNOT contain () because it is used as (custom) during game
-        textFields.add(new TextField());//Type
-        textFields.add(new TextField());//Attack
-        textFields.add(new TextField());//Defense
-        textFields.add(new TextField());//HP
-        textFields.add(new TextField());//Speed
-        textFields.add(new TextField());//Skill 1
-        textFields.add(new TextField());//Type
-        textFields.add(new TextField());//Power
-        textFields.add(new TextField());//Accuracy
-        textFields.add(new TextField());//Skill 2
-        textFields.add(new TextField());//Type
-        textFields.add(new TextField());//Power
-        textFields.add(new TextField());//Accuracy
-        textFields.add(new TextField());//Skill 3
-        textFields.add(new TextField());//Type
-        textFields.add(new TextField());//Power
-        textFields.add(new TextField());//Accuracy
-        textFields.add(new TextField());//Skill 4
-        textFields.add(new TextField());//Type
-        textFields.add(new TextField());//Power
-        textFields.add(new TextField());//Accuracy
+        center.add(labels.get(0), 0, 1);
+        center.add(labels.get(1), 0, 2);
+        center.add(labels.get(2), 0, 3);
+        center.add(labels.get(3), 0, 4);
+        center.add(textFields.get(0), 1, 1);
+        center.add(comboBox, 1, 2);
+        center.add(textFields.get(1), 1, 3);
+        center.add(textFields.get(2), 1, 4);
+
+        cancel.setOnAction(event -> main.window.setScene(SceneHandler.menu()));
+        next.setOnAction(event -> {
+
+            main.window.setScene(skillPage(
+                    line + textFields.get(0).getText() + "\n" +
+                            comboBox.getValue() + "\n" +
+                            textFields.get(1).getText() + "\n" +
+                            textFields.get(2).getText() + "\n"
+                    , skillCount - 1, name));
+        });
+
+        HBox bottom = new HBox(10);
+        bottom.getChildren().addAll(cancel, next);
+        bottom.setAlignment(Pos.CENTER_RIGHT);
+        center.add(bottom, 0, 5, 2, 1);
+        center.setAlignment(Pos.CENTER);
+        VBox holder = new VBox();
+        holder.getChildren().addAll(txt, center);
+        holder.setAlignment(Pos.CENTER);
 
 
-        textFields.get(0).setPromptText("Name");
-        textFields.get(1).setPromptText("Type");
-        textFields.get(2).setPromptText("Attack");
-        textFields.get(3).setPromptText("Defense");
-        textFields.get(4).setPromptText("HP");
-        textFields.get(5).setPromptText("Speed");
-        textFields.get(6).setPromptText("Skill 1");
-        textFields.get(7).setPromptText("Type");
-        textFields.get(8).setPromptText("Power");
-        textFields.get(9).setPromptText("Accuracy");
-        textFields.get(10).setPromptText("Skill 2");
-        textFields.get(11).setPromptText("Type");
-        textFields.get(12).setPromptText("Power");
-        textFields.get(13).setPromptText("Accuracy");
-        textFields.get(14).setPromptText("Skill 3");
-        textFields.get(15).setPromptText("Type");
-        textFields.get(16).setPromptText("Power");
-        textFields.get(17).setPromptText("Accuracy");
-        textFields.get(18).setPromptText("Skill 4");
-        textFields.get(19).setPromptText("Type");
-        textFields.get(20).setPromptText("Power");
-        textFields.get(21).setPromptText("Accuracy");
-        //TODO find out MIN and MAX
-        final int MINA = 10, MAXA = 50;//att
-        final int MIND = 10, MAXD = 50;//def
-        final int MINH = 10, MAXH = 50;//hp
-        final int MINS = 10, MAXS = 50;//sp
-        final int MINP = 10, MAXP = 50;//pow
-        final int MINC = 10, MAXC = 50;//acc
+        return new Scene(holder, 800, 800);
+    }
+
+    private static Scene done(String line, String name) {
+        pokeWriter.write(line);
+        Label top = new Label("Your Pokémon is saved!");
+        top.setMinSize(400, 50);
+        top.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        top.setAlignment(Pos.CENTER);
 
 
+        Label middle = new Label("Name : \nType : \nAttack : \nDefense : \nHP : \nSpeed : " +
+                "\nSkill 1 : \nType : \nPower : \nAccuracy : " +
+                "\nSkill 2 : \nType : \nPower : \nAccuracy : " +
+                "\nSkill 3 : \nType : \nPower : \nAccuracy : " +
+                "\nSkill 4 : \nType : \nPower : \nAccuracy : ");
+
+        middle.setMinSize(400, 430);
+        middle.setPadding(new Insets(10));
+        middle.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        middle.setText(new Pokemon(name).toString());
+
+        Button done = new Button("Back to Menu");
+        done.setAlignment(Pos.BOTTOM_CENTER);
+
+        done.setOnAction(event -> main.window.setScene(SceneHandler.menu()));
+
+        ////layout
+        VBox holder = new VBox(10);
+        holder.setPadding(new Insets(10));
+        holder.getChildren().addAll(top, middle, done);
+        holder.setAlignment(Pos.CENTER);
+
+        return new Scene(holder, 800, 800);
+    }
+
+/*
+        {
         textFields.get(0).focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
                 if (textFields.get(0).getText().matches(".*\\(Custom\\).*") || textFields.get(0).getText().matches("")) {
@@ -193,7 +282,7 @@ public class administrator {
                 }
             }
         });
-
+    }
 
 //START OF SUPER LONG ANNOYING CODE
         {
@@ -326,55 +415,27 @@ public class administrator {
                 }
             });
         }
+*/
+//
+//        for (int i = 0; i < 23; i++) {
+//            final int first = 6, second = 8 + first;
+//            if (i < first) {
+//                center.add(labels.get(i), 0, 1 + i);
+//                center.add(i != 1 ? textFields.get(i) : type.get(0), 1, 1 + i);
+//            } else if (i < second) {
+//                center.add(labels.get(i), 2, 1 + i - first);
+//                center.add(i != 7 ? (i != 11 ? textFields.get(i) : type.get(2)) : type.get(1), 3, 1 + i - first);
+//
+//            } else if (i != 22) {
+//
+//                center.add(labels.get(i), 4, 1 + i - second);
+//                center.add(i != 15 ? (i != 19 ? textFields.get(i) : type.get(4)) : type.get(3), 5, 1 + i - second);
+//
+//            } else {
+//                center.add(bottom, 4, 1 + i - second, 2, 1);
+//            }
+//        }
 
-        for (int i = 0; i < 23; i++) {
-            final int first = 6, second = 8 + first;
-            if (i < first) {
-                center.add(labels.get(i), 0, 1 + i);
-                center.add(i != 1 ? textFields.get(i) : type.get(0), 1, 1 + i);
-            } else if (i < second) {
-                center.add(labels.get(i), 2, 1 + i - first);
-                center.add(i != 7 ? (i != 11 ? textFields.get(i) : type.get(2)) : type.get(1), 3, 1 + i - first);
-
-            } else if (i != 22) {
-
-                center.add(labels.get(i), 4, 1 + i - second);
-                center.add(i != 15 ? (i != 19 ? textFields.get(i) : type.get(4)) : type.get(3), 5, 1 + i - second);
-
-            } else {
-                center.add(bottom, 4, 1 + i - second, 2, 1);
-            }
-        }
-
-
-        VBox layout1 = new VBox(20);
-        final int labWid = 80, fieldWid = 150;
-        center.getColumnConstraints().add(new ColumnConstraints(65));
-        center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
-        center.getColumnConstraints().add(new ColumnConstraints(labWid));
-        center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
-        center.getColumnConstraints().add(new ColumnConstraints(labWid));
-        center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
-
-        layout1.setPadding(new Insets(20));
-        layout1.getChildren().addAll(txt, center);
-        layout1.setAlignment(Pos.CENTER);
-
-
-        back.setOnAction(event -> main.window.setScene(SceneHandler.menu()));
-        save.setOnAction(event -> {
-            //TODO: fix this
-            if (master(22))
-                txt.setText(pokeWriter.write(textFields, type));
-            else
-                txt.setText("Fix your errors");
-
-        });
-
-
-        return new Scene(layout1, 800, 800);
-
-    }
 
     private static String rName() {
         String x = "";
@@ -389,25 +450,17 @@ public class administrator {
         return x;
     }
 
+
+    private static String rInt() {
+        return rInt(10, 50);
+    }
+
     private static String rInt(int min, int max) {
 
         int range = max - min + 1;
         String x = String.valueOf(r.nextInt(range) + 10);
 
         return x;
-    }
-
-
-    public static boolean master(int x) {
-        boolean master = true;
-        boolean[] b = new boolean[22];
-
-
-        switch (x) {
-            case 0:
-        }
-
-        return master;
     }
 
 }
