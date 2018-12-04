@@ -4,6 +4,7 @@ package Popups;/*
  * and open the template in the editor.
  */
 
+import framework.Pokemon;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,7 +21,7 @@ import javafx.stage.Stage;
  */
 public class ConfirmBox {
 
-    static boolean answer = false;
+    private static boolean answer = false;
 
     public static boolean display(String title, String message) {
 

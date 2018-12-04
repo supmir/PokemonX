@@ -9,12 +9,13 @@ import scenes.combat;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Scanner;
 
 /**
  * @author amir
  */
-public class Pokemon {
+public class Pokemon implements Serializable {
 
     private String name, type;
     private int attack, defense, speed;
@@ -147,7 +148,7 @@ public class Pokemon {
         String line = name + " used " + skillName[skillN] + " and it is ", attackSFX = "";
         if (skillName[skillN].equals("...")) {
             accSp -= speed;
-            line = "Why are you using a skill that doesn't exist..?";
+            line = "Why are you using a skill that doesn't exist..?\n";
             combat.appendStr(line);
             return;
         }

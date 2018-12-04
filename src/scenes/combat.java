@@ -17,11 +17,15 @@ import java.util.Random;
 public class combat {
     private static Pokemon[][] controller = SceneHandler.getController();
     private static String str = "Let the battle begin!!!\n";
+    private static int L, R, T, M;
 
     public static void setController(Pokemon[][] controller) {
         combat.controller = controller;
     }
 
+    public static Pokemon[][] getController() {
+        return controller;
+    }
 
     public static void appendStr(String str) {
         combat.str += str;
@@ -132,6 +136,8 @@ public class combat {
             if (!accumulator(left, right, turn))
                 skillSet.setAlignment(Pos.CENTER_RIGHT);
         } else {
+
+            //todo computer conversate with player!!!! mocking etc!!
             if (!accumulator(left, right, turn)) {
                 skillSet.setAlignment(Pos.CENTER);
                 change.setText("Move computer");
@@ -237,6 +243,12 @@ public class combat {
                 tempScene = start(right, 0, accumulator(left, 0, turn), notComputer);
             }
         }
+
+        L = left;
+        R = right;
+        T = turn ? 1 : 0;
+        M = notComputer ? 1 : 0;
+
         return tempScene;
     }
 
@@ -263,12 +275,32 @@ public class combat {
             stat = stat | 1;
         }
 
-        System.out.println("Final " + Integer.toBinaryString(stat));
         return stat;
     }
 
     public static void reset() {
-        setStr("");
+        setStr("Let the battle begin!!!\n");
 //        setController(new Pokemon());
     }
+
+    public static int getL() {
+        return L;
+    }
+
+    public static int getR() {
+        return R;
+    }
+
+    public static int getT() {
+        return T;
+    }
+
+    public static int getM() {
+        return M;
+    }
+
+    public static String getStr() {
+        return str;
+    }
+
 }

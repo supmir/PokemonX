@@ -1,8 +1,10 @@
 package scenes;
 
 import framework.Pokemon;
+import framework.pokeWriter;
 import javafx.scene.Scene;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -41,15 +43,24 @@ public class SceneHandler {
     }
 
     public static Scene combat(Boolean notComputer) {
+        framework.main.setInCombat(true);
         return combat.combat(notComputer);
     }
 
     public static Scene endGame(String x) {
+        framework.main.setInCombat(false);
         return endGame.endGame(x);
     }
 
     public static Scene Continue() {
-        return null;
+        combat.setController(framework.pokeWriter.getProg());
+        try {
+            pokeWriter.readLRTStr();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        combat.setStr(pokeWriter.getStr());
+        return combat.start(pokeWriter.getL(), pokeWriter.getR(), pokeWriter.isT(), pokeWriter.isM());
     }
 
 

@@ -36,7 +36,6 @@ public class PokeList {
 
         String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt";
         File temp = new File(path);
-        System.out.println(temp.exists());
         if (temp.exists()) {
             try (Scanner is = new Scanner(new FileInputStream(path))) {
                 //read pokemon

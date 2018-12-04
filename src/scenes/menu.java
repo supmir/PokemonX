@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class menu {
@@ -24,12 +25,21 @@ public class menu {
 
         ArrayList<Button> Buttons = new ArrayList<>();
         //add if statement only if txt config exists
-        if (true) {
-            Buttons.add(new Button("Continue"));
-            x++;
-            Buttons.get(0).setOnAction(event -> {
-                framework.main.window.setScene(SceneHandler.Continue());
-            });
+
+        String path = System.getProperty("user.home") + "/PokemonX/fight.bin";
+        File temp = new File(path);
+        if (temp.exists()) {
+            String path2 = System.getProperty("user.home") + "/PokemonX/LRTStr.bin";
+
+            File temp2 = new File(path2);
+
+            if (temp2.exists()) {
+                Buttons.add(new Button("Continue"));
+                x++;
+                Buttons.get(0).setOnAction(event -> {
+                    framework.main.window.setScene(SceneHandler.Continue());
+                });
+            }
         }
         Buttons.add(new Button("New Game"));
         Buttons.add(new Button("Credits"));

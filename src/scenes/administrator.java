@@ -113,7 +113,6 @@ public class administrator {
                         textFields.get(0).setText(rName());
                         txt.setText("Pokémon name can't be that. " + fourLetter(1));
                     } else {
-                        System.out.println(textFields.get(0).getText());
                         txt.setText(fourLetter(2));
                     }
                 }
@@ -232,7 +231,6 @@ public class administrator {
                     textFields.get(0).setText(rName());
                     txt.setText("Skill name can't be that. " + fourLetter(1));
                 } else {
-                    System.out.println(textFields.get(0).getText());
                     txt.setText(fourLetter(2));
                 }
             }
@@ -273,7 +271,7 @@ public class administrator {
     }
 
     private static Scene Saved(String line, String name) {
-        pokeWriter.write(line);
+        pokeWriter.writePokemon(line);
         Label top = new Label("Your Pokémon is saved!");
         top.setMinSize(600, 50);
         top.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
@@ -352,11 +350,14 @@ public class administrator {
                         "You're the reason I have depression.",
                         "Do you need a nudge on your head?",
                         "I bet you have a TikTok account.",
-                        "I spent days coding this and you can't even do this right?"
+                        "I spent days coding this and you can't even do this right?",
+                        "What the frick?",
+                        "Your parents will dab on you when you die"
                 },
                 sarcastic = {
                         "Wow! You're so very very smart now!",
-                        "Congratulations! Your mother must be proud"
+                        "Congratulations! Your mother must be proud",
+                        "You deserve an award!!!"
                 };
 
         switch (niceness) {

@@ -9,8 +9,9 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import scenes.SceneHandler;
 
+import java.io.IOException;
+
 /**
- *
  * @author amir
  */
 
@@ -18,17 +19,21 @@ import scenes.SceneHandler;
 public class main extends Application {
 
     public static Stage window;
+    public static boolean inCombat = false;
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    public static void setInCombat(boolean inCombat) {
+        main.inCombat = inCombat;
+    }
 
     public void start(Stage primaryStage) {
         window = primaryStage;
         window.setOnCloseRequest(e -> {
             e.consume();
-            exitProgram();
+            exitProgram(inCombat);
         });
 
         window.setScene(SceneHandler.menu());
@@ -40,10 +45,16 @@ public class main extends Application {
     }
 
 
-    private static void exitProgram() {
-        if (Popups.ConfirmBox.display("Exit?", "Are you sure you want to exit?")) {
-            System.out.println("File is saved");
-                    window.close();
+    private static void exitProgram(boolean inCombat) {
+        if (Popups.ConfirmBox.display("Exit?", "Are you sure you want to exit?", inCombat)) {
+            pokeWriter.writeProg();
+            try {
+                pokeWriter.writeLRTStr();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            window.close();
 
         }
     }
