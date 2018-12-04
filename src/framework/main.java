@@ -46,7 +46,7 @@ public class main extends Application {
 
 
     private static void exitProgram(boolean inCombat) {
-        if (Popups.ConfirmBox.display("Exit?", "Are you sure you want to exit?", inCombat)) {
+        if (Popups.ConfirmBox.display("Exit?", "Are you sure you want to exit?")) {
             pokeWriter.writeProg();
             try {
                 pokeWriter.writeLRTStr();
