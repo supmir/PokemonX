@@ -145,16 +145,29 @@ public class Pokemon {
     }
 
     public void attack(int skillN, Pokemon attacked) {
-        String line = name + " used " + skillName[skillN] + " and it is ";
+        String line = name + " used " + skillName[skillN] + " and it is ", attackSFX = "";
         if (multiplier(attacked.type) == 0) {
             line += "not effective";
+//            attackSFX += "boo.m4a";
         } else if (multiplier(attacked.type) == 0.5) {
             line += "not very effective";
+//            attackSFX += "meh.m4a";
         } else if (multiplier(attacked.type) == 1) {
             line += "effective";
+//            attackSFX += "cool.m4a";
         } else if (multiplier(attacked.type) == 2) {
             line += "super effective";
+//            attackSFX += "nice.m4a";
         }
+
+//TODO use AudioClip
+//
+//            Media sound = new Media(new File(attackSFX).toURI().toString());
+//            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+//            System.out.println("sound");
+//            mediaPlayer.play();
+
+
         line += " dealing " + (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type) + " damage!\n";
 
         attacked.setHp(attacked.getHp() - (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type));
@@ -182,7 +195,6 @@ public class Pokemon {
     private double multiplier(String oppType) {
         double x = 1;
         //TODO create enum or array?
-
         return x;
     }
 

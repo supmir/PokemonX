@@ -42,11 +42,7 @@ public class selection {
                 "\nSkill 2 : \nType : \nPower : \nAccuracy : " +
                 "\nSkill 3 : \nType : \nPower : \nAccuracy : " +
                 "\nSkill 4 : \nType : \nPower : \nAccuracy : ");
-        System.out.println("Name : \nType : \nAttack : \nDefense : \nHP : \nSpeed : " +
-                "\nSkill 1 : \nType : \nPower : \nAccuracy : " +
-                "\nSkill 2 : \nType : \nPower : \nAccuracy : " +
-                "\nSkill 3 : \nType : \nPower : \nAccuracy : " +
-                "\nSkill 4 : \nType : \nPower : \nAccuracy : ");
+
         bottom.setMinSize(400, 430);
         bottom.setPadding(new Insets(10));
         bottom.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
@@ -60,7 +56,6 @@ public class selection {
 
         //choose pokemon drop down and stuff
         if (mode == "computer") {
-            System.out.println("computer mode");
             choose.setOnAction(e -> {
                 SceneHandler.allList.remove(pokeList.getValue());
                 if (count == 2) {
@@ -75,7 +70,6 @@ public class selection {
                 }
             });
         } else {
-            System.out.println("else");
             choose.setOnAction(e -> {
                 SceneHandler.allList.remove(pokeList.getValue());
                 if (count == 2 && mode.equals("two")) {

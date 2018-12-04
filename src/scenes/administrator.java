@@ -38,7 +38,7 @@ public class administrator {
             type.add(new ComboBox<>());
             type.get(i).setPrefWidth(150);
             type.get(i).setPromptText((i == 0 ? "Pokemon" : "Skill") + " type");
-            type.get(i).getItems().addAll("Fire", "Water", "Grass");
+            type.get(i).getItems().addAll(framework.typeList.typeList());
 
         }
 
