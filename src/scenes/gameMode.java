@@ -1,6 +1,6 @@
 package scenes;
 
-import framework.main;
+import framework.pokeWriter;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,10 +28,12 @@ public class gameMode {
 
         PvP.setOnAction(e -> {
             combat.reset();
+            pokeWriter.delete(false);
             framework.main.window.setScene(SceneHandler.selection(0, "one"));
         });
         PvC.setOnAction(e -> {
             combat.reset();
+            pokeWriter.delete(false);
             framework.main.window.setScene(SceneHandler.selection(0, "computer"));
         });
 

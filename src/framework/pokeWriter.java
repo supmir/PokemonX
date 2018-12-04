@@ -106,6 +106,30 @@ public class pokeWriter {
 
     }
 
+
+    public static void delete(boolean all) {
+
+        if (all) {
+            String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt";
+            File temp = new File(path);
+            if (temp.delete())
+                System.out.println("Deleted " + path);
+        }
+
+        String path = System.getProperty("user.home") + "/PokemonX/fight.bin";
+        File temp = new File(path);
+        if (temp.delete())
+            System.out.println("Deleted " + path);
+
+
+        String path2 = System.getProperty("user.home") + "/PokemonX/LRTStr.bin";
+        File temp2 = new File(path2);
+        if (temp2.delete())
+            System.out.println("Deleted " + path2);
+
+
+    }
+
     public static void readLRTStr() throws IOException {
         ObjectInputStream OI = new ObjectInputStream(
                 new FileInputStream(System.getProperty("user.home") + "/PokemonX/LRTStr.bin"));

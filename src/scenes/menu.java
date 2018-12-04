@@ -43,7 +43,9 @@ public class menu {
         }
         Buttons.add(new Button("New Game"));
         Buttons.add(new Button("Credits"));
-        Buttons.add(new Button("???"));
+        Buttons.add(new Button("???"));//todo hide this button to make it more special
+        //todo reset button
+
 
         for (int i = 0; i < Buttons.size(); i++) {
             Buttons.get(i).setMinWidth(width);

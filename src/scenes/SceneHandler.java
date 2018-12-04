@@ -48,6 +48,7 @@ public class SceneHandler {
     }
 
     public static Scene endGame(String x) {
+        pokeWriter.delete(false);
         framework.main.setInCombat(false);
         return endGame.endGame(x);
     }
