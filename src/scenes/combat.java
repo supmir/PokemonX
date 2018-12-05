@@ -1,5 +1,6 @@
 package scenes;
 
+import Tools.fourLetter;
 import framework.Pokemon;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,6 +19,7 @@ public class combat {
     private static Pokemon[][] controller = SceneHandler.getController();
     private static String str = "Let the battle begin!!!\n";
     private static int L, R, T, M;
+    private static String strC = "Computer : Hello, you ready to get CRUSHED?";
 
     public static void setController(Pokemon[][] controller) {
         combat.controller = controller;
@@ -33,6 +35,10 @@ public class combat {
 
     public static void setStr(String str) {
         combat.str = str;
+    }
+
+    public static void setStrC(String strC) {
+        combat.strC = strC;
     }
 
     public static boolean accumulator(int left, int right, boolean turn) {
@@ -81,14 +87,27 @@ public class combat {
         if ((lifeCheck() >> 4 & 0b00000001) == 0) {//check left
             return SceneHandler.endGame("two");
         }
-        final int width = 600, height = 300, dW = width + 20, dH = height - 1;
+        final int
+                fightWidth = 600,
+                fightHeight = 300,
+                dFightWidth = fightWidth + 20,
+                dFightHeight = fightHeight - 1,
+                computerWidth = 400,
+                computerHeight = 200,
+                buttonWidth = 200;
+
+
         Label fightLog = new Label(str);
-        fightLog.setMinSize(width, height);
+        Label computer = new Label(strC);
+        fightLog.setMinSize(fightWidth, fightHeight);
         fightLog.setAlignment(Pos.BOTTOM_LEFT);
+        computer.setMinSize(computerWidth + 20, dFightHeight);
+        computer.setAlignment(Pos.BOTTOM_LEFT);
+
         ScrollPane middle = new ScrollPane();
-        middle.setMinSize(dW, dH);
-        middle.setPrefSize(dW, dH);
-        middle.setMaxSize(dW, dH);
+        middle.setMinSize(dFightWidth, dFightHeight);
+        middle.setPrefSize(dFightWidth, dFightHeight);
+        middle.setMaxSize(dFightWidth, dFightHeight);
         middle.setContent(fightLog);
         middle.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
         middle.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -99,9 +118,27 @@ public class combat {
                 event.consume();
             }
         });
+
+
+        ScrollPane computerHolder = new ScrollPane();
+        computerHolder.setPrefSize(computerWidth, computerHeight);
+        computerHolder.setMinSize(computerWidth, computerHeight);
+        computerHolder.setMaxSize(computerWidth, computerHeight);
+        computerHolder.setContent(computer);
+        computerHolder.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        computerHolder.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        computerHolder.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        computerHolder.setVvalue(computerHolder.getVmax());
+        computerHolder.addEventFilter(ScrollEvent.SCROLL, event -> {
+            if (event.getDeltaY() != 0) {
+                event.consume();
+            }
+        });
+
+
         StackPane top = new StackPane();
-        top.setMinWidth(width);
-        top.setMaxWidth(width);
+        top.setMinWidth(fightWidth);
+        top.setMaxWidth(fightWidth);
         top.setPadding(new Insets(0));
         Label LStatus = new Label(healthCheck(0, left));
         Label RStatus = new Label(healthCheck(1, right));
@@ -112,6 +149,7 @@ public class combat {
         Button[] skill = new Button[4];
         Button change = new Button("Switch");
 
+
         //pvp mode setup
         if (notComputer)
             if (!accumulator(left, right, turn))
@@ -120,15 +158,27 @@ public class combat {
         //back to both
         for (int i = 0; i < skill.length; i++) {
             skill[i] = new Button(controller[j][left].getSkillName(i));
+            skill[i].setMinWidth(buttonWidth);
+            skill[i].setMaxWidth(buttonWidth);
         }
+        change.setMinWidth(buttonWidth);
+        change.setMaxWidth(buttonWidth);
+
+
+
+
+
 
         StackPane bottom = new StackPane();
-        bottom.setMinWidth(width);
-        bottom.setMaxWidth(width);
+        bottom.setPadding(new Insets(10, -10, 10, -10));
+        bottom.setMinWidth(fightWidth);
+        bottom.setMaxWidth(fightWidth);
         VBox skillSet = new VBox(10);
         skillSet.getChildren().addAll(skill);
         skillSet.getChildren().add(change);
+
         bottom.getChildren().add(skillSet);
+        skillSet.setAlignment(Pos.CENTER_LEFT);
 
 
         //computer mode setup
@@ -136,17 +186,14 @@ public class combat {
             if (!accumulator(left, right, turn))
                 skillSet.setAlignment(Pos.CENTER_RIGHT);
         } else {
+            bottom.setAlignment(computerHolder, Pos.CENTER_RIGHT);
+            bottom.getChildren().add(0, computerHolder);
 
-            //todo computer conversate with player!!!! mocking etc!!
             if (!accumulator(left, right, turn)) {
-                skillSet.setAlignment(Pos.CENTER);
                 change.setText("Move computer");
-                skill[0].setVisible(false);
-                skill[1].setVisible(false);
-                skill[2].setVisible(false);
-                skill[3].setVisible(false);
-                skillSet.getChildren().removeAll(skill[2], skill[3]);
-                skillSet.getChildren().addAll(skill[2], skill[3]);
+                computer.setText(strC + "\nComputer : " + fourLetter.fourLetter(1));
+                strC = computer.getText();
+                skillSet.getChildren().removeAll(skill);
             }
 
         }
@@ -301,6 +348,10 @@ public class combat {
 
     public static String getStr() {
         return str;
+    }
+
+    public static String getStrC() {
+        return strC;
     }
 
 }

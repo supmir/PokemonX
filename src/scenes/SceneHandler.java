@@ -61,8 +61,12 @@ public class SceneHandler {
             e.printStackTrace();
         }
         combat.setStr(pokeWriter.getStr());
+        combat.setStrC(pokeWriter.getStrC());
         return combat.start(pokeWriter.getL(), pokeWriter.getR(), pokeWriter.isT(), pokeWriter.isM());
     }
 
 
+    public static Scene settings() {
+        return settings.settings();
+    }
 }

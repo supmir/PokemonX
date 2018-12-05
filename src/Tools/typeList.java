@@ -1,7 +1,7 @@
-package framework;
+package Tools;
 
 public class typeList {
-    final static String[] type = {
+    private final static String[] type = {
             "NORMAL",
             "FIRE",
             "WATER",
@@ -21,7 +21,7 @@ public class typeList {
             "STEEL",
             "FAIRY"};
 
-    public static String[] typeList() {
+    public static String[] getList() {
         return type;
     }
 }

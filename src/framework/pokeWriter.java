@@ -8,7 +8,7 @@ import java.io.*;
 public class pokeWriter {
     static int L, R, T, M;
     static boolean t, m;
-    static String STR;
+    private static String STR, STRC;
 
 
     public static void writePokemon(String line) {
@@ -101,6 +101,7 @@ public class pokeWriter {
         OO.writeInt(combat.getT());
         OO.writeInt(combat.getM());
         OO.writeUTF(combat.getStr());
+        OO.writeUTF(combat.getStrC());
         OO.close();
 
 
@@ -141,6 +142,7 @@ public class pokeWriter {
         M = OI.readInt();
         m = M == 1;
         STR = OI.readUTF();
+        STRC = OI.readUTF();
         OI.close();
     }
 
@@ -164,6 +166,10 @@ public class pokeWriter {
 
     public static String getStr() {
         return STR;
+    }
+
+    public static String getStrC() {
+        return STRC;
     }
 
 

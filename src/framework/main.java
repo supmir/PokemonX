@@ -33,7 +33,7 @@ public class main extends Application {
         window = primaryStage;
         window.setOnCloseRequest(e -> {
             e.consume();
-            exitProgram(inCombat);
+            exitProgram();
         });
 
         window.setScene(SceneHandler.menu());
@@ -45,14 +45,16 @@ public class main extends Application {
     }
 
 
-    private static void exitProgram(boolean inCombat) {
+    private static void exitProgram() {
         if (Popups.ConfirmBox.display("Exit?", "Are you sure you want to exit?")) {
-            pokeWriter.writeProg();
-            try {
-                pokeWriter.writeLRTStr();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+            if (inCombat)
+                try {
+                    pokeWriter.writeProg();
+                    pokeWriter.writeLRTStr();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             window.close();
 

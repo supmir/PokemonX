@@ -1,5 +1,6 @@
 package scenes;
 
+import framework.main;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -43,6 +44,8 @@ public class menu {
         }
         Buttons.add(new Button("New Game"));
         Buttons.add(new Button("Credits"));
+        Buttons.add(new Button("Settings"));
+
         Buttons.add(new Button("???"));//todo hide this button to make it more special
         //todo reset button
 
@@ -53,14 +56,18 @@ public class menu {
         }
 
 
-        Buttons.get(x + 0).setOnAction(e -> {
-            framework.main.window.setScene(SceneHandler.gameMode());
+        Buttons.get(x).setOnAction(e -> {
+            main.window.setScene(SceneHandler.gameMode());
         });
         Buttons.get(x + 1).setOnAction(e -> {
             SceneHandler.credits();
         });
         Buttons.get(x + 2).setOnAction(e -> {
-            framework.main.window.setScene(SceneHandler.administrator());
+            main.window.setScene(SceneHandler.settings());
+        });
+
+        Buttons.get(x + 3).setOnAction(e -> {
+            main.window.setScene(SceneHandler.administrator());
         });
 
         VBox layout1 = new VBox(20);

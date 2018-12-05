@@ -1,5 +1,7 @@
 package scenes;
 
+import Tools.fourLetter;
+import Tools.typeList;
 import framework.Pokemon;
 import framework.main;
 import framework.pokeWriter;
@@ -18,7 +20,6 @@ import java.util.Random;
 
 public class administrator {
     private static Random r = new Random();
-    private static int wasdumb = 0, wasmean = 0;
 
 
     public static Scene administrator() {
@@ -48,7 +49,7 @@ public class administrator {
             center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
             comboBoxes.get(0).setPrefWidth(300);
             comboBoxes.get(0).setPromptText(("Pokemon type"));
-            comboBoxes.get(0).getItems().addAll(framework.typeList.typeList());
+            comboBoxes.get(0).getItems().addAll(typeList.getList());
             comboBoxes.get(0).getSelectionModel().selectFirst();
             comboBoxes.get(1).setPrefWidth(300);
             comboBoxes.get(1).setPromptText("Select number of skills");
@@ -111,49 +112,49 @@ public class administrator {
                 if (!newValue) {
                     if (textFields.get(0).getText().matches("")) {
                         textFields.get(0).setText(rName());
-                        txt.setText("Pokémon name can't be that. " + fourLetter(1));
+                        txt.setText("Pokémon name can't be that. " + fourLetter.fourLetter(1));
                     } else {
-                        txt.setText(fourLetter(2));
+                        txt.setText(fourLetter.fourLetter(2));
                     }
                 }
             });
             textFields.get(1).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(1).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter(2));
+                        txt.setText(fourLetter.fourLetter(2));
                     } else {
                         textFields.get(1).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter(1));
+                        txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
                     }
                 }
             });
             textFields.get(2).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(2).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter(2));
+                        txt.setText(fourLetter.fourLetter(2));
                     } else {
                         textFields.get(2).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter(1));
+                        txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
                     }
                 }
             });
             textFields.get(3).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(3).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter(2));
+                        txt.setText(fourLetter.fourLetter(2));
                     } else {
                         textFields.get(3).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter(1));
+                        txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
                     }
                 }
             });
             textFields.get(4).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(4).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter(2));
+                        txt.setText(fourLetter.fourLetter(2));
                     } else {
                         textFields.get(4).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter(1));
+                        txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
                     }
                 }
             });
@@ -200,7 +201,7 @@ public class administrator {
         textFields.add(new TextField(rInt()));//Power
         textFields.add(new TextField(rInt()));//Accuracy
 
-        comboBox.getItems().addAll(framework.typeList.typeList());
+        comboBox.getItems().addAll(typeList.getList());
         comboBox.setPrefWidth(300);
         comboBox.getSelectionModel().selectFirst();
 
@@ -229,29 +230,29 @@ public class administrator {
             if (!newValue) {
                 if (textFields.get(0).getText().matches("")) {
                     textFields.get(0).setText(rName());
-                    txt.setText("Skill name can't be that. " + fourLetter(1));
+                    txt.setText("Skill name can't be that. " + fourLetter.fourLetter(1));
                 } else {
-                    txt.setText(fourLetter(2));
+                    txt.setText(fourLetter.fourLetter(2));
                 }
             }
         });
         textFields.get(1).focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
                 if (textFields.get(1).getText().matches("[1-4]\\d")) {
-                    txt.setText(fourLetter(2));
+                    txt.setText(fourLetter.fourLetter(2));
                 } else {
                     textFields.get(1).setText(rInt());
-                    txt.setText("Put something between 10-49. " + fourLetter(1));
+                    txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
                 }
             }
         });
         textFields.get(2).focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
                 if (textFields.get(2).getText().matches("[1-4]\\d")) {
-                    txt.setText(fourLetter(2));
+                    txt.setText(fourLetter.fourLetter(2));
                 } else {
                     textFields.get(2).setText(rInt());
-                    txt.setText("Put something between 10-49. " + fourLetter(1));
+                    txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
                 }
             }
         });
@@ -324,56 +325,6 @@ public class administrator {
 
         int range = max - min + 1;
         return String.valueOf(r.nextInt(range) + 10);
-    }
-
-    private static String fourLetter(int niceness) {
-        //2 is nice/1 is mean/0 is sarcastic
-        if (wasmean > 3 && niceness == 2) {
-            wasdumb = 0;
-            wasmean = 0;
-        }
-        if (wasdumb > 3 && niceness == 2) {
-            niceness = 0;
-        }
-        String[]
-
-                nice = {
-                "Nice.",
-                "WOW!",
-                "You smell like flowers.",
-                "You're cool"
-        },
-
-
-                mean = {
-                        "You can't even do this?",
-                        "You're the reason I have depression.",
-                        "Do you need a nudge on your head?",
-                        "I bet you have a TikTok account.",
-                        "I spent days coding this and you can't even do this right?",
-                        "What the frick?",
-                        "Your parents will dab on you when you die"
-                },
-                sarcastic = {
-                        "Wow! You're so very very smart now!",
-                        "Congratulations! Your mother must be proud",
-                        "You deserve an award!!!"
-                };
-
-        switch (niceness) {
-            case 0:
-                wasmean++;
-                return sarcastic[r.nextInt(sarcastic.length)];
-            case 1:
-                wasdumb++;
-                return mean[r.nextInt(mean.length)];
-            case 2:
-                return nice[r.nextInt(nice.length)];
-            default:
-                return "Mr. Stark I don't feel so good";
-        }
-
-
     }
 
 }

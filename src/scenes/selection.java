@@ -27,6 +27,7 @@ public class selection {
 
         StackPane middle = new StackPane();
         ComboBox<String> pokeList = new ComboBox<>();
+        pokeList.setMinWidth(250);
         Button choose = new Button("I choose you!");
         middle.setMinWidth(400);
         middle.setMaxWidth(400);
