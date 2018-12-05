@@ -1,4 +1,4 @@
-package Tools;
+package tools;
 
 import java.util.Random;
 
@@ -9,7 +9,7 @@ public class fourLetter {
     private static int wasDumb = 0;
     private static int wasMean = 0;
 
-    public static String fourLetter(int niceness) {
+    public static String getPhrase(int niceness) {
 //todo add more lines
         String[]
 

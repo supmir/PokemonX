@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 public class settings {
 
     //todo settings page
-    static Scene settings() {
+    static Scene start() {
         return null;
     }
 }

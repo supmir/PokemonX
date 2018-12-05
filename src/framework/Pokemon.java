@@ -145,7 +145,8 @@ public class Pokemon implements Serializable {
     }
 
     public void attacks(int skillN, Pokemon attacked) {
-        String line = name + " used " + skillName[skillN] + " and it is ", attackSFX = "";
+        String line = name + " used " + skillName[skillN] + " and it is ",
+                attackSFX = "";
         if (skillName[skillN].equals("...")) {
             accSp -= speed;
             line = "Why are you using a skill that doesn't exist..?\n";
@@ -202,6 +203,7 @@ public class Pokemon implements Serializable {
     private double multiplier(String oppType) {
         double x = 1;
         //TODO create enum or array? @Anis
+        x += 1;
 
 
         return x;

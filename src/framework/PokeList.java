@@ -21,10 +21,9 @@ public class PokeList {
         try (Scanner is = new Scanner(IS)) {
             //read pokemon
             while (is.hasNext()) {
-                if (is.nextLine().contains("$")) {
-                    if (is.hasNextLine())
-                        pList.add(is.nextLine());
-                }
+                if (is.nextLine().contains("$") && is.hasNextLine())
+                    pList.add(is.nextLine());
+
             }
         }
         try {

@@ -46,7 +46,7 @@ public class main extends Application {
 
 
     private static void exitProgram() {
-        if (Popups.ConfirmBox.display("Exit?", "Are you sure you want to exit?")) {
+        if (popups.ConfirmBox.display("Exit?", "Are you sure you want to exit?")) {
 
             if (inCombat)
                 try {

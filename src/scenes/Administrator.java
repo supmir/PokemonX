@@ -1,7 +1,7 @@
 package scenes;
 
-import Tools.fourLetter;
-import Tools.typeList;
+import tools.fourLetter;
+import tools.typeList;
 import framework.Pokemon;
 import framework.main;
 import framework.pokeWriter;
@@ -18,11 +18,11 @@ import javafx.scene.paint.Paint;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class administrator {
+public class Administrator {
     private static Random r = new Random();
 
 
-    public static Scene administrator() {
+    public static Scene start() {
         //declarations
 
 
@@ -44,7 +44,8 @@ public class administrator {
             center.setAlignment(Pos.CENTER);
             center.setVgap(10);
             center.setHgap(10);
-            final int labWid = 80, fieldWid = 200;
+            final int labWid = 80,
+                    fieldWid = 200;
             center.getColumnConstraints().add(new ColumnConstraints(labWid));
             center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
             comboBoxes.get(0).setPrefWidth(300);
@@ -112,49 +113,49 @@ public class administrator {
                 if (!newValue) {
                     if (textFields.get(0).getText().matches("")) {
                         textFields.get(0).setText(rName());
-                        txt.setText("Pokémon name can't be that. " + fourLetter.fourLetter(1));
+                        txt.setText("Pokémon name can't be that. " + fourLetter.getPhrase(1));
                     } else {
-                        txt.setText(fourLetter.fourLetter(2));
+                        txt.setText(fourLetter.getPhrase(2));
                     }
                 }
             });
             textFields.get(1).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(1).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter.fourLetter(2));
+                        txt.setText(fourLetter.getPhrase(2));
                     } else {
                         textFields.get(1).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
+                        txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
                     }
                 }
             });
             textFields.get(2).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(2).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter.fourLetter(2));
+                        txt.setText(fourLetter.getPhrase(2));
                     } else {
                         textFields.get(2).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
+                        txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
                     }
                 }
             });
             textFields.get(3).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(3).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter.fourLetter(2));
+                        txt.setText(fourLetter.getPhrase(2));
                     } else {
                         textFields.get(3).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
+                        txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
                     }
                 }
             });
             textFields.get(4).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(4).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter.fourLetter(2));
+                        txt.setText(fourLetter.getPhrase(2));
                     } else {
                         textFields.get(4).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
+                        txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
                     }
                 }
             });
@@ -167,7 +168,7 @@ public class administrator {
 
     private static Scene skillPage(String line, int skillCount, String name) {
         if (skillCount == 0) {
-            return Saved(line + "$", name);
+            return saved(line + "$", name);
         }
 
         GridPane center = new GridPane();
@@ -230,29 +231,29 @@ public class administrator {
             if (!newValue) {
                 if (textFields.get(0).getText().matches("")) {
                     textFields.get(0).setText(rName());
-                    txt.setText("Skill name can't be that. " + fourLetter.fourLetter(1));
+                    txt.setText("Skill name can't be that. " + fourLetter.getPhrase(1));
                 } else {
-                    txt.setText(fourLetter.fourLetter(2));
+                    txt.setText(fourLetter.getPhrase(2));
                 }
             }
         });
         textFields.get(1).focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
                 if (textFields.get(1).getText().matches("[1-4]\\d")) {
-                    txt.setText(fourLetter.fourLetter(2));
+                    txt.setText(fourLetter.getPhrase(2));
                 } else {
                     textFields.get(1).setText(rInt());
-                    txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
+                    txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
                 }
             }
         });
         textFields.get(2).focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
                 if (textFields.get(2).getText().matches("[1-4]\\d")) {
-                    txt.setText(fourLetter.fourLetter(2));
+                    txt.setText(fourLetter.getPhrase(2));
                 } else {
                     textFields.get(2).setText(rInt());
-                    txt.setText("Put something between 10-49. " + fourLetter.fourLetter(1));
+                    txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
                 }
             }
         });
@@ -271,7 +272,7 @@ public class administrator {
         return new Scene(holder, 800, 800);
     }
 
-    private static Scene Saved(String line, String name) {
+    private static Scene saved(String line, String name) {
         pokeWriter.writePokemon(line);
         Label top = new Label("Your Pokémon is saved!");
         top.setMinSize(600, 50);

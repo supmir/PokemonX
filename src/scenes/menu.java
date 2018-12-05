@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class menu {
 
-    public static Scene menu() {
+    public static Scene start() {
 
 
         final int width = 200;
@@ -38,7 +38,7 @@ public class menu {
                 Buttons.add(new Button("Continue"));
                 x++;
                 Buttons.get(0).setOnAction(event -> {
-                    framework.main.window.setScene(SceneHandler.Continue());
+                    framework.main.window.setScene(SceneHandler.cont());
                 });
             }
         }
@@ -50,8 +50,8 @@ public class menu {
         //todo reset button
 
 
-        for (int i = 0; i < Buttons.size(); i++) {
-            Buttons.get(i).setMinWidth(width);
+        for (Button button : Buttons) {
+            button.setMinWidth(width);
 
         }
 

@@ -1,6 +1,6 @@
 package scenes;
 
-import Tools.fourLetter;
+import tools.fourLetter;
 import framework.Pokemon;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -74,7 +74,7 @@ public class combat {
         return turn;
     }
 
-    public static Scene combat(boolean notComputer) {//pvp notComputer is true
+    public static Scene start(boolean notComputer) {//pvp notComputer is true
         return start(0, 0, accumulator(0, 0, false), notComputer);
     }
 
@@ -85,7 +85,11 @@ public class combat {
             return SceneHandler.endGame("one");
         }
         if ((lifeCheck() >> 4 & 0b00000001) == 0) {//check left
-            return SceneHandler.endGame("two");
+            if (notComputer)
+                return SceneHandler.endGame("two");
+            else
+                return SceneHandler.endGame("Computer");
+
         }
         final int
                 fightWidth = 600,
@@ -165,10 +169,6 @@ public class combat {
         change.setMaxWidth(buttonWidth);
 
 
-
-
-
-
         StackPane bottom = new StackPane();
         bottom.setPadding(new Insets(10, -10, 10, -10));
         bottom.setMinWidth(fightWidth);
@@ -191,7 +191,7 @@ public class combat {
 
             if (!accumulator(left, right, turn)) {
                 change.setText("Move computer");
-                computer.setText(strC + "\nComputer : " + fourLetter.fourLetter(1));
+                computer.setText(strC + "\nComputer : " + fourLetter.getPhrase(1));
                 strC = computer.getText();
                 skillSet.getChildren().removeAll(skill);
             }

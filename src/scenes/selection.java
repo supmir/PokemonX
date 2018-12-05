@@ -14,13 +14,13 @@ import java.util.Random;
 
 public class selection {
 
-    public static Scene selection(int count, String mode) {
+    public static Scene start(int count, String mode) {
 
         Random r = new Random();
         ////items
 
 
-        Label top = new Label("Player " + ("computer".equals(mode) ? "" : (mode + " ")) + "selection");
+        Label top = new Label("Player " + ("computer".equals(mode) ? "" : (mode + "")) + ", go ahead");
         top.setMinSize(400, 50);
         top.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
         top.setAlignment(Pos.CENTER);
@@ -67,7 +67,7 @@ public class selection {
                     framework.main.window.setScene(SceneHandler.combat(false));
                 } else {
                     SceneHandler.setController(new Pokemon(pokeList.getValue()), 0, count);
-                    framework.main.window.setScene(selection(count + 1, mode));
+                    framework.main.window.setScene(start(count + 1, mode));
                 }
             });
         } else {
@@ -78,7 +78,7 @@ public class selection {
                     framework.main.window.setScene(SceneHandler.combat(true));
                 } else {
                     SceneHandler.setController(new Pokemon(pokeList.getValue()), mode.equals("one") ? 0 : 1, count);
-                    framework.main.window.setScene(selection(mode.equals("one") ? count : count + 1, mode.equals("one") ? "two" : "one"));
+                    framework.main.window.setScene(start(mode.equals("one") ? count : count + 1, mode.equals("one") ? "two" : "one"));
                 }
             });
 

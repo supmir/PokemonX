@@ -14,13 +14,14 @@ public class pokeWriter {
     public static void writePokemon(String line) {
         //todo remove pokemon in admin
 
-        String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt";
+        String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt",
+                tempLine = line;
         File temp = new File(path);
 
-        if (!temp.exists()) line = "$\n" + line;//check if custom file alr exist
+        if (!temp.exists()) tempLine = "$\n" + tempLine;//check if custom file alr exist
         try {
             PrintWriter pw = new PrintWriter(new FileOutputStream(path, true));
-            pw.println(line);
+            pw.println(tempLine);
             pw.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -46,9 +47,7 @@ public class pokeWriter {
 
         try {
             return loadObject(path);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
         return null;

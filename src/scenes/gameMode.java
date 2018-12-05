@@ -10,7 +10,7 @@ import javafx.scene.paint.Paint;
 
 public class gameMode {
 
-    public static Scene gameMode() {
+    public static Scene start() {
         Label border = new Label();
         Label txt = new Label("Choose your game mode :");
         border.setMinSize(400, 50);

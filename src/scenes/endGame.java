@@ -9,11 +9,12 @@ import javafx.scene.paint.Paint;
 
 public class endGame {
 
-    public static Scene endGame(String x) {
+    public static Scene start(String x) {
 
 
         Label border = new Label();
-        Label txt = new Label("Player " + x + " wins!");
+        Label txt = new Label(x.equals("Computer") ? "" : ("Player ") + x + " wins!");
+
         border.setMinSize(400, 50);
         border.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
         StackPane stack = new StackPane();

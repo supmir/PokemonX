@@ -23,37 +23,37 @@ public class SceneHandler {
 
 
     public static Scene administrator() {
-        return administrator.administrator();
+        return Administrator.start();
     }
     public static Scene menu() {
-        return menu.menu();
+        return menu.start();
     }
 
     public static Scene gameMode() {
-        return gameMode.gameMode();
+        return gameMode.start();
     }
 
     public static void credits() {
-        credits.credits();
+        credits.pop();
     }
 
     public static Scene selection(int x, String y) {
         allList = new framework.PokeList().getList();
-        return selection.selection(x, y);
+        return selection.start(x, y);
     }
 
     public static Scene combat(Boolean notComputer) {
         framework.main.setInCombat(true);
-        return combat.combat(notComputer);
+        return combat.start(notComputer);
     }
 
     public static Scene endGame(String x) {
         pokeWriter.delete(false);
         framework.main.setInCombat(false);
-        return endGame.endGame(x);
+        return endGame.start(x);
     }
 
-    public static Scene Continue() {
+    public static Scene cont() {
         combat.setController(framework.pokeWriter.getProg());
         try {
             pokeWriter.readLRTStr();
@@ -67,6 +67,6 @@ public class SceneHandler {
 
 
     public static Scene settings() {
-        return settings.settings();
+        return settings.start();
     }
 }
