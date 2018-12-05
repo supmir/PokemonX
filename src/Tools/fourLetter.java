@@ -14,10 +14,14 @@ public class fourLetter {
         String[]
 
                 nice = {
-                "Nice.",
+                "Nice!",
                 "WOW!",
                 "You smell like flowers.",
-                "You're cool"
+                "You're cool",
+                "I like you already :)",
+                "You have a nice face",
+                "Good one",
+                "You have a nice face, really... (not in a creepy way) :-)"
         },
 
 
@@ -28,7 +32,8 @@ public class fourLetter {
                         "I bet you have a TikTok account.",
                         "I spent days coding this and you can't even do this right?",
                         "What the frick?",
-                        "Your parents will dab on you when you die"
+                        "Your parents will dab on you when you die",
+                        "This is something that doesn't even require high intelligence level"
                 },
                 sarcastic = {
                         "Wow! You're so very very smart now!",
@@ -38,8 +43,8 @@ public class fourLetter {
                 computer = {
                         "Is that all you got?",
                         "Bring it on.",
-                        "My grandma is better than you at this",
-                        "You should stick with Candy Crush"
+                        "My grandma could do better",
+                        "You should stick to Candy Crush"
                 };
 
 
@@ -52,10 +57,7 @@ public class fourLetter {
             if (wasDumb > 3 && niceness == 2) {
                 niceness = 0;
             }
-        }
-
-
-        if (niceness < 20) {
+        } else if (niceness < 20) {
             niceness = 3;
         }
 

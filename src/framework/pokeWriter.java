@@ -12,6 +12,7 @@ public class pokeWriter {
 
 
     public static void writePokemon(String line) {
+        //todo remove pokemon in admin
 
         String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt";
         File temp = new File(path);
@@ -61,29 +62,29 @@ public class pokeWriter {
 
     private static void saveObject(Serializable object, String filename)
             throws IOException {
-        ObjectOutputStream objstream = new ObjectOutputStream(
+        ObjectOutputStream OO = new ObjectOutputStream(
                 new FileOutputStream(filename));
 
 // The writeObject() method automatically transforms the contents of
         // the object to bytes.
         // An error is generated if the object does not implement the Serialize interface
-        objstream.writeObject(object);
+        OO.writeObject(object);
 
-        objstream.close();
+        OO.close();
     }
 
     // Deserializes the object stored in the provied path and returns this
 // object without any casting it to a specific type
     private static Pokemon[][] loadObject(String filename) throws ClassNotFoundException, IOException {
         // Open the file for reading
-        ObjectInputStream objstream = new ObjectInputStream(
+        ObjectInputStream OI = new ObjectInputStream(
                 new FileInputStream(filename));
 
         // Read the bytes and creates the object in memory
-        Pokemon[][] object = (Pokemon[][]) objstream.readObject();
+        Pokemon[][] object = (Pokemon[][]) OI.readObject();
 
         // Close the file
-        objstream.close();
+        OI.close();
 
         // Returns the object without casting
         return object;
@@ -109,7 +110,6 @@ public class pokeWriter {
 
 
     public static void delete(boolean all) {
-
         if (all) {
             String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt";
             File temp = new File(path);

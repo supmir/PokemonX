@@ -103,7 +103,7 @@ public class combat {
         fightLog.setAlignment(Pos.BOTTOM_LEFT);
         computer.setMinSize(computerWidth + 20, dFightHeight);
         computer.setAlignment(Pos.BOTTOM_LEFT);
-
+//todo differentiate player moves (use color); arraylist of strings, color using controller code
         ScrollPane middle = new ScrollPane();
         middle.setMinSize(dFightWidth, dFightHeight);
         middle.setPrefSize(dFightWidth, dFightHeight);

@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 
 public class credits {
     public static void credits() {
-
+//todo set one of the names clickable to access admin
         Popups.AlertBox.display("Credits", "Amir\nMarina\nAnis\nFadh");
 //
 //        Button back = new Button("Back");

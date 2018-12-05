@@ -201,7 +201,7 @@ public class Pokemon implements Serializable {
 
     private double multiplier(String oppType) {
         double x = 1;
-        //TODO create enum or array?
+        //TODO create enum or array? @Anis
 
 
         return x;
