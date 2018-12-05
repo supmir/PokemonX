@@ -1,7 +1,8 @@
 package scenes;
 
+import framework.Main;
 import framework.Pokemon;
-import framework.pokeWriter;
+import framework.PokeWriter;
 import javafx.scene.Scene;
 
 import java.io.IOException;
@@ -26,47 +27,47 @@ public class SceneHandler {
         return Administrator.start();
     }
     public static Scene menu() {
-        return menu.start();
+        return Menu.start();
     }
 
     public static Scene gameMode() {
-        return gameMode.start();
+        return GameMode.start();
     }
 
     public static void credits() {
-        credits.pop();
+        Credits.pop();
     }
 
     public static Scene selection(int x, String y) {
         allList = new framework.PokeList().getList();
-        return selection.start(x, y);
+        return Selection.start(x, y);
     }
 
     public static Scene combat(Boolean notComputer) {
-        framework.main.setInCombat(true);
-        return combat.start(notComputer);
+        Main.setInCombat(true);
+        return Combat.start(notComputer);
     }
 
     public static Scene endGame(String x) {
-        pokeWriter.delete(false);
-        framework.main.setInCombat(false);
-        return endGame.start(x);
+        PokeWriter.delete(false);
+        Main.setInCombat(false);
+        return EndGame.start(x);
     }
 
     public static Scene cont() {
-        combat.setController(framework.pokeWriter.getProg());
+        Combat.setController(PokeWriter.getProg());
         try {
-            pokeWriter.readLRTStr();
+            PokeWriter.readLRTStr();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        combat.setStr(pokeWriter.getStr());
-        combat.setStrC(pokeWriter.getStrC());
-        return combat.start(pokeWriter.getL(), pokeWriter.getR(), pokeWriter.isT(), pokeWriter.isM());
+        Combat.setStr(PokeWriter.getStr());
+        Combat.setStrC(PokeWriter.getStrC());
+        return Combat.start(PokeWriter.getL(), PokeWriter.getR(), PokeWriter.isT(), PokeWriter.isM());
     }
 
 
     public static Scene settings() {
-        return settings.start();
+        return Settings.start();
     }
 }

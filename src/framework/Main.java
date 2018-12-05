@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 
 
-public class main extends Application {
+public class Main extends Application {
 
     public static Stage window;
     public static boolean inCombat = false;
@@ -26,7 +26,7 @@ public class main extends Application {
     }
 
     public static void setInCombat(boolean inCombat) {
-        main.inCombat = inCombat;
+        Main.inCombat = inCombat;
     }
 
     public void start(Stage primaryStage) {
@@ -50,8 +50,8 @@ public class main extends Application {
 
             if (inCombat)
                 try {
-                    pokeWriter.writeProg();
-                    pokeWriter.writeLRTStr();
+                    PokeWriter.writeProg();
+                    PokeWriter.writeLRTStr();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -2,7 +2,7 @@ package scenes;
 
 import javafx.scene.Scene;
 
-public class settings {
+public class Settings {
 
     //todo settings page
     static Scene start() {

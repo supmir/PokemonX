@@ -1,5 +1,6 @@
 package scenes;
 
+import framework.Main;
 import framework.Pokemon;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,7 +13,7 @@ import javafx.scene.paint.Paint;
 
 import java.util.Random;
 
-public class selection {
+public class Selection {
 
     public static Scene start(int count, String mode) {
 
@@ -64,10 +65,10 @@ public class selection {
                     for (int i = 0; i < 3; i++) {
                         SceneHandler.setController(new Pokemon(SceneHandler.allList.get(r.nextInt(SceneHandler.allList.size()))), 1, i);
                     }
-                    framework.main.window.setScene(SceneHandler.combat(false));
+                    Main.window.setScene(SceneHandler.combat(false));
                 } else {
                     SceneHandler.setController(new Pokemon(pokeList.getValue()), 0, count);
-                    framework.main.window.setScene(start(count + 1, mode));
+                    Main.window.setScene(start(count + 1, mode));
                 }
             });
         } else {
@@ -75,10 +76,10 @@ public class selection {
                 SceneHandler.allList.remove(pokeList.getValue());
                 if (count == 2 && mode.equals("two")) {
                     SceneHandler.setController(new Pokemon(pokeList.getValue()), 1, count);
-                    framework.main.window.setScene(SceneHandler.combat(true));
+                    Main.window.setScene(SceneHandler.combat(true));
                 } else {
                     SceneHandler.setController(new Pokemon(pokeList.getValue()), mode.equals("one") ? 0 : 1, count);
-                    framework.main.window.setScene(start(mode.equals("one") ? count : count + 1, mode.equals("one") ? "two" : "one"));
+                    Main.window.setScene(start(mode.equals("one") ? count : count + 1, mode.equals("one") ? "two" : "one"));
                 }
             });
 

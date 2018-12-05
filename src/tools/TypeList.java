@@ -1,6 +1,6 @@
 package tools;
 
-public class typeList {
+public class TypeList {
     private final static String[] type = {
             "NORMAL",
             "FIRE",

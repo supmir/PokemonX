@@ -1,10 +1,10 @@
 package scenes;
 
-import tools.fourLetter;
-import tools.typeList;
+import tools.FourLetter;
+import tools.TypeList;
 import framework.Pokemon;
-import framework.main;
-import framework.pokeWriter;
+import framework.Main;
+import framework.PokeWriter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -50,7 +50,7 @@ public class Administrator {
             center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
             comboBoxes.get(0).setPrefWidth(300);
             comboBoxes.get(0).setPromptText(("Pokemon type"));
-            comboBoxes.get(0).getItems().addAll(typeList.getList());
+            comboBoxes.get(0).getItems().addAll(TypeList.getList());
             comboBoxes.get(0).getSelectionModel().selectFirst();
             comboBoxes.get(1).setPrefWidth(300);
             comboBoxes.get(1).setPromptText("Select number of skills");
@@ -96,10 +96,10 @@ public class Administrator {
         layout1.setAlignment(Pos.CENTER);
         //action listeners
         {
-            back.setOnAction(event -> main.window.setScene(SceneHandler.menu()));
+            back.setOnAction(event -> Main.window.setScene(SceneHandler.menu()));
             next.setOnAction(event -> {
 
-                main.window.setScene(skillPage(
+                Main.window.setScene(skillPage(
                         textFields.get(0).getText() + "(Custom)" + "\n" +
                                 comboBoxes.get(0).getValue() + "\n" +
                                 textFields.get(1).getText() + "\n" +
@@ -113,49 +113,49 @@ public class Administrator {
                 if (!newValue) {
                     if (textFields.get(0).getText().matches("")) {
                         textFields.get(0).setText(rName());
-                        txt.setText("Pokémon name can't be that. " + fourLetter.getPhrase(1));
+                        txt.setText("Pokémon name can't be that. " + FourLetter.getPhrase(1));
                     } else {
-                        txt.setText(fourLetter.getPhrase(2));
+                        txt.setText(FourLetter.getPhrase(2));
                     }
                 }
             });
             textFields.get(1).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(1).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter.getPhrase(2));
+                        txt.setText(FourLetter.getPhrase(2));
                     } else {
                         textFields.get(1).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
+                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
                     }
                 }
             });
             textFields.get(2).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(2).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter.getPhrase(2));
+                        txt.setText(FourLetter.getPhrase(2));
                     } else {
                         textFields.get(2).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
+                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
                     }
                 }
             });
             textFields.get(3).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(3).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter.getPhrase(2));
+                        txt.setText(FourLetter.getPhrase(2));
                     } else {
                         textFields.get(3).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
+                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
                     }
                 }
             });
             textFields.get(4).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
                     if (textFields.get(4).getText().matches("[1-4]\\d")) {
-                        txt.setText(fourLetter.getPhrase(2));
+                        txt.setText(FourLetter.getPhrase(2));
                     } else {
                         textFields.get(4).setText(rInt());
-                        txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
+                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
                     }
                 }
             });
@@ -202,7 +202,7 @@ public class Administrator {
         textFields.add(new TextField(rInt()));//Power
         textFields.add(new TextField(rInt()));//Accuracy
 
-        comboBox.getItems().addAll(typeList.getList());
+        comboBox.getItems().addAll(TypeList.getList());
         comboBox.setPrefWidth(300);
         comboBox.getSelectionModel().selectFirst();
 
@@ -216,10 +216,10 @@ public class Administrator {
         center.add(textFields.get(1), 1, 3);
         center.add(textFields.get(2), 1, 4);
 
-        cancel.setOnAction(event -> main.window.setScene(SceneHandler.menu()));
+        cancel.setOnAction(event -> Main.window.setScene(SceneHandler.menu()));
         next.setOnAction(event -> {
 
-            main.window.setScene(skillPage(
+            Main.window.setScene(skillPage(
                     line + textFields.get(0).getText() + "\n" +
                             comboBox.getValue() + "\n" +
                             textFields.get(1).getText() + "\n" +
@@ -231,29 +231,29 @@ public class Administrator {
             if (!newValue) {
                 if (textFields.get(0).getText().matches("")) {
                     textFields.get(0).setText(rName());
-                    txt.setText("Skill name can't be that. " + fourLetter.getPhrase(1));
+                    txt.setText("Skill name can't be that. " + FourLetter.getPhrase(1));
                 } else {
-                    txt.setText(fourLetter.getPhrase(2));
+                    txt.setText(FourLetter.getPhrase(2));
                 }
             }
         });
         textFields.get(1).focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
                 if (textFields.get(1).getText().matches("[1-4]\\d")) {
-                    txt.setText(fourLetter.getPhrase(2));
+                    txt.setText(FourLetter.getPhrase(2));
                 } else {
                     textFields.get(1).setText(rInt());
-                    txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
+                    txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
                 }
             }
         });
         textFields.get(2).focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
                 if (textFields.get(2).getText().matches("[1-4]\\d")) {
-                    txt.setText(fourLetter.getPhrase(2));
+                    txt.setText(FourLetter.getPhrase(2));
                 } else {
                     textFields.get(2).setText(rInt());
-                    txt.setText("Put something between 10-49. " + fourLetter.getPhrase(1));
+                    txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
                 }
             }
         });
@@ -273,7 +273,7 @@ public class Administrator {
     }
 
     private static Scene saved(String line, String name) {
-        pokeWriter.writePokemon(line);
+        PokeWriter.writePokemon(line);
         Label top = new Label("Your Pokémon is saved!");
         top.setMinSize(600, 50);
         top.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
@@ -294,7 +294,7 @@ public class Administrator {
         Button done = new Button("Back to Menu");
         done.setAlignment(Pos.BOTTOM_CENTER);
 
-        done.setOnAction(event -> main.window.setScene(SceneHandler.menu()));
+        done.setOnAction(event -> Main.window.setScene(SceneHandler.menu()));
 
         ////layout
         VBox holder = new VBox(10);

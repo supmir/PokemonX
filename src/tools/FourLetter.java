@@ -2,7 +2,7 @@ package tools;
 
 import java.util.Random;
 
-public class fourLetter {
+public class FourLetter {
     static Random r = new Random();
 
 

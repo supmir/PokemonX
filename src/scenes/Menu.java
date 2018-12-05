@@ -1,6 +1,6 @@
 package scenes;
 
-import framework.main;
+import framework.Main;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,7 +11,7 @@ import javafx.scene.paint.Paint;
 import java.io.File;
 import java.util.ArrayList;
 
-public class menu {
+public class Menu {
 
     public static Scene start() {
 
@@ -38,7 +38,7 @@ public class menu {
                 Buttons.add(new Button("Continue"));
                 x++;
                 Buttons.get(0).setOnAction(event -> {
-                    framework.main.window.setScene(SceneHandler.cont());
+                    Main.window.setScene(SceneHandler.cont());
                 });
             }
         }
@@ -57,17 +57,17 @@ public class menu {
 
 
         Buttons.get(x).setOnAction(e -> {
-            main.window.setScene(SceneHandler.gameMode());
+            Main.window.setScene(SceneHandler.gameMode());
         });
         Buttons.get(x + 1).setOnAction(e -> {
             SceneHandler.credits();
         });
         Buttons.get(x + 2).setOnAction(e -> {
-            main.window.setScene(SceneHandler.settings());
+            Main.window.setScene(SceneHandler.settings());
         });
 
         Buttons.get(x + 3).setOnAction(e -> {
-            main.window.setScene(SceneHandler.administrator());
+            Main.window.setScene(SceneHandler.administrator());
         });
 
         VBox layout1 = new VBox(20);

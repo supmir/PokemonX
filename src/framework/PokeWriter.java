@@ -1,11 +1,11 @@
 package framework;
 
 
-import scenes.combat;
+import scenes.Combat;
 
 import java.io.*;
 
-public class pokeWriter {
+public class PokeWriter {
     static int L, R, T, M;
     static boolean t, m;
     private static String STR, STRC;
@@ -34,7 +34,7 @@ public class pokeWriter {
         File temp = new File(path);
 
         try {
-            saveObject(combat.getController(), path);
+            saveObject(Combat.getController(), path);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -96,12 +96,12 @@ public class pokeWriter {
         ObjectOutputStream OO = new ObjectOutputStream(
                 new FileOutputStream(System.getProperty("user.home") + "/PokemonX/LRTStr.bin"));
 
-        OO.writeInt(combat.getL());
-        OO.writeInt(combat.getR());
-        OO.writeInt(combat.getT());
-        OO.writeInt(combat.getM());
-        OO.writeUTF(combat.getStr());
-        OO.writeUTF(combat.getStrC());
+        OO.writeInt(Combat.getL());
+        OO.writeInt(Combat.getR());
+        OO.writeInt(Combat.getT());
+        OO.writeInt(Combat.getM());
+        OO.writeUTF(Combat.getStr());
+        OO.writeUTF(Combat.getStrC());
         OO.close();
 
 

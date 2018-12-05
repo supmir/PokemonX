@@ -1,5 +1,6 @@
 package scenes;
 
+import framework.Main;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 
-public class endGame {
+public class EndGame {
 
     public static Scene start(String x) {
 
@@ -27,10 +28,10 @@ public class endGame {
 
 
         newGame.setOnAction(e -> {
-            framework.main.window.setScene(SceneHandler.menu());
+            Main.window.setScene(SceneHandler.menu());
         });
         back.setOnAction(e -> {
-            framework.main.window.setScene(SceneHandler.gameMode());
+            Main.window.setScene(SceneHandler.gameMode());
         });
         credits.setOnAction(e -> {
             SceneHandler.credits();

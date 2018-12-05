@@ -1,6 +1,7 @@
 package scenes;
 
-import tools.fourLetter;
+import framework.Main;
+import tools.FourLetter;
 import framework.Pokemon;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,14 +16,14 @@ import javafx.scene.text.TextAlignment;
 
 import java.util.Random;
 
-public class combat {
+public class Combat {
     private static Pokemon[][] controller = SceneHandler.getController();
     private static String str = "Let the battle begin!!!\n";
     private static int L, R, T, M;
     private static String strC = "Computer : Hello, you ready to get CRUSHED?";
 
     public static void setController(Pokemon[][] controller) {
-        combat.controller = controller;
+        Combat.controller = controller;
     }
 
     public static Pokemon[][] getController() {
@@ -30,15 +31,15 @@ public class combat {
     }
 
     public static void appendStr(String str) {
-        combat.str += str;
+        Combat.str += str;
     }
 
     public static void setStr(String str) {
-        combat.str = str;
+        Combat.str = str;
     }
 
     public static void setStrC(String strC) {
-        combat.strC = strC;
+        Combat.strC = strC;
     }
 
     public static boolean accumulator(int left, int right, boolean turn) {
@@ -191,7 +192,7 @@ public class combat {
 
             if (!accumulator(left, right, turn)) {
                 change.setText("Move computer");
-                computer.setText(strC + "\nComputer : " + fourLetter.getPhrase(1));
+                computer.setText(strC + "\nComputer : " + FourLetter.getPhrase(1));
                 strC = computer.getText();
                 skillSet.getChildren().removeAll(skill);
             }
@@ -208,56 +209,56 @@ public class combat {
         if (accumulator(left, right, turn)) {//set button turn and position according to speed accumulator
             skill[0].setOnAction(event -> {
                 controller[0][left].attacks(0, controller[1][right]);
-                framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
             });
             skill[1].setOnAction(event -> {
                 controller[0][left].attacks(1, controller[1][right]);
-                framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
             skill[2].setOnAction(event -> {
                 controller[0][left].attacks(2, controller[1][right]);
-                framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
             skill[3].setOnAction(event -> {
                 controller[0][left].attacks(3, controller[1][right]);
-                framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
             change.setOnAction(event -> {
                 if (left == 2) {
-                    framework.main.window.setScene(start(0, right, accumulator(0, right, turn), notComputer));
+                    Main.window.setScene(start(0, right, accumulator(0, right, turn), notComputer));
                 } else {
-                    framework.main.window.setScene(start(left + 1, right, accumulator(left + 1, right, turn), notComputer));
+                    Main.window.setScene(start(left + 1, right, accumulator(left + 1, right, turn), notComputer));
                 }
             });
         } else if (notComputer) {//set button turn and position according to speed accumulator
             skill[0].setOnAction(event -> {
                 controller[1][right].attacks(0, controller[0][left]);
-                framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
             });
             skill[1].setOnAction(event -> {
                 controller[1][right].attacks(1, controller[0][left]);
-                framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
             skill[2].setOnAction(event -> {
                 controller[1][right].attacks(2, controller[0][left]);
-                framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
             skill[3].setOnAction(event -> {
                 controller[1][right].attacks(3, controller[0][left]);
-                framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
             });
             change.setOnAction(event -> {
 
                 if (right == 2)
-                    framework.main.window.setScene(start(left, 0, accumulator(left, 0, turn), notComputer));
+                    Main.window.setScene(start(left, 0, accumulator(left, 0, turn), notComputer));
                 else
-                    framework.main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), notComputer));
+                    Main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), notComputer));
             });
 
         } else {
@@ -265,12 +266,12 @@ public class combat {
                 Random r = new Random();
                 if (r.nextInt(10) == 0) {
                     if (right == 2)
-                        framework.main.window.setScene(start(left, 0, accumulator(left, 0, turn), notComputer));
+                        Main.window.setScene(start(left, 0, accumulator(left, 0, turn), notComputer));
                     else
-                        framework.main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), notComputer));
+                        Main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), notComputer));
                 } else
                     controller[1][right].attacks(r.nextInt(4), controller[0][left]);
-                framework.main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
             });
         }
 

@@ -4,7 +4,7 @@ package framework;/*
  * and open the template in the editor.
  */
 
-import scenes.combat;
+import scenes.Combat;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -150,7 +150,7 @@ public class Pokemon implements Serializable {
         if (skillName[skillN].equals("...")) {
             accSp -= speed;
             line = "Why are you using a skill that doesn't exist..?\n";
-            combat.appendStr(line);
+            Combat.appendStr(line);
             return;
         }
 
@@ -187,7 +187,7 @@ public class Pokemon implements Serializable {
 
         accSp -= 100;
 
-        combat.appendStr(line);
+        Combat.appendStr(line);
 
     }
 

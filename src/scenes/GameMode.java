@@ -1,6 +1,7 @@
 package scenes;
 
-import framework.pokeWriter;
+import framework.Main;
+import framework.PokeWriter;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 
-public class gameMode {
+public class GameMode {
 
     public static Scene start() {
         Label border = new Label();
@@ -27,18 +28,18 @@ public class gameMode {
         back.setMinWidth(200);
 
         PvP.setOnAction(e -> {
-            combat.reset();
-            pokeWriter.delete(false);
-            framework.main.window.setScene(SceneHandler.selection(0, "one"));
+            Combat.reset();
+            PokeWriter.delete(false);
+            Main.window.setScene(SceneHandler.selection(0, "one"));
         });
         PvC.setOnAction(e -> {
-            combat.reset();
-            pokeWriter.delete(false);
-            framework.main.window.setScene(SceneHandler.selection(0, "computer"));
+            Combat.reset();
+            PokeWriter.delete(false);
+            Main.window.setScene(SceneHandler.selection(0, "computer"));
         });
 
         back.setOnAction(e -> {
-            framework.main.window.setScene(SceneHandler.menu());
+            Main.window.setScene(SceneHandler.menu());
         });
 
         VBox layout1 = new VBox(20);
