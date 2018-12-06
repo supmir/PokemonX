@@ -34,8 +34,8 @@ public class Selection {
         middle.setMaxWidth(400);
         middle.setPadding(new Insets(10));
         middle.getChildren().addAll(pokeList, choose);
-        middle.setAlignment(pokeList, Pos.CENTER_LEFT);
-        middle.setAlignment(choose, Pos.CENTER_RIGHT);
+        StackPane.setAlignment(pokeList, Pos.CENTER_LEFT);
+        StackPane.setAlignment(choose, Pos.CENTER_RIGHT);
         GridPane.setConstraints(middle, 0, 10);
 
 
@@ -57,7 +57,7 @@ public class Selection {
 
 
         //choose pokemon drop down and stuff
-        if (mode.equals("computer")) {
+        if ("computer".equals(mode)) {
             choose.setOnAction(e -> {
                 SceneHandler.allList.remove(pokeList.getValue());
                 if (count == 2) {
@@ -86,9 +86,7 @@ public class Selection {
         }
 
 
-        pokeList.setOnAction(e -> {
-            bottom.setText(new Pokemon(pokeList.getValue()).toString());
-        });
+        pokeList.setOnAction(e -> bottom.setText(new Pokemon(pokeList.getValue()).toString()));
 
         ////layout
         VBox holder = new VBox();

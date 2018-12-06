@@ -26,83 +26,44 @@ public class Pokemon implements Serializable {
     private boolean alive = true;
 
     public Pokemon(String name) {
-        if (name.endsWith("(Custom)")) {
-            try (Scanner is = new Scanner(new FileInputStream(System.getProperty("user.home") + "/PokemonX/Pokemons.txt"))) {
-                String line = null;
-                //read pokemon
-                while (is.hasNext()) {
-                    line = is.nextLine();
-                    if (line.contains(name)) {
-                        break;
-                    }
-                }
-
-                this.name = line;
-                this.type = is.nextLine();
-                this.attack = Integer.parseInt(is.nextLine());
-                this.defense = Integer.parseInt(is.nextLine());
-                this.hp = Integer.parseInt(is.nextLine());
-                this.speed = Integer.parseInt(is.nextLine());
-                for (skillCount = 0; is.hasNextLine(); skillCount++) {
-                    String str = is.nextLine();
-
-                    if ("".equals(str) || "$".equals(str)) {
-                        int x = 0;
-                        while (skillCount < 4) {
-                            this.skillName[skillCount] = "...";
-                            skillCount++;
-                            x++;
-                        }
-                        skillCount -= x;
-                        break;
-                    }
-                    this.skillName[skillCount] = str;
-                    this.skillType[skillCount] = is.nextLine();
-                    this.power[skillCount] = Integer.parseInt(is.nextLine());
-                    this.accuracy[skillCount] = Integer.parseInt(is.nextLine());
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            InputStream IS = getClass().getResourceAsStream("Pokemons.txt");
-
-            try (Scanner is = new Scanner(IS)) {
-                String line = null;
-                //read pokemon
-                while (is.hasNext()) {
-                    line = is.nextLine();
-                    if (line.contains(name)) {
-                        break;
-                    }
-                }
-
-                this.name = line;
-                this.type = is.nextLine();
-                this.attack = Integer.parseInt(is.nextLine());
-                this.defense = Integer.parseInt(is.nextLine());
-                this.hp = Integer.parseInt(is.nextLine());
-                this.speed = Integer.parseInt(is.nextLine());
-                for (skillCount = 0; is.hasNextLine(); skillCount++) {
-                    String str = is.nextLine();
-
-                    if ("".equals(str) || "$".equals(str)) {
-                        int x = 0;
-                        while (skillCount < 4) {
-                            this.skillName[skillCount] = "...";
-                            skillCount++;
-                            x++;
-                        }
-                        skillCount -= x;
-                        break;
-                    }
-                    this.skillName[skillCount] = str;
-                    this.skillType[skillCount] = is.nextLine();
-                    this.power[skillCount] = Integer.parseInt(is.nextLine());
-                    this.accuracy[skillCount] = Integer.parseInt(is.nextLine());
+        String path = name.endsWith("(Custom)") ? System.getProperty("user.home") + "/PokemonX/Pokemons.txt" : "Pokemons.txt";
+        InputStream IS = getClass().getResourceAsStream(path);
+        try (Scanner sc = new Scanner((name.endsWith("(Custom)") ? IS : new FileInputStream(path)))) {
+            String line = null;
+            //read pokemon
+            while (sc.hasNext()) {
+                line = sc.nextLine();
+                if (line.contains(name)) {
+                    break;
                 }
             }
+
+            this.name = line;
+            this.type = sc.nextLine();
+            this.attack = Integer.parseInt(sc.nextLine());
+            this.defense = Integer.parseInt(sc.nextLine());
+            this.hp = Integer.parseInt(sc.nextLine());
+            this.speed = Integer.parseInt(sc.nextLine());
+            for (skillCount = 0; sc.hasNextLine(); skillCount++) {
+                String str = sc.nextLine();
+
+                if ("".equals(str) || "$".equals(str)) {
+                    int x = 0;
+                    while (skillCount < 4) {
+                        this.skillName[skillCount] = "...";
+                        skillCount++;
+                        x++;
+                    }
+                    skillCount -= x;
+                    break;
+                }
+                this.skillName[skillCount] = str;
+                this.skillType[skillCount] = sc.nextLine();
+                this.power[skillCount] = Integer.parseInt(sc.nextLine());
+                this.accuracy[skillCount] = Integer.parseInt(sc.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -115,7 +76,7 @@ public class Pokemon implements Serializable {
         return alive;
     }
 
-    public void setAlive(boolean alive) {
+    private void setAlive(boolean alive) {
         this.alive = alive;
     }
 
@@ -140,7 +101,7 @@ public class Pokemon implements Serializable {
         return hp;
     }
 
-    public void setHp(double hp) {
+    private void setHp(double hp) {
         this.hp = hp;
     }
 
@@ -174,11 +135,11 @@ public class Pokemon implements Serializable {
 //            MediaPlayer mediaPlayer = new MediaPlayer(sound);
 //            System.out.println("sound");
 //            mediaPlayer.play();
+        double damage = (((double) (attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type);
 
+        line += " dealing " + damage + " damage!\n";
 
-        line += " dealing " + (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type) + " damage!\n";
-
-        attacked.setHp(attacked.getHp() - (((attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type));
+        attacked.setHp(attacked.getHp() - damage);
         if (attacked.getHp() <= 0) {
             attacked.setAlive(false);
             line += attacked.name + " has fainted.\n";
@@ -193,11 +154,11 @@ public class Pokemon implements Serializable {
 
     @Override
     public String toString() {
-        String str = "Name : " + name + "\nType : " + type + "\nAttack : " + attack + "\nDefense : " + defense + "\nHP : " + hp + "\nSpeed : " + speed;
+        StringBuilder str = new StringBuilder("Name : " + name + "\nType : " + type + "\nAttack : " + attack + "\nDefense : " + defense + "\nHP : " + hp + "\nSpeed : " + speed);
         for (int i = 0; i < skillCount; i++) {
-            str += "\nSkill " + (i + 1) + " : " + skillName[i] + "\nType : " + skillType[i] + "\nPower : " + power[i] + "\nAccuracy : " + accuracy[i];
+            str.append("\nSkill ").append(i + 1).append(" : ").append(skillName[i]).append("\nType : ").append(skillType[i]).append("\nPower : ").append(power[i]).append("\nAccuracy : ").append(accuracy[i]);
         }
-        return str;
+        return str.toString();
     }
 
     private double multiplier(String oppType) {
