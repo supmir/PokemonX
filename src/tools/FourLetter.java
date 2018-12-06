@@ -21,7 +21,8 @@ public class FourLetter {
                 "I like you already :)",
                 "You have a nice face",
                 "Good one",
-                "You have a nice face, really... (not in a creepy way) :-)"
+                "You have a nice face, really... (not in a creepy way) :-)",
+                "Hey cutie ;)"
         },
 
 
