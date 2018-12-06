@@ -16,6 +16,7 @@ public class PokeWriter {
     public static void writePokemon(String line) {
         //todo remove pokemon in admin
 
+        //todo save border style
         String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt",
                 tempLine = line;
         File temp = new File(path);

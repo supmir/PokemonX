@@ -1,6 +1,7 @@
 package scenes;
 
 import framework.Main;
+import framework.Styles;
 import javafx.scene.Node;
 import tools.FourLetter;
 import framework.Pokemon;
@@ -12,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.TextAlignment;
 
 import java.util.Random;
@@ -123,7 +123,7 @@ public class Combat {
         middle.setPrefSize(dFightWidth, dFightHeight);
         middle.setMaxSize(dFightWidth, dFightHeight);
         middle.setContent(fightLog);
-        middle.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        middle.setBorder(Styles.getBorder());
         middle.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         middle.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         middle.setVvalue(middle.getVmax());
@@ -145,7 +145,7 @@ public class Combat {
         computerHolder.setMinSize(computerWidth, computerHeight);
         computerHolder.setMaxSize(computerWidth, computerHeight);
         computerHolder.setContent(computer);
-        computerHolder.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        computerHolder.setBorder(Styles.getBorder());
         computerHolder.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         computerHolder.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         computerHolder.setVvalue(computerHolder.getVmax());
@@ -196,7 +196,7 @@ public class Combat {
 
     private static void setNotComputerButton(Button[] skill, Button change, int left, int right, boolean turn) {
 
-        if (accumulator(left, right, turn)) {//set button turn and position according to speed accumulator true is left turn
+        if (accumulator(left, right, turn)) {//border button turn and position according to speed accumulator true is left turn
             setLeftButton(skill, change, left, right, turn, true);
         } else {
             skill[0].setOnAction(event -> {
@@ -264,7 +264,7 @@ public class Combat {
         skillSet.setAlignment(Pos.CENTER_LEFT);
 
 
-        if (notComputer) {//set button turn and position according to speed accumulator, true is right turn because not left
+        if (notComputer) {//border button turn and position according to speed accumulator, true is right turn because not left
             if (!accumulator(left, right, turn))
                 skillSet.setAlignment(Pos.CENTER_RIGHT);
             setNotComputerButton(skill, change, left, right, turn);

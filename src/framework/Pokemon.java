@@ -164,9 +164,6 @@ public class Pokemon implements Serializable {
     }
 
     private double multiplier(String oppType) {
-        Random r = new Random();
-        /*
-
         double[][] multiplierList = {
                 {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 0.0, 1.0, 1.0, 0.5, 1.0},
                 {1.0, 0.5, 0.5, 1.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 0.5, 1.0, 2.0, 1.0},
@@ -189,14 +186,7 @@ public class Pokemon implements Serializable {
 
         };
 
-
-        */
-
-
-        return (double) r.nextInt(5) / 2;
-
-
-//        return multiplierList[typeIndexGetter(type)][typeIndexGetter(oppType)];
+        return multiplierList[typeIndexGetter(type)][typeIndexGetter(oppType)];
     }
 
     private int typeIndexGetter(String type) {

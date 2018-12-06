@@ -1,12 +1,12 @@
 package scenes;
 
 import framework.Main;
+import framework.Styles;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ class Menu {
         int x = 0;
         Label txt = new Label("Welcome to Pokémon");
         txt.setMinSize(width * 2, 50);
-        txt.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        txt.setBorder(Styles.getBorder());
         txt.setAlignment(Pos.CENTER);
 
 

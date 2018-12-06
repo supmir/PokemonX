@@ -2,7 +2,7 @@ package scenes;
 
 class Credits {
     static void pop() {
-//todo set one of the names clickable to access admin
+//todo border one of the names clickable to access admin
         popups.AlertBox.display("Credits", "Amir\nMarina\nAnis\nFadh");
 //
 //        Button back = new Button("Back");

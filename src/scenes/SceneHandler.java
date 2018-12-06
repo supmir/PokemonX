@@ -38,11 +38,12 @@ public class SceneHandler {
         Credits.pop();
     }
 
-    static Scene selection(int x, String y) {
+    static Scene selection(String y) {
         allList = new framework.PokeList().getList();
-        return Selection.start(x, y);
+        return Selection.start(0, y);
     }
 
+    //testtesttest
     static Scene combat(Boolean notComputer) {
         Main.setInCombat(true);
         return Combat.start(notComputer);

@@ -1,12 +1,12 @@
 package scenes;
 
 import framework.Main;
+import framework.Styles;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 
 class EndGame {
 
@@ -17,7 +17,7 @@ class EndGame {
         Label txt = new Label((x.equals("Computer") ? "" : "Player ") + x + " wins!");
 
         border.setMinSize(400, 50);
-        border.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        border.setBorder(Styles.getBorder());
         StackPane stack = new StackPane();
         stack.getChildren().addAll(border, txt);
 

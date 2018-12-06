@@ -1,5 +1,6 @@
 package scenes;
 
+import framework.Styles;
 import tools.FourLetter;
 import tools.TypeList;
 import framework.Pokemon;
@@ -13,7 +14,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,7 +38,7 @@ class Administrator {
         comboBoxes.add(new ComboBox<>());
         {
             txt.setMinSize(600, 50);
-            txt.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+            txt.setBorder(Styles.getBorder());
             txt.setAlignment(Pos.CENTER);
             bottom.setAlignment(Pos.CENTER_RIGHT);
             center.setAlignment(Pos.CENTER);
@@ -180,7 +180,7 @@ class Administrator {
 
         Label txt = new Label("Create your own Pokémon!");
         txt.setMinSize(600, 50);
-        txt.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        txt.setBorder(Styles.getBorder());
         txt.setAlignment(Pos.CENTER);
 
         ArrayList<Label> labels = new ArrayList<>();
@@ -270,7 +270,7 @@ class Administrator {
         PokeWriter.writePokemon(line);
         Label top = new Label("Your Pokémon is saved!");
         top.setMinSize(600, 50);
-        top.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        top.setBorder(Styles.getBorder());
         top.setAlignment(Pos.CENTER);
 
 
@@ -282,7 +282,7 @@ class Administrator {
 
         middle.setMinSize(400, 430);
         middle.setPadding(new Insets(10));
-        middle.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        middle.setBorder(Styles.getBorder());
         middle.setText(new Pokemon(name).toString());
 
         Button done = new Button("Back to Menu");

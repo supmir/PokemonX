@@ -2,6 +2,7 @@ package scenes;
 
 import framework.Main;
 import framework.Pokemon;
+import framework.Styles;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 
 import java.util.Random;
 
@@ -23,7 +23,7 @@ class Selection {
 
         Label top = new Label("Player" + ("computer".equals(mode) ? "" : (" " + mode)) + ", go ahead");
         top.setMinSize(400, 50);
-        top.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        top.setBorder(Styles.getBorder());
         top.setAlignment(Pos.CENTER);
 
         StackPane middle = new StackPane();
@@ -47,7 +47,7 @@ class Selection {
 
         bottom.setMinSize(400, 430);
         bottom.setPadding(new Insets(10));
-        bottom.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        bottom.setBorder(Styles.getBorder());
 
 
         GridPane.setConstraints(bottom, 0, 11);
