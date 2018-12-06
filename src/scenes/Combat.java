@@ -41,8 +41,12 @@ public class Combat {
         return controller;
     }
 
-    public static void appendStr(String str) {
-        Combat.str += str;
+    public static void appendStr(String str, boolean turn, boolean notComputer) {
+
+        Combat.str += (turn ? (notComputer ?
+                "Player 1 : " :
+                "Computer : ") :
+                "Player 2 : ") + str;
     }
 
     static void setStr(String str) {
@@ -130,17 +134,9 @@ public class Combat {
         });
         return middle;
     }
-//todo split get bottom node
 
-//    private static Node getComputerBottomNode() {
-//        return null;
-//    }
-//
-//    private static Node getNotComputerBottomNode() {
-//        return null;
-//    }
+    private static void setComputerBottomNode(StackPane bottom, int left, int right, boolean turn) {
 
-    private static Node getBottomNode(int left, int right, boolean turn, boolean notComputer) {
         Label computer = new Label(strC);
         computer.setMinSize(computerWidth + 20, dFightHeight);
         computer.setAlignment(Pos.BOTTOM_LEFT);
@@ -160,91 +156,65 @@ public class Combat {
         });
 
 
-        Button[] skill = new Button[4];
-        Button change = new Button("Switch");
-        for (int i = 0; i < skill.length; i++) {
-            skill[i] = new Button(controller[accumulator(left, right, turn) ? 0 : 1][accumulator(left, right, turn) ? left : right].getSkillName(i));
-            skill[i].setMinWidth(buttonWidth);
-            skill[i].setMaxWidth(buttonWidth);
+        StackPane.setAlignment(computerHolder, Pos.CENTER_RIGHT);
+        bottom.getChildren().add(0, computerHolder);
+        if (!accumulator(left, right, turn)) {
+            computer.setText(strC + "\nComputer : " + FourLetter.getPhrase(1));
+            strC = computer.getText();
         }
-        change.setMinWidth(buttonWidth);
-        change.setMaxWidth(buttonWidth);
+    }
 
+    private static void setLeftButton(Button[] skill, Button change, int left, int right, boolean turn, boolean notComputer) {
 
-        StackPane bottom = new StackPane();
-        bottom.setPadding(new Insets(10, -10, 10, -10));
-        bottom.setMinWidth(fightWidth);
-        bottom.setMaxWidth(fightWidth);
-        VBox skillSet = new VBox(10);
-        skillSet.getChildren().addAll(skill);
-        skillSet.getChildren().add(change);
+        skill[0].setOnAction(event -> {
+            controller[0][left].attacks(0, controller[1][right], turn, notComputer);
+            Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+        });
+        skill[1].setOnAction(event -> {
+            controller[0][left].attacks(1, controller[1][right], turn, notComputer);
+            Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
-        bottom.getChildren().add(skillSet);
-        skillSet.setAlignment(Pos.CENTER_LEFT);
+        });
+        skill[2].setOnAction(event -> {
+            controller[0][left].attacks(2, controller[1][right], turn, notComputer);
+            Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
+        });
+        skill[3].setOnAction(event -> {
+            controller[0][left].attacks(3, controller[1][right], turn, notComputer);
+            Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
 
-        //computer mode setup
-        if (notComputer) {
-            if (!accumulator(left, right, turn))
-                skillSet.setAlignment(Pos.CENTER_RIGHT);
-        } else {
-            StackPane.setAlignment(computerHolder, Pos.CENTER_RIGHT);
-            bottom.getChildren().add(0, computerHolder);
-
-            if (!accumulator(left, right, turn)) {
-                change.setText("Move computer");
-                computer.setText(strC + "\nComputer : " + FourLetter.getPhrase(1));
-                strC = computer.getText();
-                skillSet.getChildren().removeAll(skill);
+        });
+        change.setOnAction(event -> {
+            if (left == 2) {
+                Main.window.setScene(start(0, right, accumulator(0, right, turn), notComputer));
+            } else {
+                Main.window.setScene(start(left + 1, right, accumulator(left + 1, right, turn), notComputer));
             }
+        });
+    }
 
-        }
-
+    private static void setNotComputerButton(Button[] skill, Button change, int left, int right, boolean turn) {
 
         if (accumulator(left, right, turn)) {//set button turn and position according to speed accumulator true is left turn
+            setLeftButton(skill, change, left, right, turn, true);
+        } else {
             skill[0].setOnAction(event -> {
-                controller[0][left].attacks(0, controller[1][right]);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
-            });
-            skill[1].setOnAction(event -> {
-                controller[0][left].attacks(1, controller[1][right]);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
-
-            });
-            skill[2].setOnAction(event -> {
-                controller[0][left].attacks(2, controller[1][right]);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
-
-            });
-            skill[3].setOnAction(event -> {
-                controller[0][left].attacks(3, controller[1][right]);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
-
-            });
-            change.setOnAction(event -> {
-                if (left == 2) {
-                    Main.window.setScene(start(0, right, accumulator(0, right, turn), notComputer));
-                } else {
-                    Main.window.setScene(start(left + 1, right, accumulator(left + 1, right, turn), notComputer));
-                }
-            });
-        } else if (notComputer) {//set button turn and position according to speed accumulator, true is right turn because not left
-            skill[0].setOnAction(event -> {
-                controller[1][right].attacks(0, controller[0][left]);
+                controller[1][right].attacks(0, controller[0][left], turn, true);
                 Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
             });
             skill[1].setOnAction(event -> {
-                controller[1][right].attacks(1, controller[0][left]);
+                controller[1][right].attacks(1, controller[0][left], turn, true);
                 Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
 
             });
             skill[2].setOnAction(event -> {
-                controller[1][right].attacks(2, controller[0][left]);
+                controller[1][right].attacks(2, controller[0][left], turn, true);
                 Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
 
             });
             skill[3].setOnAction(event -> {
-                controller[1][right].attacks(3, controller[0][left]);
+                controller[1][right].attacks(3, controller[0][left], turn, true);
                 Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
 
             });
@@ -255,19 +225,61 @@ public class Combat {
                 else
                     Main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), true));
             });
+        }
+    }
 
+    private static void setComputerButton(Button change, int left, int right, boolean turn) {
+        change.setOnAction(event -> {
+            Random r = new Random();
+            if (r.nextInt(10) == 0) {
+                if (right == 2)
+                    Main.window.setScene(start(left, 0, accumulator(left, 0, turn), false));
+                else
+                    Main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), false));
+            } else
+                controller[1][right].attacks(r.nextInt(4), controller[0][left], turn, false);
+            Main.window.setScene(start(left, right, accumulator(left, right, turn), false));
+        });
+
+    }
+
+    private static Node getBottomNode(int left, int right, boolean turn, boolean notComputer) {
+        Button[] skill = new Button[4];
+        Button change = new Button("Switch");
+        for (int i = 0; i < skill.length; i++) {
+            skill[i] = new Button(controller[accumulator(left, right, turn) ? 0 : 1][accumulator(left, right, turn) ? left : right].getSkillName(i));
+            skill[i].setMinWidth(buttonWidth);
+            skill[i].setMaxWidth(buttonWidth);
+        }
+        change.setMinWidth(buttonWidth);
+        change.setMaxWidth(buttonWidth);
+        StackPane bottom = new StackPane();
+        bottom.setPadding(new Insets(10, -10, 10, -10));
+        bottom.setMinWidth(fightWidth);
+        bottom.setMaxWidth(fightWidth);
+        VBox skillSet = new VBox(10);
+        skillSet.getChildren().addAll(skill);
+        skillSet.getChildren().add(change);
+        bottom.getChildren().add(skillSet);
+        skillSet.setAlignment(Pos.CENTER_LEFT);
+
+
+        if (notComputer) {//set button turn and position according to speed accumulator, true is right turn because not left
+            if (!accumulator(left, right, turn))
+                skillSet.setAlignment(Pos.CENTER_RIGHT);
+            setNotComputerButton(skill, change, left, right, turn);
         } else {//not left, but not notComputer so computer turn
-            change.setOnAction(event -> {
-                Random r = new Random();
-                if (r.nextInt(10) == 0) {
-                    if (right == 2)
-                        Main.window.setScene(start(left, 0, accumulator(left, 0, turn), false));
-                    else
-                        Main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), false));
-                } else
-                    controller[1][right].attacks(r.nextInt(4), controller[0][left]);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), false));
-            });
+            //todo check whose turn
+            setComputerBottomNode(bottom, left, right, turn);
+            if (!accumulator(left, right, turn)) {
+                change.setText("Move computer");
+                skillSet.getChildren().removeAll(skill);
+                setComputerButton(change, left, right, turn);
+            } else {
+                setLeftButton(skill, change, left, right, turn, false);
+
+            }
+
         }
 
 

@@ -14,7 +14,7 @@ class EndGame {
 
 
         Label border = new Label();
-        Label txt = new Label(x.equals("Computer") ? "" : ("Player ") + x + " wins!");
+        Label txt = new Label((x.equals("Computer") ? "" : "Player ") + x + " wins!");
 
         border.setMinSize(400, 50);
         border.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
@@ -25,7 +25,7 @@ class EndGame {
         Button back = new Button("Back to Main");
         Button newGame = new Button("New Game");
         Button credits = new Button("Credits");
-
+//todo fix reset
 
         newGame.setOnAction(e -> Main.window.setScene(SceneHandler.menu()));
         back.setOnAction(e -> Main.window.setScene(SceneHandler.gameMode()));

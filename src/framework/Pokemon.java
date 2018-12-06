@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -105,29 +106,8 @@ public class Pokemon implements Serializable {
         this.hp = hp;
     }
 
-    public void attacks(int skillN, Pokemon attacked) {
-        String line = name + " used " + skillName[skillN] + " and it is ";
-        //attackSFX = "";
-        if (skillName[skillN].equals("...")) {
-            accSp -= speed;
-            line = "Why are you using a skill that doesn't exist..?\n";
-            Combat.appendStr(line);
-            return;
-        }
+    public void attacks(int skillN, Pokemon attacked, boolean turn, boolean notComputer) {
 
-        if (multiplier(attacked.type) == 0) {
-            line += "not effective";
-//            attackSFX += "boo.m4a";
-        } else if (multiplier(attacked.type) == 0.5) {
-            line += "not very effective";
-//            attackSFX += "meh.m4a";
-        } else if (multiplier(attacked.type) == 1) {
-            line += "effective";
-//            attackSFX += "cool.m4a";
-        } else if (multiplier(attacked.type) == 2) {
-            line += "super effective";
-//            attackSFX += "nice.m4a";
-        }
 
 //TODO use AudioClip
 //
@@ -135,20 +115,42 @@ public class Pokemon implements Serializable {
 //            MediaPlayer mediaPlayer = new MediaPlayer(sound);
 //            System.out.println("sound");
 //            mediaPlayer.play();
-        double damage = (((double) (attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type);
 
-        line += " dealing " + damage + " damage!\n";
 
-        attacked.setHp(attacked.getHp() - damage);
-        if (attacked.getHp() <= 0) {
-            attacked.kill();
-            line += attacked.name + " has fainted.\n";
+        String line = name + " used " + skillName[skillN] + ". ";
+
+        if (skillName[skillN].equals("...")) {
+            accSp -= speed;
+            line = "Why are you using a skill that doesn't exist..?\n";
+            Combat.appendStr(line, turn, notComputer);
+            return;
         }
 
+        Random r = new Random();
 
+        if (r.nextInt(101) < accuracy[skillN]) {
+            line += "It is";
+            if (multiplier(attacked.type) == 0) {
+                line += " not effective";
+            } else if (multiplier(attacked.type) == 0.5) {
+                line += " not very effective";
+            } else if (multiplier(attacked.type) == 1) {
+                line += " effective";
+            } else if (multiplier(attacked.type) == 2) {
+                line += " super effective";
+            }
+            double damage = (((double) (attack * power[skillN] / attacked.defense) / 20) + 2) * multiplier(attacked.type);
+            line += " dealing " + damage + " damage!\n";
+            attacked.setHp(attacked.getHp() - damage);
+            if (attacked.getHp() <= 0) {
+                attacked.kill();
+                line += attacked.name + " has fainted.\n";
+            }
+        } else {
+            line += name + "s attack missed.\n";
+        }
         accSp -= 100;
-
-        Combat.appendStr(line);
+        Combat.appendStr(line, turn, notComputer);
 
     }
 
@@ -162,6 +164,9 @@ public class Pokemon implements Serializable {
     }
 
     private double multiplier(String oppType) {
+        Random r = new Random();
+        /*
+
         double[][] multiplierList = {
                 {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
                 {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
@@ -185,7 +190,13 @@ public class Pokemon implements Serializable {
         };
 
 
-        return multiplierList[typeIndexGetter(type)][typeIndexGetter(oppType)];
+        */
+
+
+        return (double) r.nextInt(5) / 2;
+
+
+//        return multiplierList[typeIndexGetter(type)][typeIndexGetter(oppType)];
     }
 
     private int typeIndexGetter(String type) {
