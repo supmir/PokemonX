@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 
-public class GameMode {
+class GameMode {
 
     public static Scene start() {
         Label border = new Label();
@@ -38,9 +38,7 @@ public class GameMode {
             Main.window.setScene(SceneHandler.selection(0, "computer"));
         });
 
-        back.setOnAction(e -> {
-            Main.window.setScene(SceneHandler.menu());
-        });
+        back.setOnAction(e -> Main.window.setScene(SceneHandler.menu()));
 
         VBox layout1 = new VBox(20);
         layout1.getChildren().addAll(stack, PvP, PvC, back);

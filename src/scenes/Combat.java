@@ -19,10 +19,11 @@ import java.util.Random;
 public class Combat {
     private static Pokemon[][] controller = SceneHandler.getController();
     private static String str = "Let the battle begin!!!\n";
-    private static int L, R, T, M;
+    private static int L, R;
+    private static boolean T, M;
     private static String strC = "Computer : Hello, you ready to get CRUSHED?";
 
-    public static void setController(Pokemon[][] controller) {
+    static void setController(Pokemon[][] controller) {
         Combat.controller = controller;
     }
 
@@ -34,15 +35,15 @@ public class Combat {
         Combat.str += str;
     }
 
-    public static void setStr(String str) {
+    static void setStr(String str) {
         Combat.str = str;
     }
 
-    public static void setStrC(String strC) {
+    static void setStrC(String strC) {
         Combat.strC = strC;
     }
 
-    public static boolean accumulator(int left, int right, boolean turn) {
+    private static boolean accumulator(int left, int right, boolean turn) {
         boolean less;
         less = controller[0][left].getAccSp() <= 100 && controller[1][right].getAccSp() <= 100;
         while (less) {
@@ -108,7 +109,7 @@ public class Combat {
         fightLog.setAlignment(Pos.BOTTOM_LEFT);
         computer.setMinSize(computerWidth + 20, dFightHeight);
         computer.setAlignment(Pos.BOTTOM_LEFT);
-//todo differentiate player moves (use color); arraylist of strings, color using controller code
+//todo differentiate player moves (use color); arrayList of strings, color using controller code
         //.split of string also works
         ScrollPane middle = new ScrollPane();
         middle.setMinSize(dFightWidth, dFightHeight);
@@ -150,8 +151,8 @@ public class Combat {
         Label RStatus = new Label(healthCheck(1, right));
         RStatus.setTextAlignment(TextAlignment.RIGHT);
         top.getChildren().addAll(LStatus, RStatus);
-        top.setAlignment(LStatus, Pos.CENTER_LEFT);
-        top.setAlignment(RStatus, Pos.CENTER_RIGHT);
+        StackPane.setAlignment(LStatus, Pos.CENTER_LEFT);
+        StackPane.setAlignment(RStatus, Pos.CENTER_RIGHT);
         Button[] skill = new Button[4];
         Button change = new Button("Switch");
 
@@ -188,7 +189,7 @@ public class Combat {
             if (!accumulator(left, right, turn))
                 skillSet.setAlignment(Pos.CENTER_RIGHT);
         } else {
-            bottom.setAlignment(computerHolder, Pos.CENTER_RIGHT);
+            StackPane.setAlignment(computerHolder, Pos.CENTER_RIGHT);
             bottom.getChildren().add(0, computerHolder);
 
             if (!accumulator(left, right, turn)) {
@@ -207,7 +208,7 @@ public class Combat {
         holder.setAlignment(Pos.CENTER);
 
 
-        if (accumulator(left, right, turn)) {//set button turn and position according to speed accumulator
+        if (accumulator(left, right, turn)) {//set button turn and position according to speed accumulator true is left turn
             skill[0].setOnAction(event -> {
                 controller[0][left].attacks(0, controller[1][right]);
                 Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
@@ -234,45 +235,45 @@ public class Combat {
                     Main.window.setScene(start(left + 1, right, accumulator(left + 1, right, turn), notComputer));
                 }
             });
-        } else if (notComputer) {//set button turn and position according to speed accumulator
+        } else if (notComputer) {//set button turn and position according to speed accumulator, true is right turn because not left
             skill[0].setOnAction(event -> {
                 controller[1][right].attacks(0, controller[0][left]);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
             });
             skill[1].setOnAction(event -> {
                 controller[1][right].attacks(1, controller[0][left]);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
 
             });
             skill[2].setOnAction(event -> {
                 controller[1][right].attacks(2, controller[0][left]);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
 
             });
             skill[3].setOnAction(event -> {
                 controller[1][right].attacks(3, controller[0][left]);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
 
             });
             change.setOnAction(event -> {
 
                 if (right == 2)
-                    Main.window.setScene(start(left, 0, accumulator(left, 0, turn), notComputer));
+                    Main.window.setScene(start(left, 0, accumulator(left, 0, turn), true));
                 else
-                    Main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), notComputer));
+                    Main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), true));
             });
 
-        } else {
+        } else {//not left, but not notComputer so computer turn
             change.setOnAction(event -> {
                 Random r = new Random();
                 if (r.nextInt(10) == 0) {
                     if (right == 2)
-                        Main.window.setScene(start(left, 0, accumulator(left, 0, turn), notComputer));
+                        Main.window.setScene(start(left, 0, accumulator(left, 0, turn), false));
                     else
-                        Main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), notComputer));
+                        Main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), false));
                 } else
                     controller[1][right].attacks(r.nextInt(4), controller[0][left]);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), notComputer));
+                Main.window.setScene(start(left, right, accumulator(left, right, turn), false));
             });
         }
 
@@ -295,18 +296,18 @@ public class Combat {
 
         L = left;
         R = right;
-        T = turn ? 1 : 0;
-        M = notComputer ? 1 : 0;
+        T = turn;
+        M = notComputer;
 
         return tempScene;
     }
 
 
-    public static String healthCheck(int who, int which) {
+    private static String healthCheck(int who, int which) {
         return controller[who][which].getName() + "\nHP : " + controller[who][which].getHp() + "\nAccumulated Speed : " + controller[who][which].getAccSp();
     }
 
-    public static int lifeCheck() {
+    private static int lifeCheck() {
         int stat = 0;
         for (int i = 0; i < controller[0].length; i++) {
             stat = stat | (controller[0][i].isAlive() ? 1 : 0);
@@ -327,7 +328,7 @@ public class Combat {
         return stat;
     }
 
-    public static void reset() {
+    static void reset() {
         setStr("Let the battle begin!!!\n");
 //        setController(new Pokemon());
     }
@@ -340,11 +341,11 @@ public class Combat {
         return R;
     }
 
-    public static int getT() {
+    public static boolean getT() {
         return T;
     }
 
-    public static int getM() {
+    public static boolean getM() {
         return M;
     }
 

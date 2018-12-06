@@ -13,7 +13,7 @@ import javafx.scene.paint.Paint;
 
 import java.util.Random;
 
-public class Selection {
+class Selection {
 
     public static Scene start(int count, String mode) {
 

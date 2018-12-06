@@ -76,8 +76,8 @@ public class Pokemon implements Serializable {
         return alive;
     }
 
-    private void setAlive(boolean alive) {
-        this.alive = alive;
+    private void kill() {
+        this.alive = false;
     }
 
     public int getAccSp() {
@@ -106,8 +106,8 @@ public class Pokemon implements Serializable {
     }
 
     public void attacks(int skillN, Pokemon attacked) {
-        String line = name + " used " + skillName[skillN] + " and it is ",
-                attackSFX = "";
+        String line = name + " used " + skillName[skillN] + " and it is ";
+        //attackSFX = "";
         if (skillName[skillN].equals("...")) {
             accSp -= speed;
             line = "Why are you using a skill that doesn't exist..?\n";
@@ -141,7 +141,7 @@ public class Pokemon implements Serializable {
 
         attacked.setHp(attacked.getHp() - damage);
         if (attacked.getHp() <= 0) {
-            attacked.setAlive(false);
+            attacked.kill();
             line += attacked.name + " has fainted.\n";
         }
 
@@ -164,10 +164,12 @@ public class Pokemon implements Serializable {
     private double multiplier(String oppType) {
         double x = 1;
         //TODO create enum or array? @Anis
+
         x += 1;
 
 
         return x;
     }
+
 
 }

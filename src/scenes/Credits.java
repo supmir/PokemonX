@@ -1,7 +1,7 @@
 package scenes;
 
-public class Credits {
-    public static void pop() {
+class Credits {
+    static void pop() {
 //todo set one of the names clickable to access admin
         popups.AlertBox.display("Credits", "Amir\nMarina\nAnis\nFadh");
 //

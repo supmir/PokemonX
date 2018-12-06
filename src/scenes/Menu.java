@@ -11,7 +11,7 @@ import javafx.scene.paint.Paint;
 import java.io.File;
 import java.util.ArrayList;
 
-public class Menu {
+class Menu {
 
     public static Scene start() {
 
@@ -37,9 +37,7 @@ public class Menu {
             if (temp2.exists()) {
                 Buttons.add(new Button("Continue"));
                 x++;
-                Buttons.get(0).setOnAction(event -> {
-                    Main.window.setScene(SceneHandler.cont());
-                });
+                Buttons.get(0).setOnAction(event -> Main.window.setScene(SceneHandler.cont()));
             }
         }
         Buttons.add(new Button("New Game"));
@@ -56,19 +54,11 @@ public class Menu {
         }
 
 
-        Buttons.get(x).setOnAction(e -> {
-            Main.window.setScene(SceneHandler.gameMode());
-        });
-        Buttons.get(x + 1).setOnAction(e -> {
-            SceneHandler.credits();
-        });
-        Buttons.get(x + 2).setOnAction(e -> {
-            Main.window.setScene(SceneHandler.settings());
-        });
+        Buttons.get(x).setOnAction(e -> Main.window.setScene(SceneHandler.gameMode()));
+        Buttons.get(x + 1).setOnAction(e -> SceneHandler.credits());
+        Buttons.get(x + 2).setOnAction(e -> Main.window.setScene(SceneHandler.settings()));
 
-        Buttons.get(x + 3).setOnAction(e -> {
-            Main.window.setScene(SceneHandler.administrator());
-        });
+        Buttons.get(x + 3).setOnAction(e -> Main.window.setScene(SceneHandler.administrator()));
 
         VBox layout1 = new VBox(20);
         layout1.getChildren().addAll(txt);

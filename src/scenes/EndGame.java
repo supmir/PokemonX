@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 
-public class EndGame {
+class EndGame {
 
     public static Scene start(String x) {
 
@@ -27,15 +27,9 @@ public class EndGame {
         Button credits = new Button("Credits");
 
 
-        newGame.setOnAction(e -> {
-            Main.window.setScene(SceneHandler.menu());
-        });
-        back.setOnAction(e -> {
-            Main.window.setScene(SceneHandler.gameMode());
-        });
-        credits.setOnAction(e -> {
-            SceneHandler.credits();
-        });
+        newGame.setOnAction(e -> Main.window.setScene(SceneHandler.menu()));
+        back.setOnAction(e -> Main.window.setScene(SceneHandler.gameMode()));
+        credits.setOnAction(e -> SceneHandler.credits());
 
         HBox buttons = new HBox(20);
         buttons.getChildren().addAll(back, newGame, credits);

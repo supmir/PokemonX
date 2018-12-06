@@ -18,8 +18,8 @@ import javafx.scene.paint.Paint;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Administrator {
-    private static Random r = new Random();
+class Administrator {
+    private static final Random r = new Random();
 
 
     public static Scene start() {
@@ -70,7 +70,7 @@ public class Administrator {
             textFields.add(new TextField(rName()));//pokemon name CANNOT contain () because it is used as (custom) during game
             textFields.add(new TextField(rInt()));//Attack
             textFields.add(new TextField(rInt()));//Defense
-            textFields.add(new TextField(rInt()));//HP
+            textFields.add(new TextField(rInt(20, 50)));//HP
             textFields.add(new TextField(rInt()));//Speed
             center.add(labels.get(0), 0, 0);
             center.add(labels.get(1), 0, 1);
@@ -97,21 +97,18 @@ public class Administrator {
         //action listeners
         {
             back.setOnAction(event -> Main.window.setScene(SceneHandler.menu()));
-            next.setOnAction(event -> {
-
-                Main.window.setScene(skillPage(
-                        textFields.get(0).getText() + "(Custom)" + "\n" +
-                                comboBoxes.get(0).getValue() + "\n" +
-                                textFields.get(1).getText() + "\n" +
-                                textFields.get(2).getText() + "\n" +
-                                textFields.get(3).getText() + "\n" +
-                                textFields.get(4).getText() + "\n",
-                        Integer.parseInt(comboBoxes.get(1).getValue()),
-                        textFields.get(0).getText() + "(Custom)"));
-            });
+            next.setOnAction(event -> Main.window.setScene(skillPage(
+                    textFields.get(0).getText() + "(Custom)" + "\n" +
+                            comboBoxes.get(0).getValue() + "\n" +
+                            textFields.get(1).getText() + "\n" +
+                            textFields.get(2).getText() + "\n" +
+                            textFields.get(3).getText() + "\n" +
+                            textFields.get(4).getText() + "\n",
+                    Integer.parseInt(comboBoxes.get(1).getValue()),
+                    textFields.get(0).getText() + "(Custom)")));
             textFields.get(0).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
-                    if (textFields.get(0).getText().matches("")) {
+                    if (textFields.get(0).getText().matches("(.+\\(Custom\\))|")) {
                         textFields.get(0).setText(rName());
                         txt.setText("Pokémon name can't be that. " + FourLetter.getPhrase(1));
                     } else {
@@ -141,11 +138,11 @@ public class Administrator {
             });
             textFields.get(3).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
-                    if (textFields.get(3).getText().matches("[1-4]\\d")) {
+                    if (textFields.get(3).getText().matches("[2-5]\\d")) {
                         txt.setText(FourLetter.getPhrase(2));
                     } else {
-                        textFields.get(3).setText(rInt());
-                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
+                        textFields.get(3).setText(rInt(20, 59));
+                        txt.setText("Put something between 20-59. " + FourLetter.getPhrase(1));
                     }
                 }
             });
@@ -217,15 +214,12 @@ public class Administrator {
         center.add(textFields.get(2), 1, 4);
 
         cancel.setOnAction(event -> Main.window.setScene(SceneHandler.menu()));
-        next.setOnAction(event -> {
-
-            Main.window.setScene(skillPage(
-                    line + textFields.get(0).getText() + "\n" +
-                            comboBox.getValue() + "\n" +
-                            textFields.get(1).getText() + "\n" +
-                            textFields.get(2).getText() + "\n"
-                    , skillCount - 1, name));
-        });
+        next.setOnAction(event -> Main.window.setScene(skillPage(
+                line + textFields.get(0).getText() + "\n" +
+                        comboBox.getValue() + "\n" +
+                        textFields.get(1).getText() + "\n" +
+                        textFields.get(2).getText() + "\n"
+                , skillCount - 1, name)));
 
         textFields.get(0).focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
@@ -306,16 +300,16 @@ public class Administrator {
     }
 
     private static String rName() {
-        String x = "";
+        StringBuilder x = new StringBuilder();
 
 
-        x += (char) (r.nextInt(26) + 65);
+        x.append((char) (r.nextInt(26) + 65));
         for (int i = 0; i < r.nextInt(6) + 2; i++) {
-            x += (char) (r.nextInt(26) + 97);
+            x.append((char) (r.nextInt(26) + 97));
         }
 
 
-        return x;
+        return x.toString();
     }
 
     private static String rInt() {

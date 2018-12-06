@@ -3,7 +3,7 @@ package tools;
 import java.util.Random;
 
 public class FourLetter {
-    static Random r = new Random();
+    private static final Random r = new Random();
 
 
     private static int wasDumb = 0;

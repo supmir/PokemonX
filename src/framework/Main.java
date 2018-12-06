@@ -19,7 +19,7 @@ import java.io.IOException;
 public class Main extends Application {
 
     public static Stage window;
-    public static boolean inCombat = false;
+    private static boolean inCombat = false;
 
     public static void main(String[] args) {
         launch(args);

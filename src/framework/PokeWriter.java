@@ -6,8 +6,10 @@ import scenes.Combat;
 import java.io.*;
 
 public class PokeWriter {
-    static int L, R, T, M;
-    static boolean t, m;
+    private static int L;
+    private static int R;
+    private static boolean T;
+    private static boolean M;
     private static String STR, STRC;
 
 
@@ -29,9 +31,8 @@ public class PokeWriter {
 
     }
 
-    public static void writeProg() {
+    static void writeProg() {
         String path = System.getProperty("user.home") + "/PokemonX/fight.bin";
-        File temp = new File(path);
 
         try {
             saveObject(Combat.getController(), path);
@@ -43,10 +44,9 @@ public class PokeWriter {
 
     public static Pokemon[][] getProg() {
         String path = System.getProperty("user.home") + "/PokemonX/fight.bin";
-        File temp = new File(path);
 
         try {
-            return loadObject(path);
+            return (Pokemon[][]) loadObject(path);
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
@@ -55,42 +55,31 @@ public class PokeWriter {
     }
 
 
-// Serialize an object into binary format inside a file
-// stored in the location of the second parameter
-
 
     private static void saveObject(Serializable object, String filename)
             throws IOException {
         ObjectOutputStream OO = new ObjectOutputStream(
                 new FileOutputStream(filename));
 
-// The writeObject() method automatically transforms the contents of
-        // the object to bytes.
-        // An error is generated if the object does not implement the Serialize interface
         OO.writeObject(object);
 
         OO.close();
     }
 
-    // Deserializes the object stored in the provied path and returns this
-// object without any casting it to a specific type
-    private static Pokemon[][] loadObject(String filename) throws ClassNotFoundException, IOException {
-        // Open the file for reading
+    private static Object loadObject(String filename) throws ClassNotFoundException, IOException {
+
         ObjectInputStream OI = new ObjectInputStream(
                 new FileInputStream(filename));
 
-        // Read the bytes and creates the object in memory
-        Pokemon[][] object = (Pokemon[][]) OI.readObject();
+        Object object = OI.readObject();
 
-        // Close the file
         OI.close();
 
-        // Returns the object without casting
         return object;
     }
 
 
-    public static void writeLRTStr() throws IOException {
+    static void writeLRTStr() throws IOException {
 
 
         ObjectOutputStream OO = new ObjectOutputStream(
@@ -98,8 +87,8 @@ public class PokeWriter {
 
         OO.writeInt(Combat.getL());
         OO.writeInt(Combat.getR());
-        OO.writeInt(Combat.getT());
-        OO.writeInt(Combat.getM());
+        OO.writeBoolean(Combat.getT());
+        OO.writeBoolean(Combat.getM());
         OO.writeUTF(Combat.getStr());
         OO.writeUTF(Combat.getStrC());
         OO.close();
@@ -136,10 +125,9 @@ public class PokeWriter {
 
         L = OI.readInt();
         R = OI.readInt();
-        T = OI.readInt();
-        t = T == 1;
-        M = OI.readInt();
-        m = M == 1;
+
+        T = OI.readBoolean();
+        M = OI.readBoolean();
         STR = OI.readUTF();
         STRC = OI.readUTF();
         OI.close();
@@ -156,11 +144,11 @@ public class PokeWriter {
 
 
     public static boolean isT() {
-        return t;
+        return T;
     }
 
     public static boolean isM() {
-        return m;
+        return M;
     }
 
     public static String getStr() {
