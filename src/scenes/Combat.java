@@ -1,6 +1,7 @@
 package scenes;
 
 import framework.Main;
+import javafx.scene.Node;
 import tools.FourLetter;
 import framework.Pokemon;
 import javafx.geometry.Insets;
@@ -22,6 +23,15 @@ public class Combat {
     private static int L, R;
     private static boolean T, M;
     private static String strC = "Computer : Hello, you ready to get CRUSHED?";
+
+    private final static int
+            fightWidth = 600,
+            fightHeight = 300,
+            dFightWidth = fightWidth + 20,
+            dFightHeight = fightHeight - 1,
+            computerWidth = 400,
+            computerHeight = 200,
+            buttonWidth = 200;
 
     static void setController(Pokemon[][] controller) {
         Combat.controller = controller;
@@ -57,7 +67,7 @@ public class Combat {
 
         if (accCompare > 0) {
             turn = true;
-        } else if (accCompare == 0) {
+        } else if (accCompare == 0) {//todo this will cause bug because accumulator counts even if its just a second check
             int speedCompare;
             speedCompare = controller[0][left].getSpeed() - controller[1][right].getSpeed();
 
@@ -80,35 +90,28 @@ public class Combat {
         return start(0, 0, accumulator(0, 0, false), notComputer);
     }
 
-    public static Scene start(int left, int right, boolean turn, boolean notComputer) {
-        //setup for both modes
-        int j = 0;
-        if ((lifeCheck() & 0b00000001) == 0) {//check right
-            return SceneHandler.endGame("one");
-        }
-        if ((lifeCheck() >> 4 & 0b00000001) == 0) {//check left
-            if (notComputer)
-                return SceneHandler.endGame("two");
-            else
-                return SceneHandler.endGame("Computer");
 
-        }
-        final int
-                fightWidth = 600,
-                fightHeight = 300,
-                dFightWidth = fightWidth + 20,
-                dFightHeight = fightHeight - 1,
-                computerWidth = 400,
-                computerHeight = 200,
-                buttonWidth = 200;
+    private static Node getTopNode(int left, int right) {
+
+        StackPane top = new StackPane();
+        top.setMinWidth(fightWidth);
+        top.setMaxWidth(fightWidth);
+        top.setPadding(new Insets(0));
+        Label LStatus = new Label(healthCheck(0, left));
+        Label RStatus = new Label(healthCheck(1, right));
+        RStatus.setTextAlignment(TextAlignment.RIGHT);
+        top.getChildren().addAll(LStatus, RStatus);
+        StackPane.setAlignment(LStatus, Pos.CENTER_LEFT);
+        StackPane.setAlignment(RStatus, Pos.CENTER_RIGHT);
 
 
+        return top;
+    }
+
+    private static Node getMiddleNode() {
         Label fightLog = new Label(str);
-        Label computer = new Label(strC);
         fightLog.setMinSize(fightWidth, fightHeight);
         fightLog.setAlignment(Pos.BOTTOM_LEFT);
-        computer.setMinSize(computerWidth + 20, dFightHeight);
-        computer.setAlignment(Pos.BOTTOM_LEFT);
 //todo differentiate player moves (use color); arrayList of strings, color using controller code
         //.split of string also works
         ScrollPane middle = new ScrollPane();
@@ -125,8 +128,22 @@ public class Combat {
                 event.consume();
             }
         });
+        return middle;
+    }
+//todo split get bottom node
 
+//    private static Node getComputerBottomNode() {
+//        return null;
+//    }
+//
+//    private static Node getNotComputerBottomNode() {
+//        return null;
+//    }
 
+    private static Node getBottomNode(int left, int right, boolean turn, boolean notComputer) {
+        Label computer = new Label(strC);
+        computer.setMinSize(computerWidth + 20, dFightHeight);
+        computer.setAlignment(Pos.BOTTOM_LEFT);
         ScrollPane computerHolder = new ScrollPane();
         computerHolder.setPrefSize(computerWidth, computerHeight);
         computerHolder.setMinSize(computerWidth, computerHeight);
@@ -143,28 +160,10 @@ public class Combat {
         });
 
 
-        StackPane top = new StackPane();
-        top.setMinWidth(fightWidth);
-        top.setMaxWidth(fightWidth);
-        top.setPadding(new Insets(0));
-        Label LStatus = new Label(healthCheck(0, left));
-        Label RStatus = new Label(healthCheck(1, right));
-        RStatus.setTextAlignment(TextAlignment.RIGHT);
-        top.getChildren().addAll(LStatus, RStatus);
-        StackPane.setAlignment(LStatus, Pos.CENTER_LEFT);
-        StackPane.setAlignment(RStatus, Pos.CENTER_RIGHT);
         Button[] skill = new Button[4];
         Button change = new Button("Switch");
-
-
-        //pvp mode setup
-        if (notComputer)
-            if (!accumulator(left, right, turn))
-                j = 1;
-
-        //back to both
         for (int i = 0; i < skill.length; i++) {
-            skill[i] = new Button(controller[j][left].getSkillName(i));
+            skill[i] = new Button(controller[accumulator(left, right, turn) ? 0 : 1][accumulator(left, right, turn) ? left : right].getSkillName(i));
             skill[i].setMinWidth(buttonWidth);
             skill[i].setMaxWidth(buttonWidth);
         }
@@ -200,12 +199,6 @@ public class Combat {
             }
 
         }
-
-
-        //back to both
-        VBox holder = new VBox(top, middle, bottom);
-        holder.setSpacing(10);
-        holder.setAlignment(Pos.CENTER);
 
 
         if (accumulator(left, right, turn)) {//set button turn and position according to speed accumulator true is left turn
@@ -276,6 +269,29 @@ public class Combat {
                 Main.window.setScene(start(left, right, accumulator(left, right, turn), false));
             });
         }
+
+
+        return bottom;
+    }
+
+
+    public static Scene start(int left, int right, boolean turn, boolean notComputer) {
+        //setup for both modes
+
+        if ((lifeCheck() & 0b00000001) == 0) {//check right
+            return SceneHandler.endGame("one");
+        }
+        if ((lifeCheck() >> 4 & 0b00000001) == 0) {//check left
+            if (notComputer)
+                return SceneHandler.endGame("two");
+            else
+                return SceneHandler.endGame("Computer");
+        }
+
+        //back to both
+        VBox holder = new VBox(getTopNode(left, right), getMiddleNode(), getBottomNode(left, right, turn, notComputer));
+        holder.setSpacing(10);
+        holder.setAlignment(Pos.CENTER);
 
 
         Scene tempScene = new Scene(holder, 800, 800);
