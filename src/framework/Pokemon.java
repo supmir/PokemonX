@@ -28,7 +28,7 @@ public class Pokemon implements Serializable {
     public Pokemon(String name) {
         String path = name.endsWith("(Custom)") ? System.getProperty("user.home") + "/PokemonX/Pokemons.txt" : "Pokemons.txt";
         InputStream IS = getClass().getResourceAsStream(path);
-        try (Scanner sc = new Scanner((name.endsWith("(Custom)") ? IS : new FileInputStream(path)))) {
+        try (Scanner sc = new Scanner((name.endsWith("(Custom)") ? new FileInputStream(path) : IS))) {
             String line = null;
             //read pokemon
             while (sc.hasNext()) {
@@ -162,14 +162,45 @@ public class Pokemon implements Serializable {
     }
 
     private double multiplier(String oppType) {
-        double x = 1;
-        //TODO create enum or array? @Anis
+        double[][] multiplierList = {
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0},
+                {1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0, 0.5, 0.0, 1.0, 2.0, 1.0}
 
-        x += 1;
+        };
+
+
+        return multiplierList[typeIndexGetter(type)][typeIndexGetter(oppType)];
+    }
+
+    private int typeIndexGetter(String type) {
+        int x = 0;
+        String[] typeList = tools.TypeList.getList();
+
+        while (x < typeList.length) {
+            if (typeList[x].equals(type)) {
+                return x;
+            }
+            x++;
+        }
 
 
         return x;
     }
-
 
 }

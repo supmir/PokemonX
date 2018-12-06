@@ -21,7 +21,7 @@ class Selection {
         ////items
 
 
-        Label top = new Label("Player " + ("computer".equals(mode) ? "" : (mode + "")) + ", go ahead");
+        Label top = new Label("Player" + ("computer".equals(mode) ? "" : (" " + mode)) + ", go ahead");
         top.setMinSize(400, 50);
         top.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
         top.setAlignment(Pos.CENTER);
