@@ -154,7 +154,8 @@ class Administrator {
         center.setHgap(10);
 
         center.setAlignment(Pos.CENTER);
-        final int labWid = 80, fieldWid = 200;
+        final int labWid = 80,
+                fieldWid = 200;
         center.getColumnConstraints().add(new ColumnConstraints(labWid));
         center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
 

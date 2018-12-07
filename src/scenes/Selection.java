@@ -85,7 +85,7 @@ class Selection {
                 Main.window.setScene(SceneHandler.combat(true));
             } else {
                 SceneHandler.setController(new Pokemon(pokeList.getValue()), "one".equals(mode) ? 0 : 1, count);
-                Main.window.setScene(start(mode.equals("one") ? count : count + 1, "one".equals(mode) ? "two" : "one"));
+                Main.window.setScene(start("one".equals(mode) ? count : count + 1, "one".equals(mode) ? "two" : "one"));
             }
         });
     }

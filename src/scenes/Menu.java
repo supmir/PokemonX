@@ -1,6 +1,6 @@
 package scenes;
 
-import ImageGetter.ImgGet;
+import imagegetter.ImgGet;
 import framework.Main;
 import framework.Styles;
 import javafx.geometry.Pos;
@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 
 import java.io.File;
 import java.util.ArrayList;

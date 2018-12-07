@@ -58,8 +58,9 @@ public class Combat {
     }
 
     private static boolean accumulator(int left, int right, boolean turn) {
-        boolean less;
-        less = controller[0][left].getAccSp() <= 100 && controller[1][right].getAccSp() <= 100;
+        boolean less = controller[0][left].getAccSp() <= 100 && controller[1][right].getAccSp() <= 100,
+                tempTurn = turn;
+
         while (less) {
 
             controller[0][left].adder();
@@ -70,24 +71,24 @@ public class Combat {
         accCompare = controller[0][left].getAccSp() - controller[1][right].getAccSp();
 
         if (accCompare > 0) {
-            turn = true;
+            tempTurn = true;
         } else if (accCompare == 0) {//todo this will cause bug because accumulator counts even if its just a second check
             int speedCompare;
             speedCompare = controller[0][left].getSpeed() - controller[1][right].getSpeed();
 
             if (speedCompare > 0) {
-                turn = true;
+                tempTurn = true;
             } else if (speedCompare == 0) {
-                turn = !turn;
+                tempTurn = !tempTurn;
             } else {
-                turn = false;
+                tempTurn = false;
             }
 
         } else {
-            turn = false;
+            tempTurn = false;
         }
 
-        return turn;
+        return tempTurn;
     }
 
     public static Scene start(boolean notComputer) {//pvp notComputer is true
