@@ -2,7 +2,9 @@ package scenes;
 
 import framework.Main;
 import framework.Pokemon;
-import framework.PokeWriter;
+import tools.CombatProgress;
+import tools.LRTStr;
+import tools.Writer;
 import javafx.scene.Scene;
 
 import java.io.IOException;
@@ -50,21 +52,21 @@ public class SceneHandler {
     }
 
     static Scene endGame(String x) {
-        PokeWriter.delete(false);
+        Writer.delete(false);
         Main.setInCombat(false);
         return EndGame.start(x);
     }
 
     static Scene cont() {
-        Combat.setController(PokeWriter.getProg());
+        Combat.setController(CombatProgress.getProg());
         try {
-            PokeWriter.readLRTStr();
+            LRTStr.readLRTStr();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Combat.setStr(PokeWriter.getStr());
-        Combat.setStrC(PokeWriter.getStrC());
-        return Combat.start(PokeWriter.getL(), PokeWriter.getR(), PokeWriter.isT(), PokeWriter.isM());
+        Combat.setStr(LRTStr.getStr());
+        Combat.setStrC(LRTStr.getStrC());
+        return Combat.start(LRTStr.getL(), LRTStr.getR(), LRTStr.isT(), LRTStr.isM());
     }
 
 

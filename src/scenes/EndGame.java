@@ -17,7 +17,7 @@ class EndGame {
         Label txt = new Label(("Computer".equals(x) ? "" : "Player ") + x + " wins!");
 
         border.setMinSize(400, 50);
-        border.setBorder(Styles.getBorder());
+        border.setBorder(Main.styles.getBorder());
         StackPane stack = new StackPane();
         stack.getChildren().addAll(border, txt);
 

@@ -1,11 +1,10 @@
 package scenes;
 
-import framework.Styles;
+import tools.CombatProgress;
 import tools.FourLetter;
 import tools.TypeList;
 import framework.Pokemon;
 import framework.Main;
-import framework.PokeWriter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -37,7 +36,7 @@ class Administrator {
         comboBoxes.add(new ComboBox<>());
         {
             txt.setMinSize(600, 50);
-            txt.setBorder(Styles.getBorder());
+            txt.setBorder(Main.styles.getBorder());
             txt.setAlignment(Pos.CENTER);
             bottom.setAlignment(Pos.CENTER_RIGHT);
             center.setAlignment(Pos.CENTER);
@@ -70,7 +69,11 @@ class Administrator {
             };
             for (int i = 0; i < labelString.length; i++) {
                 labels.add(new Label(labelString[i]));
-                center.add(labels.get(i), 0, i);
+                if (i != 6)
+                    center.add(labels.get(i), 0, i);
+                else
+                    center.add(labels.get(6), 0, 6, 2, 1);
+
             }
 
             labels.get(6).setPrefWidth(200);
@@ -84,7 +87,6 @@ class Administrator {
             }
 
 
-            center.add(labels.get(6), 0, 6, 2, 1);
             center.add(textFields.get(0), 1, 0);
             center.add(comboBoxes.get(0), 1, 1);
             center.add(textFields.get(1), 1, 2);
@@ -121,7 +123,17 @@ class Administrator {
                     Integer.parseInt(comboBoxes.get(1).getValue()),
                     textFields.get(0).getText() + "(Custom)")));
 
-            setupTextFieldListeners(textFields, 0, "(.+\\(Custom\\))|", -1, -1, txt);
+
+            textFields.get(0).focusedProperty().addListener((arg0, oldValue, newValue) -> {
+                if (!newValue) {
+                    if (textFields.get(0).getText().matches("(.+\\(Custom\\))|")) {
+                        textFields.get(0).setText(rInt(-1, -1));
+                        txt.setText("Pokémon name can't be that. " + FourLetter.getPhrase(1));
+                    } else {
+                        txt.setText(FourLetter.getPhrase(2));
+                    }
+                }
+            });
             setupTextFieldListeners(textFields, 1, "[1-4]\\d", 10, 49, txt);
             setupTextFieldListeners(textFields, 2, "[1-4]\\d", 10, 49, txt);
             setupTextFieldListeners(textFields, 3, "[2-5]\\d", 20, 59, txt);
@@ -136,7 +148,7 @@ class Administrator {
                     txt.setText(FourLetter.getPhrase(2));
                 } else {
                     textFields.get(index).setText(rInt(min, max));
-                    txt.setText("Put something between " + min + "-" + max + "." + FourLetter.getPhrase(1));
+                    txt.setText("Put something between " + min + "-" + max + ". " + FourLetter.getPhrase(1));
                 }
             }
         });
@@ -161,7 +173,7 @@ class Administrator {
 
         Label txt = new Label("Create your own Pokémon!");
         txt.setMinSize(600, 50);
-        txt.setBorder(Styles.getBorder());
+        txt.setBorder(Main.styles.getBorder());
         txt.setAlignment(Pos.CENTER);
 
         ArrayList<Label> labels = new ArrayList<>();
@@ -212,26 +224,8 @@ class Administrator {
                 }
             }
         });
-        textFields.get(1).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-            if (!newValue) {
-                if (textFields.get(1).getText().matches("[1-4]\\d")) {
-                    txt.setText(FourLetter.getPhrase(2));
-                } else {
-                    textFields.get(1).setText(rInt());
-                    txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
-                }
-            }
-        });
-        textFields.get(2).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-            if (!newValue) {
-                if (textFields.get(2).getText().matches("[1-4]\\d")) {
-                    txt.setText(FourLetter.getPhrase(2));
-                } else {
-                    textFields.get(2).setText(rInt());
-                    txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
-                }
-            }
-        });
+        setupTextFieldListeners(textFields, 1, "[1-4]\\d", 10, 49, txt);
+        setupTextFieldListeners(textFields, 2, "[1-4]\\d", 10, 49, txt);
 
 
         HBox bottom = new HBox(10);
@@ -248,10 +242,10 @@ class Administrator {
     }
 
     private static Scene saved(String line, String name) {
-        PokeWriter.writePokemon(line);
+        CombatProgress.writePokemon(line);
         Label top = new Label("Your Pokémon is saved!");
         top.setMinSize(600, 50);
-        top.setBorder(Styles.getBorder());
+        top.setBorder(Main.styles.getBorder());
         top.setAlignment(Pos.CENTER);
 
 
@@ -263,7 +257,7 @@ class Administrator {
 
         middle.setMinSize(400, 430);
         middle.setPadding(new Insets(10));
-        middle.setBorder(Styles.getBorder());
+        middle.setBorder(Main.styles.getBorder());
         middle.setText(new Pokemon(name).toString());
 
         Button done = new Button("Back to Menu");

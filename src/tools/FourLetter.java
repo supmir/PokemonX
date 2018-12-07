@@ -35,18 +35,21 @@ public class FourLetter {
                         "I spent days coding this and you can't even do this right?",
                         "What the frick?",
                         "Your parents will dab on you when you die",
-                        "This is something that doesn't even require high intelligence level"
+                        "This isn't even something that requires a high level of intelligence"
                 },
                 sarcastic = {
                         "Wow! You're so very very smart now!",
                         "Congratulations! Your mother must be proud",
-                        "You deserve an award!!!"
+                        "You deserve an award!!!",
+                        "I am very happy that you have improved your thinking skills"
                 },
                 computer = {
                         "Is that all you got?",
                         "Bring it on.",
                         "My grandma could do better",
-                        "You should stick to Candy Crush"
+                        "You should stick to Candy Crush",
+                        "You gotta do a little better than that if you wanna beat me",
+                        "I'm telling you, you're hopeless."
                 };
 
 

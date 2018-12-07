@@ -18,11 +18,21 @@ import java.util.Scanner;
  */
 public class Pokemon implements Serializable {
 
-    private String name, type;
-    private int attack, defense, speed;
-    final private String[] skillName = new String[4], skillType = new String[4];
-    final private int[] power = new int[4], accuracy = new int[4];
-    private int accSp, skillCount;
+    private String
+            name,
+            type;
+    private int
+            attack,
+            defense,
+            speed;
+    final private String[]
+            skillName = new String[4],
+            skillType = new String[4];
+    final private int[]
+            power = new int[4],
+            accuracy = new int[4];
+    private int accSp,
+            skillCount;
     private double hp;
     private boolean alive = true;
 

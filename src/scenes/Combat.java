@@ -20,8 +20,10 @@ import java.util.Random;
 public class Combat {
     private static Pokemon[][] controller = SceneHandler.getController();
     private static String str = "Let the battle begin!!!\n";
-    private static int L, R;
-    private static boolean T, M;
+    private static int L,
+            R;
+    private static boolean T,
+            M;
     private static String strC = "Computer : Hello, you ready to get CRUSHED?";
 
     private final static int
@@ -124,7 +126,7 @@ public class Combat {
         middle.setPrefSize(dFightWidth, dFightHeight);
         middle.setMaxSize(dFightWidth, dFightHeight);
         middle.setContent(fightLog);
-        middle.setBorder(Styles.getBorder());
+        middle.setBorder(Main.styles.getBorder());
         middle.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         middle.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         middle.setVvalue(middle.getVmax());
@@ -146,7 +148,7 @@ public class Combat {
         computerHolder.setMinSize(computerWidth, computerHeight);
         computerHolder.setMaxSize(computerWidth, computerHeight);
         computerHolder.setContent(computer);
-        computerHolder.setBorder(Styles.getBorder());
+        computerHolder.setBorder(Main.styles.getBorder());
         computerHolder.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         computerHolder.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         computerHolder.setVvalue(computerHolder.getVmax());
@@ -269,7 +271,6 @@ public class Combat {
                 skillSet.setAlignment(Pos.CENTER_RIGHT);
             }
         } else {//not left, but not notComputer so computer turn
-            //todo check whose turn
             setComputerBottomNode(bottom, left, right, turn);
             if (!accumulator(left, right, turn)) {
                 change.setText("Move computer");

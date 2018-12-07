@@ -1,8 +1,7 @@
 package scenes;
 
 import framework.Main;
-import framework.PokeWriter;
-import framework.Styles;
+import tools.Writer;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,7 +14,7 @@ class GameMode {
         Label border = new Label();
         Label txt = new Label("Choose your game mode :");
         border.setMinSize(400, 50);
-        border.setBorder(Styles.getBorder());
+        border.setBorder(Main.styles.getBorder());
         StackPane stack = new StackPane();
         stack.getChildren().addAll(border, txt);
 
@@ -29,12 +28,12 @@ class GameMode {
 
         PvP.setOnAction(e -> {
             Combat.reset();
-            PokeWriter.delete(false);
+            Writer.delete(false);
             Main.window.setScene(SceneHandler.selection("one"));
         });
         PvC.setOnAction(e -> {
             Combat.reset();
-            PokeWriter.delete(false);
+            Writer.delete(false);
             Main.window.setScene(SceneHandler.selection("computer"));
         });
 

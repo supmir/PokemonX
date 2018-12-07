@@ -14,7 +14,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 class Menu {
-
+    //todo reset game if user files are corrupt
     public static Scene start() {
         final int width = 200;
         int x = 0;
@@ -25,7 +25,7 @@ class Menu {
         Label txt = new Label("Welcome to Pokémon");
         txt.setMinSize(width * 2, 50);
         txt.setStyle("-fx-background-color: white;");
-        txt.setBorder(Styles.getBorder());
+        txt.setBorder(Main.styles.getBorder());
         txt.setAlignment(Pos.CENTER);
 
 
@@ -49,8 +49,7 @@ class Menu {
         Buttons.add(new Button("Credits"));
         Buttons.add(new Button("Settings"));
 
-        Buttons.add(new Button("???"));//todo hide this button to make it more special
-        //todo reset button
+        Buttons.add(new Button("Reset"));//todo make reset button work
 
 
         for (Button button : Buttons) {
@@ -62,7 +61,6 @@ class Menu {
         Buttons.get(x).setOnAction(e -> Main.window.setScene(SceneHandler.gameMode()));
         Buttons.get(x + 1).setOnAction(e -> SceneHandler.credits());
         Buttons.get(x + 2).setOnAction(e -> Main.window.setScene(SceneHandler.settings()));
-        Buttons.get(x + 3).setOnAction(e -> Main.window.setScene(SceneHandler.administrator()));
 
         VBox layout1 = new VBox(20);
         layout1.getChildren().addAll(txt);

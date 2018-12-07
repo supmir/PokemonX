@@ -6,9 +6,13 @@ package framework;/*
 
 
 import javafx.application.Application;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import scenes.SceneHandler;
+import tools.CombatProgress;
+import tools.LRTStr;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -20,8 +24,17 @@ public class Main extends Application {
 
     public static Stage window;
     private static boolean inCombat = false;
+    public static Styles styles = new Styles();
+
 
     public static void main(String[] args) {
+        String path = System.getProperty("user.home") + "/PokemonX/userStyle.txt";
+        File temp = new File(path);
+        if (temp.exists()) {
+            System.out.println("hi");
+            tools.StyleWriter.setFields();
+            styles = new Styles(Color.valueOf(tools.StyleWriter.getColor()), tools.StyleWriter.getBorderStrokeStyle(), tools.StyleWriter.getRadii(), tools.StyleWriter.getBorderWidths());
+        }
         launch(args);
     }
 
@@ -48,13 +61,14 @@ public class Main extends Application {
     private static void exitProgram() {
         if (popups.ConfirmBox.display("Exit?", "Are you sure you want to exit?")) {
 
-            if (inCombat)
+            if (inCombat) {
                 try {
-                    PokeWriter.writeProg();
-                    PokeWriter.writeLRTStr();
+                    CombatProgress.writeProg();
+                    LRTStr.writeLRTStr();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
 
             window.close();
 

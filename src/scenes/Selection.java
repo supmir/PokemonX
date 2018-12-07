@@ -18,7 +18,7 @@ class Selection {
     public static Scene start(int count, String mode) {
         Label top = new Label("Player" + ("computer".equals(mode) ? "" : (" " + mode)) + ", go ahead");
         top.setMinSize(400, 50);
-        top.setBorder(Styles.getBorder());
+        top.setBorder(Main.styles.getBorder());
         top.setAlignment(Pos.CENTER);
         StackPane middle = new StackPane();
         ComboBox<String> pokeList = new ComboBox<>();
@@ -38,7 +38,7 @@ class Selection {
                 "\nSkill 4 : \nType : \nPower : \nAccuracy : ");
         bottom.setMinSize(400, 430);
         bottom.setPadding(new Insets(10));
-        bottom.setBorder(Styles.getBorder());
+        bottom.setBorder(Main.styles.getBorder());
         GridPane.setConstraints(bottom, 0, 11);
         ////item config
         pokeList.setPromptText("Choose your " + (count == 0 ? "first" : (count == 1 ? "second" : "third")) + " Pokémon! ");
