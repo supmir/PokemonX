@@ -24,7 +24,7 @@ class Administrator {
 
     public static Scene start() {
         //declarations
-//todo no duplicate pokemon
+//todo no duplicate pokemon,remove, modify
         Label txt = new Label("Create your own Pokémon!");
         Button back = new Button("Back");
         Button next = new Button("Next");

@@ -196,37 +196,35 @@ public class Combat {
 
     private static void setNotComputerButton(Button[] skill, Button change, int left, int right, boolean turn) {
 
-        if (accumulator(left, right, turn)) {//border button turn and position according to speed accumulator true is left turn
-            setLeftButton(skill, change, left, right, turn, true);
-        } else {
-            skill[0].setOnAction(event -> {
-                controller[1][right].attacks(0, controller[0][left], turn, true);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
-            });
-            skill[1].setOnAction(event -> {
-                controller[1][right].attacks(1, controller[0][left], turn, true);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
 
-            });
-            skill[2].setOnAction(event -> {
-                controller[1][right].attacks(2, controller[0][left], turn, true);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
+        skill[0].setOnAction(event -> {
+            controller[1][right].attacks(0, controller[0][left], turn, true);
+            Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
+        });
+        skill[1].setOnAction(event -> {
+            controller[1][right].attacks(1, controller[0][left], turn, true);
+            Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
 
-            });
-            skill[3].setOnAction(event -> {
-                controller[1][right].attacks(3, controller[0][left], turn, true);
-                Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
+        });
+        skill[2].setOnAction(event -> {
+            controller[1][right].attacks(2, controller[0][left], turn, true);
+            Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
 
-            });
-            change.setOnAction(event -> {
+        });
+        skill[3].setOnAction(event -> {
+            controller[1][right].attacks(3, controller[0][left], turn, true);
+            Main.window.setScene(start(left, right, accumulator(left, right, turn), true));
 
-                if (right == 2)
-                    Main.window.setScene(start(left, 0, accumulator(left, 0, turn), true));
-                else
-                    Main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), true));
-            });
-        }
+        });
+        change.setOnAction(event -> {
+
+            if (right == 2)
+                Main.window.setScene(start(left, 0, accumulator(left, 0, turn), true));
+            else
+                Main.window.setScene(start(left, right + 1, accumulator(left, right + 1, turn), true));
+        });
     }
+
 
     private static void setComputerButton(Button change, int left, int right, boolean turn) {
         change.setOnAction(event -> {
@@ -262,12 +260,13 @@ public class Combat {
         skillSet.getChildren().add(change);
         bottom.getChildren().add(skillSet);
         skillSet.setAlignment(Pos.CENTER_LEFT);
-
-
         if (notComputer) {//border button turn and position according to speed accumulator, true is right turn because not left
-            if (!accumulator(left, right, turn))
+            if (accumulator(left, right, turn)) {
+                setLeftButton(skill, change, left, right, turn, true);
+            } else {
+                setNotComputerButton(skill, change, left, right, turn);
                 skillSet.setAlignment(Pos.CENTER_RIGHT);
-            setNotComputerButton(skill, change, left, right, turn);
+            }
         } else {//not left, but not notComputer so computer turn
             //todo check whose turn
             setComputerBottomNode(bottom, left, right, turn);
@@ -277,12 +276,8 @@ public class Combat {
                 setComputerButton(change, left, right, turn);
             } else {
                 setLeftButton(skill, change, left, right, turn, false);
-
             }
-
         }
-
-
         return bottom;
     }
 

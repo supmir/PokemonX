@@ -1,12 +1,15 @@
 package scenes;
 
+import ImageGetter.ImgGet;
 import framework.Main;
 import framework.Styles;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,12 +17,15 @@ import java.util.ArrayList;
 class Menu {
 
     public static Scene start() {
-
-
         final int width = 200;
         int x = 0;
+
+        ImageView imageHolder = new ImageView();
+        imageHolder.setImage(ImgGet.imgGet());
+
         Label txt = new Label("Welcome to Pokémon");
         txt.setMinSize(width * 2, 50);
+        txt.setStyle("-fx-background-color: white;");
         txt.setBorder(Styles.getBorder());
         txt.setAlignment(Pos.CENTER);
 
@@ -57,7 +63,6 @@ class Menu {
         Buttons.get(x).setOnAction(e -> Main.window.setScene(SceneHandler.gameMode()));
         Buttons.get(x + 1).setOnAction(e -> SceneHandler.credits());
         Buttons.get(x + 2).setOnAction(e -> Main.window.setScene(SceneHandler.settings()));
-
         Buttons.get(x + 3).setOnAction(e -> Main.window.setScene(SceneHandler.administrator()));
 
         VBox layout1 = new VBox(20);
@@ -65,7 +70,10 @@ class Menu {
         layout1.getChildren().addAll(Buttons);
         layout1.setAlignment(Pos.CENTER);
 
+        StackPane all = new StackPane();
+        all.getChildren().addAll(imageHolder, layout1);
 
-        return new Scene(layout1, 800, 800);
+
+        return new Scene(all, 800, 800);
     }
 }

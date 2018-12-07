@@ -10,6 +10,7 @@ public class FourLetter {
     private static int wasMean = 0;
 
     public static String getPhrase(int niceness) {
+        int tempNiceness = niceness;
 //todo add more lines
         String[]
 
@@ -50,20 +51,20 @@ public class FourLetter {
 
 
         //2 is nice/1 is mean/0 is sarcastic
-        if (niceness < 10) {
-            if (wasMean > 3 && niceness == 2) {
+        if (tempNiceness < 10) {
+            if (wasMean > 3 && tempNiceness == 2) {
                 wasDumb = 0;
                 wasMean = 0;
             }
-            if (wasDumb > 3 && niceness == 2) {
-                niceness = 0;
+            if (wasDumb > 3 && tempNiceness == 2) {
+                tempNiceness = 0;
             }
-        } else if (niceness < 20) {
-            niceness = 3;
+        } else if (tempNiceness < 20) {
+            tempNiceness = 3;
         }
 
 
-        switch (niceness) {
+        switch (tempNiceness) {
             case 0:
                 wasMean++;
                 return sarcastic[r.nextInt(sarcastic.length)];
