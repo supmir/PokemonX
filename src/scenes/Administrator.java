@@ -101,14 +101,14 @@ class Administrator {
         layout1.getChildren().addAll(txt, center);
         layout1.setAlignment(Pos.CENTER);
         //action listeners
-        setupActionListeners(back, next, textFields, comboBoxes, txt);
+        setupFirstActionListeners(back, next, textFields, comboBoxes, txt);
 
         return new Scene(layout1, 800, 800);
 
     }
 
 
-    private static void setupActionListeners(Button back, Button next, ArrayList<TextField> textFields, ArrayList<ComboBox<String>> comboBoxes, Label txt) {
+    private static void setupFirstActionListeners(Button back, Button next, ArrayList<TextField> textFields, ArrayList<ComboBox<String>> comboBoxes, Label txt) {
         {
             back.setOnAction(event -> Main.window.setScene(SceneHandler.menu()));
             next.setOnAction(event -> Main.window.setScene(skillPage(
@@ -120,61 +120,30 @@ class Administrator {
                             textFields.get(4).getText() + "\n",
                     Integer.parseInt(comboBoxes.get(1).getValue()),
                     textFields.get(0).getText() + "(Custom)")));
-            textFields.get(0).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-                if (!newValue) {
-                    if (textFields.get(0).getText().matches("(.+\\(Custom\\))|")) {
-                        textFields.get(0).setText(rName());
-                        txt.setText("Pokémon name can't be that. " + FourLetter.getPhrase(1));
-                    } else {
-                        txt.setText(FourLetter.getPhrase(2));
-                    }
-                }
-            });
-            textFields.get(1).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-                if (!newValue) {
-                    if (textFields.get(1).getText().matches("[1-4]\\d")) {
-                        txt.setText(FourLetter.getPhrase(2));
-                    } else {
-                        textFields.get(1).setText(rInt());
-                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
-                    }
-                }
-            });
-            textFields.get(2).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-                if (!newValue) {
-                    if (textFields.get(2).getText().matches("[1-4]\\d")) {
-                        txt.setText(FourLetter.getPhrase(2));
-                    } else {
-                        textFields.get(2).setText(rInt());
-                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
-                    }
-                }
-            });
-            textFields.get(3).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-                if (!newValue) {
-                    if (textFields.get(3).getText().matches("[2-5]\\d")) {
-                        txt.setText(FourLetter.getPhrase(2));
-                    } else {
-                        textFields.get(3).setText(rInt(20, 59));
-                        txt.setText("Put something between 20-59. " + FourLetter.getPhrase(1));
-                    }
-                }
-            });
-            textFields.get(4).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-                if (!newValue) {
-                    if (textFields.get(4).getText().matches("[1-4]\\d")) {
-                        txt.setText(FourLetter.getPhrase(2));
-                    } else {
-                        textFields.get(4).setText(rInt());
-                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
-                    }
-                }
-            });
 
+            setupTextFieldListeners(textFields, 0, "(.+\\(Custom\\))|", -1, -1, txt);
+            setupTextFieldListeners(textFields, 1, "[1-4]\\d", 10, 49, txt);
+            setupTextFieldListeners(textFields, 2, "[1-4]\\d", 10, 49, txt);
+            setupTextFieldListeners(textFields, 3, "[2-5]\\d", 20, 59, txt);
+            setupTextFieldListeners(textFields, 4, "[1-4]\\d", 10, 49, txt);
         }
     }
 
-    private static Scene skillPage(String line, int skillCount, String name) {
+    private static void setupTextFieldListeners(ArrayList<TextField> textFields, int index, String regex, int min, int max, Label txt) {
+        textFields.get(index).focusedProperty().addListener((arg0, oldValue, newValue) -> {
+            if (!newValue) {
+                if (textFields.get(index).getText().matches(regex)) {
+                    txt.setText(FourLetter.getPhrase(2));
+                } else {
+                    textFields.get(index).setText(rInt(min, max));
+                    txt.setText("Put something between " + min + "-" + max + "." + FourLetter.getPhrase(1));
+                }
+            }
+        });
+    }
+
+
+    private static Scene skillPage(String line, int skillCount, String name) {//use setupTextFIeldListeners method here too
         if (skillCount == 0) {
             return saved(line + "$", name);
         }
@@ -326,11 +295,6 @@ class Administrator {
     private static String rInt() {
         return rInt(10, 49);
     }
-
-    private static String rInt(String name) {
-        return rName();
-    }
-
 
     private static String rInt(int min, int max) {
         if (min == -1 && max == -1) {
