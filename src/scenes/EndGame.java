@@ -14,7 +14,7 @@ class EndGame {
 
 
         Label border = new Label();
-        Label txt = new Label((x.equals("Computer") ? "" : "Player ") + x + " wins!");
+        Label txt = new Label(("Computer".equals(x) ? "" : "Player ") + x + " wins!");
 
         border.setMinSize(400, 50);
         border.setBorder(Styles.getBorder());

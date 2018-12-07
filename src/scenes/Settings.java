@@ -2,15 +2,11 @@ package scenes;
 
 import framework.Main;
 import framework.Styles;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import tools.FourLetter;
+import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
@@ -19,7 +15,6 @@ class Settings {
     //todo settings page
     static Scene start() {
         final int width = 200;
-        int x = 0;
         Label txt = new Label("Settings");
         txt.setMinSize(width * 2, 50);
         txt.setBorder(Styles.getBorder());
@@ -37,6 +32,22 @@ class Settings {
             button.setMinWidth(width);
         }
 
+        GridPane holder = new GridPane();
+
+        holder.setHgap(10);
+        holder.setVgap(10);
+        Label[] labels = new Label[4];
+
+        String[] labelString = {
+                "Border Color : ",
+                "Border Style : ",
+                "Corner Style : ",
+                "Border Width : "
+        };
+
+        for (int i = 0; i < labelString.length; i++) {
+            labels[i] = new Label(labelString[i]);
+        }
 
         ColorPicker colorPicker = new ColorPicker(Styles.getColor());
         colorPicker.setMaxWidth(200);
@@ -57,14 +68,10 @@ class Settings {
             Styles.setRadii(newValue.doubleValue());
             txt.setBorder(Styles.getBorder());
         });
-
-
         borderWidths.valueProperty().addListener((arg0, oldValue, newValue) -> {
             Styles.setBorderWidths(newValue.doubleValue());
             txt.setBorder(Styles.getBorder());
         });
-
-
         borderStrokeStyleComboBox.getItems().addAll(
                 BorderStrokeStyle.NONE,
                 BorderStrokeStyle.DASHED,
@@ -90,13 +97,18 @@ class Settings {
         });
 
 
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(txt, colorPicker, borderStrokeStyleComboBox);
-        layout1.getChildren().addAll(radii, borderWidths);
-        layout1.getChildren().addAll(Buttons);
-        layout1.setAlignment(Pos.CENTER);
+        holder.setAlignment(Pos.CENTER);
+        holder.add(txt, 0, 0, 2, 1);
+        for (int i = 0; i < 4; i++) {
+            holder.add(labels[i], 0, i + 1);
+        }
 
-
-        return new Scene(layout1, 800, 800);
+        holder.add(colorPicker, 1, 1);
+        holder.add(borderStrokeStyleComboBox, 1, 2);
+        holder.add(radii, 1, 3);
+        holder.add(borderWidths, 1, 4);
+        holder.add(Buttons.get(0), 0, 5);
+        holder.add(Buttons.get(1), 1, 5);
+        return new Scene(holder, 800, 800);
     }
 }

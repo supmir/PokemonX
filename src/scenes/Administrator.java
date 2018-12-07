@@ -24,7 +24,6 @@ class Administrator {
 
     public static Scene start() {
         //declarations
-
 //todo no duplicate pokemon
         Label txt = new Label("Create your own Pokémon!");
         Button back = new Button("Back");
@@ -48,36 +47,43 @@ class Administrator {
                     fieldWid = 200;
             center.getColumnConstraints().add(new ColumnConstraints(labWid));
             center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
-            comboBoxes.get(0).setPrefWidth(300);
+            for (ComboBox<String> comboBox : comboBoxes) {
+                comboBox.setPrefWidth(300);
+            }
             comboBoxes.get(0).setPromptText(("Pokemon type"));
             comboBoxes.get(0).getItems().addAll(TypeList.getList());
             comboBoxes.get(0).getSelectionModel().selectFirst();
-            comboBoxes.get(1).setPrefWidth(300);
             comboBoxes.get(1).setPromptText("Select number of skills");
             comboBoxes.get(1).getItems().addAll("1", "2", "3", "4");
             comboBoxes.get(1).getSelectionModel().selectLast();
         }
 //adding stuff into their holder
         {
-            labels.add(new Label("Name :"));
-            labels.add(new Label("Type :"));
-            labels.add(new Label("Attack :"));
-            labels.add(new Label("Defense :"));
-            labels.add(new Label("HP :"));
-            labels.add(new Label("Speed :"));
-            labels.add(new Label("Number of Skills :"));
+            String[] labelString = {
+                    "Name :",
+                    "Type :",
+                    "Attack :",
+                    "Defense :",
+                    "HP :",
+                    "Speed :",
+                    "Number of Skills :"
+            };
+            for (int i = 0; i < labelString.length; i++) {
+                labels.add(new Label(labelString[i]));
+                center.add(labels.get(i), 0, i);
+            }
+
             labels.get(6).setPrefWidth(200);
-            textFields.add(new TextField(rName()));//pokemon name CANNOT contain () because it is used as (custom) during game
-            textFields.add(new TextField(rInt()));//Attack
-            textFields.add(new TextField(rInt()));//Defense
-            textFields.add(new TextField(rInt(20, 50)));//HP
-            textFields.add(new TextField(rInt()));//Speed
-            center.add(labels.get(0), 0, 0);
-            center.add(labels.get(1), 0, 1);
-            center.add(labels.get(2), 0, 2);
-            center.add(labels.get(3), 0, 3);
-            center.add(labels.get(4), 0, 4);
-            center.add(labels.get(5), 0, 5);
+
+            int[]
+                    min = {-1, 10, 10, 20, 10},
+                    max = {-1, 49, 49, 49, 49};
+
+            for (int i = 0; i < min.length; i++) {
+                textFields.add(new TextField(rInt(min[i], max[i])));
+            }
+
+
             center.add(labels.get(6), 0, 6, 2, 1);
             center.add(textFields.get(0), 1, 0);
             center.add(comboBoxes.get(0), 1, 1);
@@ -95,6 +101,14 @@ class Administrator {
         layout1.getChildren().addAll(txt, center);
         layout1.setAlignment(Pos.CENTER);
         //action listeners
+        setupActionListeners(back, next, textFields, comboBoxes, txt);
+
+        return new Scene(layout1, 800, 800);
+
+    }
+
+
+    private static void setupActionListeners(Button back, Button next, ArrayList<TextField> textFields, ArrayList<ComboBox<String>> comboBoxes, Label txt) {
         {
             back.setOnAction(event -> Main.window.setScene(SceneHandler.menu()));
             next.setOnAction(event -> Main.window.setScene(skillPage(
@@ -158,9 +172,6 @@ class Administrator {
             });
 
         }
-
-        return new Scene(layout1, 800, 800);
-
     }
 
     private static Scene skillPage(String line, int skillCount, String name) {
@@ -316,8 +327,15 @@ class Administrator {
         return rInt(10, 49);
     }
 
-    private static String rInt(int min, int max) {
+    private static String rInt(String name) {
+        return rName();
+    }
 
+
+    private static String rInt(int min, int max) {
+        if (min == -1 && max == -1) {
+            return rName();
+        }
         int range = max - min + 1;
         return String.valueOf(r.nextInt(range) + 10);
     }

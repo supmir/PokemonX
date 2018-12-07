@@ -74,12 +74,12 @@ class Selection {
         } else {
             choose.setOnAction(e -> {
                 SceneHandler.allList.remove(pokeList.getValue());
-                if (count == 2 && mode.equals("two")) {
+                if (count == 2 && "two".equals(mode)) {
                     SceneHandler.setController(new Pokemon(pokeList.getValue()), 1, count);
                     Main.window.setScene(SceneHandler.combat(true));
                 } else {
-                    SceneHandler.setController(new Pokemon(pokeList.getValue()), mode.equals("one") ? 0 : 1, count);
-                    Main.window.setScene(start(mode.equals("one") ? count : count + 1, mode.equals("one") ? "two" : "one"));
+                    SceneHandler.setController(new Pokemon(pokeList.getValue()), "one".equals(mode) ? 0 : 1, count);
+                    Main.window.setScene(start(mode.equals("one") ? count : count + 1, "one".equals(mode) ? "two" : "one"));
                 }
             });
 

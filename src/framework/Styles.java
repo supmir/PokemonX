@@ -2,7 +2,6 @@ package framework;
 
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class Styles {
     private static Color color = Color.valueOf("gray");
@@ -54,11 +53,6 @@ public class Styles {
 
     }
 
-    public static void setBorder(Border border) {
-        Styles.border = border;
-        updateBorder();
-
-    }
 
     public static void setDefault() {
 
