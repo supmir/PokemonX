@@ -119,7 +119,7 @@ public class Combat {
         Label fightLog = new Label(str);
         fightLog.setMinSize(fightWidth, fightHeight);
         fightLog.setAlignment(Pos.BOTTOM_LEFT);
-//todo differentiate player moves (use color); arrayList of strings, color using controller code
+//todo differentiate player moves (use color); text flow of Text class, the Text class as an arraylist
         //.split of string also works
         ScrollPane middle = new ScrollPane();
         middle.setMinSize(dFightWidth, dFightHeight);

@@ -20,7 +20,10 @@ class Menu {
         int x = 0;
 
         ImageView imageHolder = new ImageView();
-        imageHolder.setImage(ImgGet.imgGet());
+
+        ImgGet get = new ImgGet();
+        imageHolder.setImage(get.getBackground("Background"));
+//        imageHolder.setImage(Menu.getResource("Background.png").toString());
 
         Label txt = new Label("Welcome to Pokémon");
         txt.setMinSize(width * 2, 50);
@@ -62,13 +65,13 @@ class Menu {
         Buttons.get(x + 1).setOnAction(e -> SceneHandler.credits());
         Buttons.get(x + 2).setOnAction(e -> Main.window.setScene(SceneHandler.settings()));
 
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(txt);
-        layout1.getChildren().addAll(Buttons);
-        layout1.setAlignment(Pos.CENTER);
+        VBox foreground = new VBox(20);
+        foreground.getChildren().addAll(txt);
+        foreground.getChildren().addAll(Buttons);
+        foreground.setAlignment(Pos.CENTER);
 
         StackPane all = new StackPane();
-        all.getChildren().addAll(imageHolder, layout1);
+        all.getChildren().addAll(imageHolder, foreground);
 
 
         return new Scene(all, 800, 800);

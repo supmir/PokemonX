@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import scenes.SceneHandler;
+import tools.AudioPlayer.Audio;
 import tools.CombatProgress;
 import tools.LRTStr;
 
@@ -28,6 +29,10 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+
+        new Audio("GameStart");
+
+
         String path = System.getProperty("user.home") + "/PokemonX/userStyle.txt";
         File temp = new File(path);
         if (temp.exists()) {
