@@ -37,16 +37,24 @@ public class SceneHandler {
     }
 
     static void credits() {
+
+        Main.bgm.pauseAudio();
         Credits.pop();
     }
 
     static Scene selection(String y) {
         allList = new framework.PokeList().getList();
+        Main.bgm.stopAudio();
+        Main.bgm.playAudio("Selection");
         return Selection.start(0, y);
     }
 
     //testtesttest
     static Scene combat(Boolean notComputer) {
+
+        Main.bgm.stopAudio();
+        Main.bgm.playAudio("Combat");
+
         Main.setInCombat(true);
         return Combat.start(notComputer);
     }
@@ -54,6 +62,10 @@ public class SceneHandler {
     static Scene endGame(String x) {
         Writer.delete(false);
         Main.setInCombat(false);
+
+        Main.bgm.stopAudio();
+        Main.bgm.playAudio("EndGame");
+
         return EndGame.start(x);
     }
 

@@ -1,8 +1,7 @@
 package scenes;
 
-import imagegetter.ImgGet;
+import tools.getres.getRes;
 import framework.Main;
-import framework.Styles;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,8 +20,8 @@ class Menu {
 
         ImageView imageHolder = new ImageView();
 
-        ImgGet get = new ImgGet();
-        imageHolder.setImage(get.getBackground("Background"));
+        getRes get = new getRes();
+        imageHolder.setImage(get.getImage("Background"));
 //        imageHolder.setImage(Menu.getResource("Background.png").toString());
 
         Label txt = new Label("Welcome to Pokémon");

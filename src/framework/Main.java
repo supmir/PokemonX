@@ -5,11 +5,11 @@ package framework;/*
  */
 
 
+import tools.getres.getRes;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import scenes.SceneHandler;
-import tools.AudioPlayer.Audio;
 import tools.CombatProgress;
 import tools.LRTStr;
 
@@ -26,11 +26,12 @@ public class Main extends Application {
     public static Stage window;
     private static boolean inCombat = false;
     public static Styles styles = new Styles();
+    public static getRes bgm = new getRes();
 
 
     public static void main(String[] args) {
 
-        new Audio("GameStart");
+        bgm.playAudio("Menu");
 
 
         String path = System.getProperty("user.home") + "/PokemonX/userStyle.txt";

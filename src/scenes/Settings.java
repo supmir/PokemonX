@@ -2,22 +2,20 @@ package scenes;
 
 import framework.Main;
 import framework.Styles;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 
 import java.util.ArrayList;
 
 class Settings {
-
-    //todo settings page
     static Scene start() {
         Styles temp = Main.styles;
-        final int width = 200;
+        final double width = 400;
         Label txt = new Label("Settings");
-        txt.setMinSize(width * 2, 50);
+        txt.setPrefSize(width, 50);
         txt.setBorder(temp.getBorder());
         txt.setAlignment(Pos.CENTER);
 
@@ -31,7 +29,8 @@ class Settings {
 
 
         for (Button button : Buttons) {
-            button.setMinWidth(width);
+            button.setPrefWidth(width);
+            button.setAlignment(Pos.CENTER);
         }
 
         GridPane holder = new GridPane();
@@ -49,21 +48,22 @@ class Settings {
 
         for (int i = 0; i < labelString.length; i++) {
             labels[i] = new Label(labelString[i]);
+            labels[i].setAlignment(Pos.CENTER);
+
         }
 
         ColorPicker colorPicker = new ColorPicker(temp.getColor());
-        colorPicker.setMaxWidth(200);
+        colorPicker.setPrefWidth(width * 4 / 6);
         ComboBox<BorderStrokeStyle> borderStrokeStyleComboBox = new ComboBox<>();
-        borderStrokeStyleComboBox.setPrefWidth(200);
+        borderStrokeStyleComboBox.setPrefWidth(width * 4 / 6);
 
         Slider radii = new Slider(0, 20, temp.getRadii());
         Slider borderWidths = new Slider(0, 20, temp.getBorderWidths());
-
         radii.setSnapToTicks(false);
-        radii.setMaxWidth(200);
+        radii.setPrefWidth(width * 4 / 6);
 
         borderWidths.setSnapToTicks(false);
-        borderWidths.setMaxWidth(200);
+        borderWidths.setPrefWidth(width * 4 / 6);
 
 
         radii.valueProperty().addListener((arg0, oldValue, newValue) -> {
@@ -113,13 +113,41 @@ class Settings {
             holder.add(labels[i], 0, i + 1);
         }
 
+
+        HBox buttonHolder = new HBox(10);
+        buttonHolder.getChildren().addAll(Buttons);
+
+
         holder.add(colorPicker, 1, 1);
         holder.add(borderStrokeStyleComboBox, 1, 2);
         holder.add(radii, 1, 3);
         holder.add(borderWidths, 1, 4);
-        holder.add(Buttons.get(0), 0, 5);
-        holder.add(Buttons.get(1), 1, 5);
-        holder.add(Buttons.get(2), 2, 5);
+        holder.add(buttonHolder, 0, 5, 2, 1);
+
+        GridPane.setHalignment(colorPicker, HPos.CENTER);
+        GridPane.setHalignment(borderStrokeStyleComboBox, HPos.CENTER);
+        GridPane.setHalignment(radii, HPos.CENTER);
+        GridPane.setHalignment(borderWidths, HPos.CENTER);
+        GridPane.setHalignment(buttonHolder, HPos.CENTER);
+
+
+        final int labWid = 100,
+                fieldWid = 250;
+        holder.getColumnConstraints().add(new ColumnConstraints(labWid));
+        holder.getColumnConstraints().add(new ColumnConstraints(fieldWid));
+
+        RowConstraints[] rowConstraints = new RowConstraints[6];
+        for (int i = 0; i < rowConstraints.length; i++) {
+            rowConstraints[i] = new RowConstraints();
+            rowConstraints[i].setMinHeight(20);
+        }
+
+
+        holder.getRowConstraints().addAll(rowConstraints);
+
+
+
+
         return new Scene(holder, 800, 800);
     }
 }

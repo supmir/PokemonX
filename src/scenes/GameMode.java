@@ -21,7 +21,7 @@ class GameMode {
         //add if statement only if txt config exists
         Button PvP = new Button("VS Player");
         Button PvC = new Button("VS Computer");
-        Button back = new Button("Back");
+        Button back = new Button("Back to Menu");
         PvP.setMinWidth(200);
         PvC.setMinWidth(200);
         back.setMinWidth(200);

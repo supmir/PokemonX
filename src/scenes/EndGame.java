@@ -27,8 +27,8 @@ class EndGame {
         Button credits = new Button("Credits");
 //todo fix reset
 
-        newGame.setOnAction(e -> Main.window.setScene(SceneHandler.menu()));
-        back.setOnAction(e -> Main.window.setScene(SceneHandler.gameMode()));
+        newGame.setOnAction(e -> Main.window.setScene(SceneHandler.gameMode()));
+        back.setOnAction(e -> Main.window.setScene(SceneHandler.menu()));
         credits.setOnAction(e -> SceneHandler.credits());
 
         HBox buttons = new HBox(20);
