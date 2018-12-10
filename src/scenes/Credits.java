@@ -15,20 +15,21 @@ import javafx.stage.Stage;
 import tools.getres.GetResource;
 
 public class Credits {
+    static Boolean stay = false;
 
 
     public static void pop() {
         GetResource popBgm = new GetResource();
         popBgm.playAudio("Credits");
-        popBgm.pauseAudio();
-        //todo fix waiter
-//        popBgm.waiter(3);
-
         //todo change to gridpane
-        Text amir = new Text("Amir\n");
-        Text marina = new Text("Marina\n");
-        Text anis = new Text("Anis\n");
-        Text fadh = new Text("Fadh\n");
+        Text amir = new Text("Amir Bin Iskandar (Head and Shoulder Knees Mentos)\n");
+        Text marina = new Text("Nur Marina Binti Wan Mahathir Awang Hijau\n");
+        Text anis = new Text("Nurus Siti Anis Wafiah Binti Mas Sokar \n");
+        Text fadh = new Text("Dayang Intan Fadhliana Nureyn Binti Ahmedi Hasbool Aliim\n");
+        Text team = new Text("Kacang");
+        Text dash = new Text("-");
+        Text team2 = new Text("Kacang Jaring\n");
+
         Stage window = new Stage();
 
 
@@ -38,7 +39,7 @@ public class Credits {
         window.setMinHeight(250);
 
 
-        TextFlow txt = new TextFlow(amir, marina, anis, fadh);
+        TextFlow txt = new TextFlow(amir, marina, anis, fadh, team, dash, team2);
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> {
             popBgm.stopAudio();
@@ -47,6 +48,8 @@ public class Credits {
         });
         VBox layout = new VBox(20);
         Button magic = new Button("???");
+        layout.getChildren().add(magic);
+        magic.setVisible(false);
         magic.setOnAction(e -> {
             window.close();
             Main.window.setScene(SceneHandler.administrator());
@@ -56,14 +59,15 @@ public class Credits {
         layout.setAlignment(Pos.CENTER);
 
 
-        amir.setOnMouseEntered(event -> {
+        dash.setOnMouseEntered(event -> {
             popBgm.pauseAudio();
-            layout.getChildren().add(magic);
+            magic.setVisible(true);
         });
-        amir.setOnMouseExited(event -> {
+        dash.setOnMouseClicked(event -> stay = !stay);
+        dash.setOnMouseExited(event -> {
             popBgm.continueAudio();
-
-            layout.getChildren().remove(magic);
+            if (!stay)
+                magic.setVisible(false);
         });
 
         Scene scene = new Scene(layout);
@@ -71,7 +75,7 @@ public class Credits {
             if (key.getCode() == KeyCode.ENTER) {
 
                 popBgm.pauseAudio();
-                layout.getChildren().add(magic);
+                magic.setVisible(true);
                 //this part might cause a duplicate children added error, but it's fine.
             }
         });
@@ -79,7 +83,7 @@ public class Credits {
             if (key.getCode() == KeyCode.ENTER) {
 
                 popBgm.continueAudio();
-                layout.getChildren().remove(magic);
+                magic.setVisible(false);
             }
         });
         window.setOnCloseRequest(event -> {

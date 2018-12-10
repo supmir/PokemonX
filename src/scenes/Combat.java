@@ -3,6 +3,7 @@ package scenes;
 import framework.Main;
 import framework.Styles;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import tools.FourLetter;
 import framework.Pokemon;
 import javafx.geometry.Insets;
@@ -14,7 +15,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
+import tools.getres.GetResource;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public class Combat {
@@ -74,7 +77,7 @@ public class Combat {
 
         if (accCompare > 0) {
             tempTurn = true;
-        } else if (accCompare == 0) {//todo this will cause bug because accumulator counts even if its just a second check
+        } else if (accCompare == 0) {
             int speedCompare;
             speedCompare = controller[0][left].getSpeed() - controller[1][right].getSpeed();
 
@@ -107,9 +110,39 @@ public class Combat {
         Label LStatus = new Label(healthCheck(0, left));
         Label RStatus = new Label(healthCheck(1, right));
         RStatus.setTextAlignment(TextAlignment.RIGHT);
-        top.getChildren().addAll(LStatus, RStatus);
-        StackPane.setAlignment(LStatus, Pos.CENTER_LEFT);
-        StackPane.setAlignment(RStatus, Pos.CENTER_RIGHT);
+
+        RStatus.setAlignment(Pos.CENTER_RIGHT);
+        LStatus.setBorder(Main.styles.getBorder());
+        RStatus.setBorder(Main.styles.getBorder());
+        LStatus.setMinWidth(180);
+        RStatus.setMinWidth(180);
+
+        GetResource getResource = new GetResource();
+        ImageView imageLeft = new ImageView();
+        ImageView imageRight = new ImageView();
+        imageLeft.setFitHeight(100);
+        imageLeft.setFitWidth(100);
+
+        imageRight.setFitHeight(100);
+        imageRight.setFitWidth(100);
+
+
+        imageLeft.setImage(getResource.getImage(controller[0][left].getName()));
+        imageRight.setImage(getResource.getImage(controller[1][right].getName() + "Flip"));
+
+
+        HBox leftH = new HBox();
+        leftH.setAlignment(Pos.CENTER_LEFT);
+        HBox rightH = new HBox();
+        rightH.setAlignment(Pos.CENTER_RIGHT);
+        leftH.getChildren().addAll(LStatus, imageLeft);
+        rightH.getChildren().addAll(imageRight, RStatus);
+
+        top.getChildren().addAll(leftH, rightH);
+
+
+        StackPane.setAlignment(leftH, Pos.CENTER_LEFT);
+        StackPane.setAlignment(rightH, Pos.CENTER_RIGHT);
 
 
         return top;
@@ -119,7 +152,6 @@ public class Combat {
         Label fightLog = new Label(str);
         fightLog.setMinSize(fightWidth, fightHeight);
         fightLog.setAlignment(Pos.BOTTOM_LEFT);
-//todo differentiate player moves (use color); text flow of Text class, the Text class as an arraylist
         //.split of string also works
         ScrollPane middle = new ScrollPane();
         middle.setMinSize(dFightWidth, dFightHeight);
@@ -162,7 +194,7 @@ public class Combat {
         StackPane.setAlignment(computerHolder, Pos.CENTER_RIGHT);
         bottom.getChildren().add(0, computerHolder);
         if (!accumulator(left, right, turn)) {
-            computer.setText(strC + "\nComputer : " + FourLetter.getPhrase(1));
+            computer.setText(strC + "\nComputer : " + FourLetter.getPhrase(13));
             strC = computer.getText();
         }
     }
@@ -329,7 +361,14 @@ public class Combat {
 
 
     private static String healthCheck(int who, int which) {
-        return controller[who][which].getName() + "\nHP : " + controller[who][which].getHp() + "\nAccumulated Speed : " + controller[who][which].getAccSp();
+
+
+        DecimalFormat df = new DecimalFormat("#.00");
+
+
+        return controller[who][which].getName() + "\nHP : " + df.format(controller[who][which].getHp()) + "\nAccumulated Speed : " + controller[who][which].getAccSp();
+
+
     }
 
     private static int lifeCheck() {

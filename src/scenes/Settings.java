@@ -87,6 +87,7 @@ class Settings {
             Main.window.setScene(SceneHandler.settings());
         });
         Buttons.get(1).setOnAction(e -> {
+            Main.styles.setDefault();
             Main.window.setScene(SceneHandler.menu());
         });
         Buttons.get(2).setOnAction(event -> {

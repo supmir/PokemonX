@@ -15,6 +15,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 class Menu {
+    static int i = 0;
+
     //todo reset game if user files are corrupt
     public static Scene start() {
         final int width = 200;
@@ -47,12 +49,13 @@ class Menu {
                 Buttons.add(new Button("Continue"));
                 x++;
                 Buttons.get(0).setOnAction(event -> Main.window.setScene(SceneHandler.cont()));
+                Buttons.get(0).setOnMouseEntered(event -> txt.setText("Continue previous Game"));
+                Buttons.get(0).setOnMouseExited(event -> txt.setText("Welcome to Pokémon"));
             }
         }
         Buttons.add(new Button("New Game"));
         Buttons.add(new Button("Credits"));
         Buttons.add(new Button("Settings"));
-
         Buttons.add(new Button("Reset"));
 
 
@@ -73,6 +76,18 @@ class Menu {
             }
         });
 
+        String[] info = {"", "Start a new game", "Look at who made this game", "Set layouts", "Reset everything back to default"};
+
+        Buttons.get(x).setOnMouseEntered(event -> txt.setText(info[1]));
+        Buttons.get(x).setOnMouseExited(event -> txt.setText("Welcome to Pokémon"));
+        Buttons.get(x + 1).setOnMouseEntered(event -> txt.setText(info[2]));
+        Buttons.get(x + 1).setOnMouseExited(event -> txt.setText("Welcome to Pokémon"));
+        Buttons.get(x + 2).setOnMouseEntered(event -> txt.setText(info[3]));
+        Buttons.get(x + 2).setOnMouseExited(event -> txt.setText("Welcome to Pokémon"));
+        Buttons.get(x + 3).setOnMouseEntered(event -> txt.setText(info[4]));
+        Buttons.get(x + 3).setOnMouseExited(event -> txt.setText("Welcome to Pokémon"));
+
+
         VBox foreground = new VBox(20);
         foreground.getChildren().addAll(txt);
         foreground.getChildren().addAll(Buttons);
@@ -83,5 +98,9 @@ class Menu {
 
 
         return new Scene(all, 800, 800);
+    }
+
+    private void lieToLambda() {
+
     }
 }
