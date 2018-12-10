@@ -2,6 +2,7 @@ package tools;
 
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Writer {
 
@@ -41,23 +42,24 @@ public class Writer {
     }
 
     public static void delete(boolean all) {
+        ArrayList<String> files = new ArrayList<>();
+
         if (all) {
-            String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt";
+            files.add("Pokemons.txt");
+            files.add("userStyle.txt");
+
+        }
+
+        files.add("fight.bin");
+        files.add("LRTStr.bin");
+
+
+        for (String file : files) {
+            String path = System.getProperty("user.home") + "/PokemonX/" + file;
             File temp = new File(path);
             if (temp.delete())
                 System.out.println("Deleted " + path);
         }
-
-        String path = System.getProperty("user.home") + "/PokemonX/fight.bin";
-        File temp = new File(path);
-        if (temp.delete())
-            System.out.println("Deleted " + path);
-
-
-        String path2 = System.getProperty("user.home") + "/PokemonX/LRTStr.bin";
-        File temp2 = new File(path2);
-        if (temp2.delete())
-            System.out.println("Deleted " + path2);
 
 
     }

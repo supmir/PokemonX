@@ -124,21 +124,24 @@ class Administrator {
                     textFields.get(0).getText() + "(Custom)")));
 
 
-            textFields.get(0).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-                if (!newValue) {
-                    if (textFields.get(0).getText().matches("(.+\\(Custom\\))|")) {
-                        textFields.get(0).setText(rInt(-1, -1));
-                        txt.setText("Pokémon name can't be that. " + FourLetter.getPhrase(1));
-                    } else {
-                        txt.setText(FourLetter.getPhrase(2));
-                    }
-                }
-            });
+            setupTextFieldListeners(textFields, 0, getRegex(), -1, -1, txt);
             setupTextFieldListeners(textFields, 1, "[1-4]\\d", 10, 49, txt);
             setupTextFieldListeners(textFields, 2, "[1-4]\\d", 10, 49, txt);
             setupTextFieldListeners(textFields, 3, "[2-5]\\d", 20, 59, txt);
             setupTextFieldListeners(textFields, 4, "[1-4]\\d", 10, 49, txt);
         }
+    }
+
+    private static String getRegex() {
+        StringBuilder str = new StringBuilder("(.+\\(Custom\\))|");
+        ArrayList<String> list = new framework.PokeList().getList();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).endsWith("(Custom)"))
+                list.set(i, list.get(i).substring(0, list.get(i).length() - 8));
+            str.append("|").append(list.get(i));
+        }
+        System.out.println(str);
+        return str.toString();
     }
 
     private static void setupTextFieldListeners(ArrayList<TextField> textFields, int index, String regex, int min, int max, Label txt) {
@@ -148,7 +151,11 @@ class Administrator {
                     txt.setText(FourLetter.getPhrase(2));
                 } else {
                     textFields.get(index).setText(rInt(min, max));
-                    txt.setText("Put something between " + min + "-" + max + ". " + FourLetter.getPhrase(1));
+                    if (min == -1 && max == -1) {
+                        txt.setText("Name cannot be that. " + FourLetter.getPhrase(1));
+
+                    } else
+                        txt.setText("Put something between " + min + "-" + max + ". " + FourLetter.getPhrase(1));
                 }
             }
         });

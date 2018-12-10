@@ -83,7 +83,7 @@ class Settings {
         borderStrokeStyleComboBox.getSelectionModel().select(temp.getBorderStrokeStyle());
 
         Buttons.get(0).setOnAction(event -> {
-            temp.setDefault();
+            Main.styles.setDefault();
             Main.window.setScene(SceneHandler.settings());
         });
         Buttons.get(1).setOnAction(e -> {
@@ -91,6 +91,7 @@ class Settings {
         });
         Buttons.get(2).setOnAction(event -> {
             temp.writeStyles();
+            txt.setText("Configuration saved.");
             Main.styles = temp;
         });
 

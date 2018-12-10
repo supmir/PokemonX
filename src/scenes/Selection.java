@@ -8,7 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import tools.getres.GetResource;
 
 import java.util.Random;
 
@@ -49,11 +51,33 @@ class Selection {
             setNotComputerAction(choose, pokeList, count, mode);
         }
 
-        pokeList.setOnAction(e -> bottom.setText(new Pokemon(pokeList.getValue()).toString()));
+
+        //todo @fadh
+
+        GetResource img = new GetResource();
+        ImageView imageHolder = new ImageView();
+        imageHolder.setFitHeight(100);
+        imageHolder.setFitWidth(100);
+
+
+        imageHolder.setImage(img.getImage("Default"));
+
+        pokeList.setOnAction(e -> {
+            imageHolder.setImage(img.getImage(pokeList.getValue()));
+            bottom.setText(new Pokemon(pokeList.getValue()).toString());
+        });
         ////layout
         VBox holder = new VBox();
         holder.setPadding(new Insets(10));
-        holder.getChildren().addAll(top, middle, bottom);
+
+
+        StackPane bottomHolder = new StackPane();
+        bottomHolder.getChildren().addAll(bottom, imageHolder);
+
+
+        holder.getChildren().addAll(top, middle, bottomHolder);
+
+
         holder.setAlignment(Pos.CENTER);
         return new Scene(holder, 800, 800);
 

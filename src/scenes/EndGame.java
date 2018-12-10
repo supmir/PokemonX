@@ -25,7 +25,7 @@ class EndGame {
         Button back = new Button("Back to Main");
         Button newGame = new Button("New Game");
         Button credits = new Button("Credits");
-//todo fix reset
+//todo fix reset??
 
         newGame.setOnAction(e -> Main.window.setScene(SceneHandler.gameMode()));
         back.setOnAction(e -> Main.window.setScene(SceneHandler.menu()));

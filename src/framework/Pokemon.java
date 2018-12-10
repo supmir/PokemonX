@@ -5,6 +5,7 @@ package framework;/*
  */
 
 import scenes.Combat;
+import tools.getres.GetResource;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,6 +36,7 @@ public class Pokemon implements Serializable {
             skillCount;
     private double hp;
     private boolean alive = true;
+    private GetResource sfx = new GetResource();
 
     public Pokemon(String name) {
         String path = name.endsWith("(Custom)") ? System.getProperty("user.home") + "/PokemonX/Pokemons.txt" : "Pokemons.txt";
@@ -117,14 +119,8 @@ public class Pokemon implements Serializable {
     }
 
     public void attacks(int skillN, Pokemon attacked, boolean turn, boolean notComputer) {
+        sfx.playAudio("Attack");
 
-
-//TODO use AudioClip
-//
-//            Media sound = new Media(new File(attackSFX).toURI().toString());
-//            MediaPlayer mediaPlayer = new MediaPlayer(sound);
-//            System.out.println("sound");
-//            mediaPlayer.play();
 
 
         String line = name + " used " + skillName[skillN] + ". ";
@@ -155,6 +151,7 @@ public class Pokemon implements Serializable {
             if (attacked.getHp() <= 0) {
                 attacked.kill();
                 line += attacked.name + " has fainted.\n";
+                sfx.playAudio("Died");
             }
         } else {
             line += name + "s attack missed.\n";

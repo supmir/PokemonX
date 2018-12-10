@@ -5,7 +5,7 @@ package framework;/*
  */
 
 
-import tools.getres.getRes;
+import tools.getres.GetResource;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -26,7 +26,7 @@ public class Main extends Application {
     public static Stage window;
     private static boolean inCombat = false;
     public static Styles styles = new Styles();
-    public static getRes bgm = new getRes();
+    public static GetResource bgm = new GetResource();
 
 
     public static void main(String[] args) {

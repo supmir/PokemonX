@@ -1,6 +1,8 @@
 package scenes;
 
-import tools.getres.getRes;
+import popups.ConfirmBox;
+import tools.Writer;
+import tools.getres.GetResource;
 import framework.Main;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,7 +22,7 @@ class Menu {
 
         ImageView imageHolder = new ImageView();
 
-        getRes get = new getRes();
+        GetResource get = new GetResource();
         imageHolder.setImage(get.getImage("Background"));
 //        imageHolder.setImage(Menu.getResource("Background.png").toString());
 
@@ -51,7 +53,7 @@ class Menu {
         Buttons.add(new Button("Credits"));
         Buttons.add(new Button("Settings"));
 
-        Buttons.add(new Button("Reset"));//todo make reset button work
+        Buttons.add(new Button("Reset"));
 
 
         for (Button button : Buttons) {
@@ -63,6 +65,13 @@ class Menu {
         Buttons.get(x).setOnAction(e -> Main.window.setScene(SceneHandler.gameMode()));
         Buttons.get(x + 1).setOnAction(e -> SceneHandler.credits());
         Buttons.get(x + 2).setOnAction(e -> Main.window.setScene(SceneHandler.settings()));
+        Buttons.get(x + 3).setOnAction(event -> {
+            if (ConfirmBox.display("Are you sure?", "All of your data will be lost")) {
+                Writer.delete(true);
+                Main.styles.setDefault();
+                Main.window.setScene(SceneHandler.menu());
+            }
+        });
 
         VBox foreground = new VBox(20);
         foreground.getChildren().addAll(txt);

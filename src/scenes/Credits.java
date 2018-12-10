@@ -12,14 +12,17 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import tools.getres.getRes;
+import tools.getres.GetResource;
 
-class Credits {
+public class Credits {
 
 
     public static void pop() {
-        getRes popBgm = new getRes();
+        GetResource popBgm = new GetResource();
         popBgm.playAudio("Credits");
+        popBgm.pauseAudio();
+        //todo fix waiter
+//        popBgm.waiter(3);
 
         //todo change to gridpane
         Text amir = new Text("Amir\n");
@@ -44,7 +47,10 @@ class Credits {
         });
         VBox layout = new VBox(20);
         Button magic = new Button("???");
-        magic.setOnAction(e -> Main.window.setScene(SceneHandler.administrator()));
+        magic.setOnAction(e -> {
+            window.close();
+            Main.window.setScene(SceneHandler.administrator());
+        });
         layout.getChildren().addAll(txt, closeButton);
         layout.setPadding(new Insets(20));
         layout.setAlignment(Pos.CENTER);
@@ -66,6 +72,7 @@ class Credits {
 
                 popBgm.pauseAudio();
                 layout.getChildren().add(magic);
+                //this part might cause a duplicate children added error, but it's fine.
             }
         });
         scene.addEventHandler(KeyEvent.KEY_RELEASED, (key) -> {
