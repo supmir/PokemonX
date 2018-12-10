@@ -8,8 +8,6 @@ import java.io.IOException;
 
 public class CombatProgress {
     public static void writePokemon(String line) {
-        //todo remove pokemon in admin
-
         String path = System.getProperty("user.home") + "/PokemonX/Pokemons.txt",
                 tempLine = line;
         File temp = new File(path);

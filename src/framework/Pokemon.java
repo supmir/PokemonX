@@ -36,7 +36,7 @@ public class Pokemon implements Serializable {
             skillCount;
     private double hp;
     private boolean alive = true;
-    private GetResource sfx = new GetResource();
+//    private GetResource sfx = new GetResource(); DO NOT PUT IT HER IT IS NOT SERIALIZABLE
 
     public Pokemon(String name) {
         String path = name.endsWith("(Custom)") ? System.getProperty("user.home") + "/PokemonX/Pokemons.txt" : "Pokemons.txt";
@@ -119,9 +119,10 @@ public class Pokemon implements Serializable {
     }
 
     public void attacks(int skillN, Pokemon attacked, boolean turn, boolean notComputer) {
-        sfx.playAudio("Attack");
+        Random r = new Random();
 
-
+        //todo @anis
+//        sfx.playAudio("Attack"+r.nextInt(7));
 
         String line = name + " used " + skillName[skillN] + ". ";
 
@@ -132,7 +133,6 @@ public class Pokemon implements Serializable {
             return;
         }
 
-        Random r = new Random();
 
         if (r.nextInt(101) < accuracy[skillN]) {
             line += "It is";
@@ -151,7 +151,7 @@ public class Pokemon implements Serializable {
             if (attacked.getHp() <= 0) {
                 attacked.kill();
                 line += attacked.name + " has fainted.\n";
-                sfx.playAudio("Died");
+//                sfx.playAudio("Died");
             }
         } else {
             line += name + "s attack missed.\n";

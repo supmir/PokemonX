@@ -19,8 +19,6 @@ import java.util.Random;
 
 class Administrator {
     private static final Random r = new Random();
-
-
     public static Scene start() {
         //declarations
 //todo no duplicate pokemon,remove, modify
@@ -124,7 +122,17 @@ class Administrator {
                     textFields.get(0).getText() + "(Custom)")));
 
 
-            setupTextFieldListeners(textFields, 0, getRegex(), -1, -1, txt);
+            textFields.get(0).focusedProperty().addListener((arg0, oldValue, newValue) -> {
+                if (!newValue) {
+                    if (textFields.get(0).getText().matches(getRegex())) {
+                        textFields.get(0).setText(rInt(-1, -1));
+                        txt.setText("Pokémon name can't be that. " + FourLetter.getPhrase(1));
+                    } else {
+                        txt.setText(FourLetter.getPhrase(2));
+                    }
+                }
+            });
+
             setupTextFieldListeners(textFields, 1, "[1-4]\\d", 10, 49, txt);
             setupTextFieldListeners(textFields, 2, "[1-4]\\d", 10, 49, txt);
             setupTextFieldListeners(textFields, 3, "[2-5]\\d", 20, 59, txt);
@@ -151,11 +159,8 @@ class Administrator {
                     txt.setText(FourLetter.getPhrase(2));
                 } else {
                     textFields.get(index).setText(rInt(min, max));
-                    if (min == -1 && max == -1) {
-                        txt.setText("Name cannot be that. " + FourLetter.getPhrase(1));
+                    txt.setText("Put something between " + min + "-" + max + ". " + FourLetter.getPhrase(1));
 
-                    } else
-                        txt.setText("Put something between " + min + "-" + max + ". " + FourLetter.getPhrase(1));
                 }
             }
         });
