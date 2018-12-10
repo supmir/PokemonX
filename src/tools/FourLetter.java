@@ -23,7 +23,7 @@ public class FourLetter {
                 "You have a nice face",
                 "Good one",
                 "You have a nice face, really... (not in a creepy way) :-)",
-                "Hey cutie ;)"
+                "Hey cutie ;)",
                 "Awesome!!!" 
         },
 
@@ -36,7 +36,7 @@ public class FourLetter {
                         "I spent days coding this and you can't even do this right?",
                         "What the frick?",
                         "Your parents will dab on you when you die",
-                        "This isn't even something that requires a high level of intelligence"
+                        "This isn't even something that requires a high level of intelligence",
                         "Dude, just gth."
                 },
                 sarcastic = {
@@ -50,7 +50,8 @@ public class FourLetter {
                         "Bring it on.",
                         "My grandma could do better",
                         "You should stick to Candy Crush",
-                        "You gotta do a little better than that if you wanna beat me",
+                        "You gotta do a little better than",
+                        "You can't beat me",
                         "I'm telling you, you're hopeless."
                 };
 

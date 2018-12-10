@@ -112,8 +112,6 @@ public class Combat {
         RStatus.setTextAlignment(TextAlignment.RIGHT);
 
         RStatus.setAlignment(Pos.CENTER_RIGHT);
-        LStatus.setBorder(Main.styles.getBorder());
-        RStatus.setBorder(Main.styles.getBorder());
         LStatus.setMinWidth(180);
         RStatus.setMinWidth(180);
 
@@ -159,6 +157,7 @@ public class Combat {
         middle.setMaxSize(dFightWidth, dFightHeight);
         middle.setContent(fightLog);
         middle.setBorder(Main.styles.getBorder());
+        middle.setStyle("-fx-background-color: white;");
         middle.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         middle.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         middle.setVvalue(middle.getVmax());

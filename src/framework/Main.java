@@ -5,6 +5,7 @@ package framework;/*
  */
 
 
+import javafx.stage.StageStyle;
 import tools.getres.GetResource;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
@@ -58,6 +59,7 @@ public class Main extends Application {
         });
 
         window.setScene(SceneHandler.menu());
+//        window.initStyle(StageStyle.TRANSPARENT);
         window.setTitle("Pokémon X");
 
 

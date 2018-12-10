@@ -63,7 +63,7 @@ class Selection {
         imageHolder.setImage(img.getImage("Default"));
 
         pokeList.setOnAction(e -> {
-            imageHolder.setImage(img.getImage(pokeList.getValue()));
+            imageHolder.setImage(img.getImage(pokeList.getValue() + "Flip"));
             bottom.setText(new Pokemon(pokeList.getValue()).toString());
         });
         ////layout
