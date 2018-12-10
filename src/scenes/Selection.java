@@ -40,6 +40,7 @@ class Selection {
         bottom.setMinSize(400, 430);
         bottom.setPadding(new Insets(10));
         bottom.setBorder(Main.styles.getBorder());
+        bottom.setStyle("-fx-background-color: white;");
         GridPane.setConstraints(bottom, 0, 11);
         ////item config
         pokeList.setPromptText("Choose your " + (count == 0 ? "first" : (count == 1 ? "second" : "third")) + " Pokémon! ");
