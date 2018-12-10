@@ -1,10 +1,10 @@
 package scenes;
 
+import tools.CombatProgress;
 import tools.FourLetter;
 import tools.TypeList;
 import framework.Pokemon;
 import framework.Main;
-import framework.PokeWriter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,19 +13,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Administrator {
-    private static Random r = new Random();
-
-
+class Administrator {
+    private static final Random r = new Random();
     public static Scene start() {
         //declarations
-
-
+//todo no duplicate pokemon,remove, modify
         Label txt = new Label("Create your own Pokémon!");
         Button back = new Button("Back");
         Button next = new Button("Next");
@@ -38,7 +34,7 @@ public class Administrator {
         comboBoxes.add(new ComboBox<>());
         {
             txt.setMinSize(600, 50);
-            txt.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+            txt.setBorder(Main.styles.getBorder());
             txt.setAlignment(Pos.CENTER);
             bottom.setAlignment(Pos.CENTER_RIGHT);
             center.setAlignment(Pos.CENTER);
@@ -48,37 +44,47 @@ public class Administrator {
                     fieldWid = 200;
             center.getColumnConstraints().add(new ColumnConstraints(labWid));
             center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
-            comboBoxes.get(0).setPrefWidth(300);
+            for (ComboBox<String> comboBox : comboBoxes) {
+                comboBox.setPrefWidth(300);
+            }
             comboBoxes.get(0).setPromptText(("Pokemon type"));
             comboBoxes.get(0).getItems().addAll(TypeList.getList());
             comboBoxes.get(0).getSelectionModel().selectFirst();
-            comboBoxes.get(1).setPrefWidth(300);
             comboBoxes.get(1).setPromptText("Select number of skills");
             comboBoxes.get(1).getItems().addAll("1", "2", "3", "4");
             comboBoxes.get(1).getSelectionModel().selectLast();
         }
 //adding stuff into their holder
         {
-            labels.add(new Label("Name :"));
-            labels.add(new Label("Type :"));
-            labels.add(new Label("Attack :"));
-            labels.add(new Label("Defense :"));
-            labels.add(new Label("HP :"));
-            labels.add(new Label("Speed :"));
-            labels.add(new Label("Number of Skills :"));
+            String[] labelString = {
+                    "Name :",
+                    "Type :",
+                    "Attack :",
+                    "Defense :",
+                    "HP :",
+                    "Speed :",
+                    "Number of Skills :"
+            };
+            for (int i = 0; i < labelString.length; i++) {
+                labels.add(new Label(labelString[i]));
+                if (i != 6)
+                    center.add(labels.get(i), 0, i);
+                else
+                    center.add(labels.get(6), 0, 6, 2, 1);
+
+            }
+
             labels.get(6).setPrefWidth(200);
-            textFields.add(new TextField(rName()));//pokemon name CANNOT contain () because it is used as (custom) during game
-            textFields.add(new TextField(rInt()));//Attack
-            textFields.add(new TextField(rInt()));//Defense
-            textFields.add(new TextField(rInt()));//HP
-            textFields.add(new TextField(rInt()));//Speed
-            center.add(labels.get(0), 0, 0);
-            center.add(labels.get(1), 0, 1);
-            center.add(labels.get(2), 0, 2);
-            center.add(labels.get(3), 0, 3);
-            center.add(labels.get(4), 0, 4);
-            center.add(labels.get(5), 0, 5);
-            center.add(labels.get(6), 0, 6, 2, 1);
+
+            int[]
+                    min = {-1, 10, 10, 20, 10},
+                    max = {-1, 49, 49, 49, 49};
+
+            for (int i = 0; i < min.length; i++) {
+                textFields.add(new TextField(rInt(min[i], max[i])));
+            }
+
+
             center.add(textFields.get(0), 1, 0);
             center.add(comboBoxes.get(0), 1, 1);
             center.add(textFields.get(1), 1, 2);
@@ -95,78 +101,73 @@ public class Administrator {
         layout1.getChildren().addAll(txt, center);
         layout1.setAlignment(Pos.CENTER);
         //action listeners
+        setupFirstActionListeners(back, next, textFields, comboBoxes, txt);
+
+        return new Scene(layout1, 800, 800);
+
+    }
+
+
+    private static void setupFirstActionListeners(Button back, Button next, ArrayList<TextField> textFields, ArrayList<ComboBox<String>> comboBoxes, Label txt) {
         {
             back.setOnAction(event -> Main.window.setScene(SceneHandler.menu()));
-            next.setOnAction(event -> {
+            next.setOnAction(event -> Main.window.setScene(skillPage(
+                    textFields.get(0).getText() + "(Custom)" + "\n" +
+                            comboBoxes.get(0).getValue() + "\n" +
+                            textFields.get(1).getText() + "\n" +
+                            textFields.get(2).getText() + "\n" +
+                            textFields.get(3).getText() + "\n" +
+                            textFields.get(4).getText() + "\n",
+                    Integer.parseInt(comboBoxes.get(1).getValue()),
+                    textFields.get(0).getText() + "(Custom)")));
 
-                Main.window.setScene(skillPage(
-                        textFields.get(0).getText() + "(Custom)" + "\n" +
-                                comboBoxes.get(0).getValue() + "\n" +
-                                textFields.get(1).getText() + "\n" +
-                                textFields.get(2).getText() + "\n" +
-                                textFields.get(3).getText() + "\n" +
-                                textFields.get(4).getText() + "\n",
-                        Integer.parseInt(comboBoxes.get(1).getValue()),
-                        textFields.get(0).getText() + "(Custom)"));
-            });
+
             textFields.get(0).focusedProperty().addListener((arg0, oldValue, newValue) -> {
                 if (!newValue) {
-                    if (textFields.get(0).getText().matches("")) {
-                        textFields.get(0).setText(rName());
+                    if (textFields.get(0).getText().matches(getRegex())) {
+                        textFields.get(0).setText(rInt(-1, -1));
                         txt.setText("Pokémon name can't be that. " + FourLetter.getPhrase(1));
                     } else {
                         txt.setText(FourLetter.getPhrase(2));
                     }
                 }
             });
-            textFields.get(1).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-                if (!newValue) {
-                    if (textFields.get(1).getText().matches("[1-4]\\d")) {
-                        txt.setText(FourLetter.getPhrase(2));
-                    } else {
-                        textFields.get(1).setText(rInt());
-                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
-                    }
-                }
-            });
-            textFields.get(2).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-                if (!newValue) {
-                    if (textFields.get(2).getText().matches("[1-4]\\d")) {
-                        txt.setText(FourLetter.getPhrase(2));
-                    } else {
-                        textFields.get(2).setText(rInt());
-                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
-                    }
-                }
-            });
-            textFields.get(3).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-                if (!newValue) {
-                    if (textFields.get(3).getText().matches("[1-4]\\d")) {
-                        txt.setText(FourLetter.getPhrase(2));
-                    } else {
-                        textFields.get(3).setText(rInt());
-                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
-                    }
-                }
-            });
-            textFields.get(4).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-                if (!newValue) {
-                    if (textFields.get(4).getText().matches("[1-4]\\d")) {
-                        txt.setText(FourLetter.getPhrase(2));
-                    } else {
-                        textFields.get(4).setText(rInt());
-                        txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
-                    }
-                }
-            });
 
+            setupTextFieldListeners(textFields, 1, "[1-4]\\d", 10, 49, txt);
+            setupTextFieldListeners(textFields, 2, "[1-4]\\d", 10, 49, txt);
+            setupTextFieldListeners(textFields, 3, "[2-5]\\d", 20, 59, txt);
+            setupTextFieldListeners(textFields, 4, "[1-4]\\d", 10, 49, txt);
         }
-
-        return new Scene(layout1, 800, 800);
-
     }
 
-    private static Scene skillPage(String line, int skillCount, String name) {
+    private static String getRegex() {
+        StringBuilder str = new StringBuilder("(.+\\(Custom\\))|");
+        ArrayList<String> list = new framework.PokeList().getList();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).endsWith("(Custom)"))
+                list.set(i, list.get(i).substring(0, list.get(i).length() - 8));
+            str.append("|").append(list.get(i));
+        }
+        System.out.println(str);
+        return str.toString();
+    }
+
+    private static void setupTextFieldListeners(ArrayList<TextField> textFields, int index, String regex, int min, int max, Label txt) {
+        textFields.get(index).focusedProperty().addListener((arg0, oldValue, newValue) -> {
+            if (!newValue) {
+                if (textFields.get(index).getText().matches(regex)) {
+                    txt.setText(FourLetter.getPhrase(2));
+                } else {
+                    textFields.get(index).setText(rInt(min, max));
+                    txt.setText("Put something between " + min + "-" + max + ". " + FourLetter.getPhrase(1));
+
+                }
+            }
+        });
+    }
+
+
+    private static Scene skillPage(String line, int skillCount, String name) {//use setupTextFIeldListeners method here too
         if (skillCount == 0) {
             return saved(line + "$", name);
         }
@@ -177,13 +178,14 @@ public class Administrator {
         center.setHgap(10);
 
         center.setAlignment(Pos.CENTER);
-        final int labWid = 80, fieldWid = 200;
+        final int labWid = 80,
+                fieldWid = 200;
         center.getColumnConstraints().add(new ColumnConstraints(labWid));
         center.getColumnConstraints().add(new ColumnConstraints(fieldWid));
 
         Label txt = new Label("Create your own Pokémon!");
         txt.setMinSize(600, 50);
-        txt.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        txt.setBorder(Main.styles.getBorder());
         txt.setAlignment(Pos.CENTER);
 
         ArrayList<Label> labels = new ArrayList<>();
@@ -217,15 +219,12 @@ public class Administrator {
         center.add(textFields.get(2), 1, 4);
 
         cancel.setOnAction(event -> Main.window.setScene(SceneHandler.menu()));
-        next.setOnAction(event -> {
-
-            Main.window.setScene(skillPage(
-                    line + textFields.get(0).getText() + "\n" +
-                            comboBox.getValue() + "\n" +
-                            textFields.get(1).getText() + "\n" +
-                            textFields.get(2).getText() + "\n"
-                    , skillCount - 1, name));
-        });
+        next.setOnAction(event -> Main.window.setScene(skillPage(
+                line + textFields.get(0).getText() + "\n" +
+                        comboBox.getValue() + "\n" +
+                        textFields.get(1).getText() + "\n" +
+                        textFields.get(2).getText() + "\n"
+                , skillCount - 1, name)));
 
         textFields.get(0).focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
@@ -237,26 +236,8 @@ public class Administrator {
                 }
             }
         });
-        textFields.get(1).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-            if (!newValue) {
-                if (textFields.get(1).getText().matches("[1-4]\\d")) {
-                    txt.setText(FourLetter.getPhrase(2));
-                } else {
-                    textFields.get(1).setText(rInt());
-                    txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
-                }
-            }
-        });
-        textFields.get(2).focusedProperty().addListener((arg0, oldValue, newValue) -> {
-            if (!newValue) {
-                if (textFields.get(2).getText().matches("[1-4]\\d")) {
-                    txt.setText(FourLetter.getPhrase(2));
-                } else {
-                    textFields.get(2).setText(rInt());
-                    txt.setText("Put something between 10-49. " + FourLetter.getPhrase(1));
-                }
-            }
-        });
+        setupTextFieldListeners(textFields, 1, "[1-4]\\d", 10, 49, txt);
+        setupTextFieldListeners(textFields, 2, "[1-4]\\d", 10, 49, txt);
 
 
         HBox bottom = new HBox(10);
@@ -273,10 +254,10 @@ public class Administrator {
     }
 
     private static Scene saved(String line, String name) {
-        PokeWriter.writePokemon(line);
+        CombatProgress.writePokemon(line);
         Label top = new Label("Your Pokémon is saved!");
         top.setMinSize(600, 50);
-        top.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        top.setBorder(Main.styles.getBorder());
         top.setAlignment(Pos.CENTER);
 
 
@@ -288,7 +269,7 @@ public class Administrator {
 
         middle.setMinSize(400, 430);
         middle.setPadding(new Insets(10));
-        middle.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        middle.setBorder(Main.styles.getBorder());
         middle.setText(new Pokemon(name).toString());
 
         Button done = new Button("Back to Menu");
@@ -306,16 +287,16 @@ public class Administrator {
     }
 
     private static String rName() {
-        String x = "";
+        StringBuilder x = new StringBuilder();
 
 
-        x += (char) (r.nextInt(26) + 65);
+        x.append((char) (r.nextInt(26) + 65));
         for (int i = 0; i < r.nextInt(6) + 2; i++) {
-            x += (char) (r.nextInt(26) + 97);
+            x.append((char) (r.nextInt(26) + 97));
         }
 
 
-        return x;
+        return x.toString();
     }
 
     private static String rInt() {
@@ -323,7 +304,9 @@ public class Administrator {
     }
 
     private static String rInt(int min, int max) {
-
+        if (min == -1 && max == -1) {
+            return rName();
+        }
         int range = max - min + 1;
         return String.valueOf(r.nextInt(range) + 10);
     }

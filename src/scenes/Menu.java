@@ -1,26 +1,37 @@
 package scenes;
 
+import popups.ConfirmBox;
+import tools.Writer;
+import tools.getres.GetResource;
 import framework.Main;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class Menu {
+class Menu {
+    static int i = 0;
 
+    //todo reset game if user files are corrupt
     public static Scene start() {
-
-
         final int width = 200;
         int x = 0;
+
+        ImageView imageHolder = new ImageView();
+
+        GetResource get = new GetResource();
+        imageHolder.setImage(get.getImage("Background"));
+//        imageHolder.setImage(Menu.getResource("Background.png").toString());
+
         Label txt = new Label("Welcome to Pokémon");
         txt.setMinSize(width * 2, 50);
-        txt.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        txt.setStyle("-fx-background-color: white;");
+        txt.setBorder(Main.styles.getBorder());
         txt.setAlignment(Pos.CENTER);
 
 
@@ -37,17 +48,15 @@ public class Menu {
             if (temp2.exists()) {
                 Buttons.add(new Button("Continue"));
                 x++;
-                Buttons.get(0).setOnAction(event -> {
-                    Main.window.setScene(SceneHandler.cont());
-                });
+                Buttons.get(0).setOnAction(event -> Main.window.setScene(SceneHandler.cont()));
+                Buttons.get(0).setOnMouseEntered(event -> txt.setText("Continue previous Game"));
+                Buttons.get(0).setOnMouseExited(event -> txt.setText("Welcome to Pokémon"));
             }
         }
         Buttons.add(new Button("New Game"));
         Buttons.add(new Button("Credits"));
         Buttons.add(new Button("Settings"));
-
-        Buttons.add(new Button("???"));//todo hide this button to make it more special
-        //todo reset button
+        Buttons.add(new Button("Reset"));
 
 
         for (Button button : Buttons) {
@@ -56,26 +65,42 @@ public class Menu {
         }
 
 
-        Buttons.get(x).setOnAction(e -> {
-            Main.window.setScene(SceneHandler.gameMode());
-        });
-        Buttons.get(x + 1).setOnAction(e -> {
-            SceneHandler.credits();
-        });
-        Buttons.get(x + 2).setOnAction(e -> {
-            Main.window.setScene(SceneHandler.settings());
-        });
-
-        Buttons.get(x + 3).setOnAction(e -> {
-            Main.window.setScene(SceneHandler.administrator());
+        Buttons.get(x).setOnAction(e -> Main.window.setScene(SceneHandler.gameMode()));
+        Buttons.get(x + 1).setOnAction(e -> SceneHandler.credits());
+        Buttons.get(x + 2).setOnAction(e -> Main.window.setScene(SceneHandler.settings()));
+        Buttons.get(x + 3).setOnAction(event -> {
+            if (ConfirmBox.display("Are you sure?", "All of your data will be lost")) {
+                Writer.delete(true);
+                Main.styles.setDefault();
+                Main.window.setScene(SceneHandler.menu());
+            }
         });
 
-        VBox layout1 = new VBox(20);
-        layout1.getChildren().addAll(txt);
-        layout1.getChildren().addAll(Buttons);
-        layout1.setAlignment(Pos.CENTER);
+        String[] info = {"", "Start a new game", "Look at who made this game", "Set layouts", "Reset everything back to default"};
+
+        Buttons.get(x).setOnMouseEntered(event -> txt.setText(info[1]));
+        Buttons.get(x).setOnMouseExited(event -> txt.setText("Welcome to Pokémon"));
+        Buttons.get(x + 1).setOnMouseEntered(event -> txt.setText(info[2]));
+        Buttons.get(x + 1).setOnMouseExited(event -> txt.setText("Welcome to Pokémon"));
+        Buttons.get(x + 2).setOnMouseEntered(event -> txt.setText(info[3]));
+        Buttons.get(x + 2).setOnMouseExited(event -> txt.setText("Welcome to Pokémon"));
+        Buttons.get(x + 3).setOnMouseEntered(event -> txt.setText(info[4]));
+        Buttons.get(x + 3).setOnMouseExited(event -> txt.setText("Welcome to Pokémon"));
 
 
-        return new Scene(layout1, 800, 800);
+        VBox foreground = new VBox(20);
+        foreground.getChildren().addAll(txt);
+        foreground.getChildren().addAll(Buttons);
+        foreground.setAlignment(Pos.CENTER);
+
+        StackPane all = new StackPane();
+        all.getChildren().addAll(imageHolder, foreground);
+
+
+        return new Scene(all, 800, 800);
+    }
+
+    private void lieToLambda() {
+
     }
 }

@@ -1,23 +1,23 @@
 package scenes;
 
 import framework.Main;
+import framework.Styles;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 
-public class EndGame {
+class EndGame {
 
     public static Scene start(String x) {
 
 
         Label border = new Label();
-        Label txt = new Label(x.equals("Computer") ? "" : ("Player ") + x + " wins!");
+        Label txt = new Label(("Computer".equals(x) ? "" : "Player ") + x + " wins!");
 
         border.setMinSize(400, 50);
-        border.setBorder(new Border(new BorderStroke(Paint.valueOf("gray"), BorderStrokeStyle.SOLID, null, new BorderWidths(5))));
+        border.setBorder(Main.styles.getBorder());
         StackPane stack = new StackPane();
         stack.getChildren().addAll(border, txt);
 
@@ -26,16 +26,9 @@ public class EndGame {
         Button newGame = new Button("New Game");
         Button credits = new Button("Credits");
 
-
-        newGame.setOnAction(e -> {
-            Main.window.setScene(SceneHandler.menu());
-        });
-        back.setOnAction(e -> {
-            Main.window.setScene(SceneHandler.gameMode());
-        });
-        credits.setOnAction(e -> {
-            SceneHandler.credits();
-        });
+        newGame.setOnAction(e -> Main.window.setScene(SceneHandler.gameMode()));
+        back.setOnAction(e -> Main.window.setScene(SceneHandler.menu()));
+        credits.setOnAction(e -> SceneHandler.credits());
 
         HBox buttons = new HBox(20);
         buttons.getChildren().addAll(back, newGame, credits);

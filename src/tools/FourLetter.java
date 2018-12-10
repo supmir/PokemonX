@@ -3,13 +3,14 @@ package tools;
 import java.util.Random;
 
 public class FourLetter {
-    static Random r = new Random();
+    private static final Random r = new Random();
 
 
     private static int wasDumb = 0;
     private static int wasMean = 0;
 
     public static String getPhrase(int niceness) {
+        int tempNiceness = niceness;
 //todo add more lines
         String[]
 
@@ -21,7 +22,8 @@ public class FourLetter {
                 "I like you already :)",
                 "You have a nice face",
                 "Good one",
-                "You have a nice face, really... (not in a creepy way) :-)"
+                "You have a nice face, really... (not in a creepy way) :-)",
+                "Hey cutie ;)"
         },
 
 
@@ -33,36 +35,39 @@ public class FourLetter {
                         "I spent days coding this and you can't even do this right?",
                         "What the frick?",
                         "Your parents will dab on you when you die",
-                        "This is something that doesn't even require high intelligence level"
+                        "This isn't even something that requires a high level of intelligence"
                 },
                 sarcastic = {
                         "Wow! You're so very very smart now!",
                         "Congratulations! Your mother must be proud",
-                        "You deserve an award!!!"
+                        "You deserve an award!!!",
+                        "I am very happy that you have improved your thinking skills"
                 },
                 computer = {
                         "Is that all you got?",
                         "Bring it on.",
                         "My grandma could do better",
-                        "You should stick to Candy Crush"
+                        "You should stick to Candy Crush",
+                        "You gotta do a little better than that if you wanna beat me",
+                        "I'm telling you, you're hopeless."
                 };
 
 
         //2 is nice/1 is mean/0 is sarcastic
-        if (niceness < 10) {
-            if (wasMean > 3 && niceness == 2) {
+        if (tempNiceness < 10) {
+            if (wasMean > 3 && tempNiceness == 2) {
                 wasDumb = 0;
                 wasMean = 0;
             }
-            if (wasDumb > 3 && niceness == 2) {
-                niceness = 0;
+            if (wasDumb > 3 && tempNiceness == 2) {
+                tempNiceness = 0;
             }
-        } else if (niceness < 20) {
-            niceness = 3;
+        } else if (tempNiceness < 20) {
+            tempNiceness = 3;
         }
 
 
-        switch (niceness) {
+        switch (tempNiceness) {
             case 0:
                 wasMean++;
                 return sarcastic[r.nextInt(sarcastic.length)];

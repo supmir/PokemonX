@@ -2,7 +2,9 @@ package scenes;
 
 import framework.Main;
 import framework.Pokemon;
-import framework.PokeWriter;
+import tools.CombatProgress;
+import tools.LRTStr;
+import tools.Writer;
 import javafx.scene.Scene;
 
 import java.io.IOException;
@@ -11,63 +13,76 @@ import java.util.ArrayList;
 
 public class SceneHandler {
 
-    private static Pokemon[][] controller = new Pokemon[2][3];//player 0 is left, player 1 is right
-    public static ArrayList<String> allList = new framework.PokeList().getList();
+    private static final Pokemon[][] controller = new Pokemon[2][3];//player 0 is left, player 1 is right
+    static ArrayList<String> allList = new framework.PokeList().getList();
 
-    public static void setController(Pokemon whichPoke, int who, int which) {
+    static void setController(Pokemon whichPoke, int who, int which) {
         SceneHandler.controller[who][which] = whichPoke;
     }
 
-    public static Pokemon[][] getController() {
+    static Pokemon[][] getController() {
         return controller;
     }
 
 
-    public static Scene administrator() {
+    static Scene administrator() {
         return Administrator.start();
     }
     public static Scene menu() {
         return Menu.start();
     }
 
-    public static Scene gameMode() {
+    static Scene gameMode() {
         return GameMode.start();
     }
 
-    public static void credits() {
+    static void credits() {
+
+        Main.bgm.pauseAudio();
         Credits.pop();
     }
 
-    public static Scene selection(int x, String y) {
+    static Scene selection(String y) {
         allList = new framework.PokeList().getList();
-        return Selection.start(x, y);
+        Main.bgm.stopAudio();
+        Main.bgm.playAudio("Selection");
+        return Selection.start(0, y);
     }
 
-    public static Scene combat(Boolean notComputer) {
+    //testtesttest
+    static Scene combat(Boolean notComputer) {
+
+        Main.bgm.stopAudio();
+        Main.bgm.playAudio("Combat");
+
         Main.setInCombat(true);
         return Combat.start(notComputer);
     }
 
-    public static Scene endGame(String x) {
-        PokeWriter.delete(false);
+    static Scene endGame(String x) {
+        Writer.delete(false);
         Main.setInCombat(false);
+
+        Main.bgm.stopAudio();
+        Main.bgm.playAudio("EndGame");
+
         return EndGame.start(x);
     }
 
-    public static Scene cont() {
-        Combat.setController(PokeWriter.getProg());
+    static Scene cont() {
+        Combat.setController(CombatProgress.getProg());
         try {
-            PokeWriter.readLRTStr();
+            LRTStr.readLRTStr();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Combat.setStr(PokeWriter.getStr());
-        Combat.setStrC(PokeWriter.getStrC());
-        return Combat.start(PokeWriter.getL(), PokeWriter.getR(), PokeWriter.isT(), PokeWriter.isM());
+        Combat.setStr(LRTStr.getStr());
+        Combat.setStrC(LRTStr.getStrC());
+        return Combat.start(LRTStr.getL(), LRTStr.getR(), LRTStr.isT(), LRTStr.isM());
     }
 
 
-    public static Scene settings() {
+    static Scene settings() {
         return Settings.start();
     }
 }
