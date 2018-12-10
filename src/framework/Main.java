@@ -49,7 +49,9 @@ public class Main extends Application {
     }
 
     public void start(Stage primaryStage) {
+
         window = primaryStage;
+
         window.setOnCloseRequest(e -> {
             e.consume();
             exitProgram();

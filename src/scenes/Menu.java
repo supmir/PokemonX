@@ -25,7 +25,7 @@ class Menu {
         ImageView imageHolder = new ImageView();
 
         GetResource get = new GetResource();
-        imageHolder.setImage(get.getImage("Background"));
+        imageHolder.setImage(get.getImage("backgd"));
 //        imageHolder.setImage(Menu.getResource("Background.png").toString());
 
         Label txt = new Label("Welcome to Pokémon");
