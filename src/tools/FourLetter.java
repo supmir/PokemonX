@@ -24,6 +24,7 @@ public class FourLetter {
                 "Good one",
                 "You have a nice face, really... (not in a creepy way) :-)",
                 "Hey cutie ;)"
+                "Awesome!!!" 
         },
 
 
@@ -36,6 +37,7 @@ public class FourLetter {
                         "What the frick?",
                         "Your parents will dab on you when you die",
                         "This isn't even something that requires a high level of intelligence"
+                        "Dude, just gth."
                 },
                 sarcastic = {
                         "Wow! You're so very very smart now!",
