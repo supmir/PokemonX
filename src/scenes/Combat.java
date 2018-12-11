@@ -1,7 +1,6 @@
 package scenes;
 
 import framework.Main;
-import framework.Styles;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import tools.FourLetter;
@@ -48,10 +47,10 @@ public class Combat {
 
     public static void appendStr(String str, boolean turn, boolean notComputer) {
 
-        Combat.str += (turn ? (notComputer ?
-                "Player 1 : " :
-                "Computer : ") :
-                "Player 2 : ") + str;
+        Combat.str += (turn ? "Player 1 : " :
+                (notComputer ?
+                        "Player 2 : " :
+                        "Computer : ")) + str;
     }
 
     static void setStr(String str) {
@@ -124,7 +123,7 @@ public class Combat {
         imageRight.setFitHeight(100);
         imageRight.setFitWidth(100);
 
-
+        // todo shake on attack
         imageLeft.setImage(getResource.getImage(controller[0][left].getName()));
         imageRight.setImage(getResource.getImage(controller[1][right].getName() + "Flip"));
 

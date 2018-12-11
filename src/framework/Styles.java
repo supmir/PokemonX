@@ -17,6 +17,10 @@ public class Styles {
     }
 
     public Styles(Color color, BorderStrokeStyle borderStrokeStyle, double radii, double borderWidths) {
+        this.color = color;
+        this.borderStrokeStyle = borderStrokeStyle;
+        this.radii = radii;
+        this.borderWidths = borderWidths;
         this.border = new Border(new BorderStroke(color, borderStrokeStyle, new CornerRadii(radii), new BorderWidths(borderWidths)));
     }
 

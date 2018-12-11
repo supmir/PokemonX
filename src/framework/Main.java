@@ -29,6 +29,9 @@ public class Main extends Application {
     public static Styles styles = new Styles();
     public static GetResource bgm = new GetResource();
 
+    public static Styles getStyles() {
+        return styles;
+    }
 
     public static void main(String[] args) {
 
@@ -52,7 +55,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         window = primaryStage;
-
+        window.setResizable(false);
+        window.setMaxHeight(780);
+        window.setMinWidth(800);
         window.setOnCloseRequest(e -> {
             e.consume();
             exitProgram();

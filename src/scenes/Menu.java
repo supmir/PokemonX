@@ -100,6 +100,7 @@ class Menu {
         return new Scene(all, 800, 800);
     }
 
+
     private void lieToLambda() {
 
     }

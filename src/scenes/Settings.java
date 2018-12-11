@@ -7,12 +7,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import popups.AlertBox;
 
 import java.util.ArrayList;
 
 class Settings {
     static Scene start() {
-        Styles temp = Main.styles;
+        Styles temp = Main.getStyles();
         final double width = 400;
         Label txt = new Label("Settings");
         txt.setPrefSize(width, 50);
@@ -25,7 +26,6 @@ class Settings {
 
         Buttons.add(new Button("Reset"));
         Buttons.add(new Button("Back"));
-        Buttons.add(new Button("Save"));
 
 
         for (Button button : Buttons) {
@@ -52,6 +52,7 @@ class Settings {
 
         }
 
+        System.out.println(temp.getColor());
         ColorPicker colorPicker = new ColorPicker(temp.getColor());
         colorPicker.setPrefWidth(width * 4 / 6);
         ComboBox<BorderStrokeStyle> borderStrokeStyleComboBox = new ComboBox<>();
@@ -87,13 +88,11 @@ class Settings {
             Main.window.setScene(SceneHandler.settings());
         });
         Buttons.get(1).setOnAction(e -> {
-            Main.styles.setDefault();
-            Main.window.setScene(SceneHandler.menu());
-        });
-        Buttons.get(2).setOnAction(event -> {
+
             temp.writeStyles();
-            txt.setText("Configuration saved.");
+            AlertBox.display("Style saved.", "Your changes has been saved.");
             Main.styles = temp;
+            Main.window.setScene(SceneHandler.menu());
         });
 
 
