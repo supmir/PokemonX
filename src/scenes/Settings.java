@@ -25,7 +25,7 @@ class Settings {
         //add if statement only if txt config exists
 
         Buttons.add(new Button("Reset"));
-        Buttons.add(new Button("Back"));
+        Buttons.add(new Button("Save and Back"));
 
 
         for (Button button : Buttons) {

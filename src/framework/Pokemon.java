@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -120,9 +121,11 @@ public class Pokemon implements Serializable {
 
     public void attacks(int skillN, Pokemon attacked, boolean turn, boolean notComputer) {
         Random r = new Random();
-
+        GetResource sfx = new GetResource();
         //todo @anis
-//        sfx.playAudio("Attack"+r.nextInt(7));
+
+        System.out.println("Attack" + new DecimalFormat("00").format(r.nextInt(12)));
+//        sfx.playAudio("Attack" + new DecimalFormat("00").format(r.nextInt(12)));
 
         String line = name + " used " + skillName[skillN] + ". ";
 
@@ -151,7 +154,8 @@ public class Pokemon implements Serializable {
             if (attacked.getHp() <= 0) {
                 attacked.kill();
                 line += attacked.name + " has fainted.\n";
-//                sfx.playAudio("Died");
+                //todo @anis
+                sfx.playAudio("Died");
             }
         } else {
             line += name + "s attack missed.\n";

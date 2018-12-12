@@ -25,7 +25,7 @@ public class Credits {
         Text amir = new Text("Amir Bin Iskandar (Head and Shoulder Knees Mentos)\n");
         Text marina = new Text("Nur Marina Binti Wan Mahathir Awang Hijau\n");
         Text anis = new Text("Nurus Siti Anis Wafiah Binti Mas Sokar \n");
-        Text fadh = new Text("Dayang Intan Fadhliana Nureyn Binti Ahmedi Hasbool Aliim\n");
+        Text fadh = new Text("Fadh Fadh Siku Lipat Siapa Cepat Dia Dapat\n");
         Text team = new Text("Kacang");
         Text dash = new Text("-");
         Text team2 = new Text("Kacang Jaring\n");

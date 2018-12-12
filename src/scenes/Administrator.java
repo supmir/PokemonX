@@ -21,7 +21,7 @@ class Administrator {
     private static final Random r = new Random();
     public static Scene start() {
         //declarations
-//todo no duplicate pokemon,remove, modify
+//todo no remove, modify pokemon
         Label txt = new Label("Create your own Pokémon!");
         Button back = new Button("Back");
         Button next = new Button("Next");
