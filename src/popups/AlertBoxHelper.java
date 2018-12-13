@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 /**
  * @author amir
  */
-public class AlertBox {
+public class AlertBoxHelper {
     public static void display(String title, String message) {
         Stage window = new Stage();
 

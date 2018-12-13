@@ -1,7 +1,7 @@
 package tools;
 
 import javafx.scene.layout.BorderStrokeStyle;
-import popups.ConfirmBox;
+import popups.ConfirmBoxHelper;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,7 +32,7 @@ public class StyleWriter {
             borderWidths = Double.valueOf(sc.nextLine());
             sc.close();
         } catch (FileNotFoundException | NumberFormatException e) {
-            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+            if (ConfirmBoxHelper.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
                 delete(true);
         }
 

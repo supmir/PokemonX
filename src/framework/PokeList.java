@@ -4,7 +4,7 @@ package framework;/*
  * and open the template in the editor.
  */
 
-import popups.ConfirmBox;
+import popups.ConfirmBoxHelper;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class PokeList {
             IS.close();
         } catch (IOException e) {
 
-            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+            if (ConfirmBoxHelper.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
                 delete(true);
         }
 
@@ -50,14 +50,14 @@ public class PokeList {
                     }
                 }
             } catch (FileNotFoundException e) {
-                if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+                if (ConfirmBoxHelper.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
                     delete(true);
             }
             try {
                 IS.close();
             } catch (IOException e) {
 
-                if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+                if (ConfirmBoxHelper.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
                     delete(true);
             }
         }

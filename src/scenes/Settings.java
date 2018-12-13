@@ -7,7 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import popups.AlertBox;
+import popups.AlertBoxHelper;
 
 import java.util.ArrayList;
 
@@ -89,7 +89,7 @@ class Settings {
         Buttons.get(1).setOnAction(e -> {
 
             temp.writeStyles();
-            AlertBox.display("Style saved.", "Your changes has been saved.");
+            AlertBoxHelper.display("Style saved.", "Your changes has been saved.");
             Main.styles = temp;
             Main.window.setScene(SceneHandler.menu());
         });

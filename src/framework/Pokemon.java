@@ -4,7 +4,7 @@ package framework;/*
  * and open the template in the editor.
  */
 
-import popups.ConfirmBox;
+import popups.ConfirmBoxHelper;
 import scenes.Combat;
 import tools.getres.GetResource;
 
@@ -40,7 +40,6 @@ public class Pokemon implements Serializable {
             skillCount;
     private double hp;
     private boolean alive = true;
-//    private GetResource sfx = new GetResource(); DO NOT PUT IT HER IT IS NOT SERIALIZABLE
 
     public Pokemon(String name) {
         String path = name.endsWith("(Custom)") ? System.getProperty("user.home") + "/PokemonX/Pokemons.txt" : "Pokemons.txt";
@@ -81,7 +80,7 @@ public class Pokemon implements Serializable {
             }
         } catch (NumberFormatException | FileNotFoundException e) {
 
-            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+            if (ConfirmBoxHelper.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
                 delete(true);
         }
     }
@@ -156,7 +155,6 @@ public class Pokemon implements Serializable {
             if (attacked.getHp() <= 0) {
                 attacked.kill();
                 line += attacked.name + " has fainted.\n";
-                //todo @anis
                 sfx.playAudio("Died");
             }
         } else {

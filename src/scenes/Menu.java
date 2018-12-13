@@ -1,6 +1,6 @@
 package scenes;
 
-import popups.ConfirmBox;
+import popups.ConfirmBoxHelper;
 import tools.Writer;
 import tools.getres.GetResource;
 import framework.Main;
@@ -69,7 +69,7 @@ class Menu {
         Buttons.get(x + 1).setOnAction(e -> SceneHandler.credits());
         Buttons.get(x + 2).setOnAction(e -> Main.window.setScene(SceneHandler.settings()));
         Buttons.get(x + 3).setOnAction(event -> {
-            if (ConfirmBox.display("Are you sure?", "All of your data will be lost")) {
+            if (ConfirmBoxHelper.display("Are you sure?", "All of your data will be lost")) {
                 Writer.delete(true);
                 Main.styles.setDefault();
                 Main.window.setScene(SceneHandler.menu());
@@ -101,7 +101,4 @@ class Menu {
     }
 
 
-    private void lieToLambda() {
-
-    }
 }

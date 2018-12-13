@@ -53,7 +53,7 @@ public class Combat {
                         "Computer : ")) + str;
     }
 
-    static void setStr(String str) {
+    public static void setStr(String str) {
         Combat.str = str;
     }
 

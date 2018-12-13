@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  *
  * @author amir
  */
-public class ConfirmBox {
+public class ConfirmBoxHelper {
 
     private static boolean answer = false;
 

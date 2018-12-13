@@ -1,6 +1,6 @@
 package tools;
 
-import popups.ConfirmBox;
+import popups.ConfirmBoxHelper;
 import scenes.Combat;
 
 import java.io.*;
@@ -31,7 +31,7 @@ public class LRTStr {
             OO.writeUTF(Combat.getStrC());
             OO.close();
         } catch (IOException e) {
-            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+            if (ConfirmBoxHelper.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
                 delete(true);
         }
 
@@ -58,7 +58,7 @@ public class LRTStr {
         } catch (IOException e) {
 
 
-            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+            if (ConfirmBoxHelper.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
                 delete(true);
         }
 

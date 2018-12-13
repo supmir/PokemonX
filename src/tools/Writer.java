@@ -1,7 +1,7 @@
 package tools;
 
 
-import popups.ConfirmBox;
+import popups.ConfirmBoxHelper;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Writer {
             pw.println(line);
             pw.close();
         } catch (FileNotFoundException e) {
-            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+            if (ConfirmBoxHelper.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
                 delete(true);
         }
     }
@@ -34,7 +34,7 @@ public class Writer {
 
 
         } catch (IOException e) {
-            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+            if (ConfirmBoxHelper.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
                 delete(true);
         }
 
@@ -50,7 +50,7 @@ public class Writer {
             object = OI.readObject();
             OI.close();
         } catch (IOException | ClassNotFoundException e) {
-            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+            if (ConfirmBoxHelper.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
                 delete(true);
         }
 

@@ -1,11 +1,13 @@
-package framework;/*
+package framework;
+
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
 
-import javafx.stage.StageStyle;
+import popups.ConfirmBoxHelper;
 import tools.getres.GetResource;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
@@ -15,7 +17,6 @@ import tools.CombatProgress;
 import tools.LRTStr;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * @author amir
@@ -74,7 +75,7 @@ public class Main extends Application {
 
 
     private static void exitProgram() {
-        if (popups.ConfirmBox.display("Exit?", "Are you sure you want to exit?")) {
+        if (ConfirmBoxHelper.display("Exit?", "Are you sure you want to exit?")) {
 
             if (inCombat) {
                 CombatProgress.writeProg();
