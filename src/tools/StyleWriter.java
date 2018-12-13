@@ -1,10 +1,13 @@
 package tools;
 
 import javafx.scene.layout.BorderStrokeStyle;
+import popups.ConfirmBox;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import static tools.Writer.delete;
 
 public class StyleWriter {
 
@@ -21,8 +24,6 @@ public class StyleWriter {
 
     public static void setFields() {
         String path = System.getProperty("user.home") + "/PokemonX/userStyle.txt";
-        System.out.println(path);
-
         try {
             Scanner sc = new Scanner(new FileInputStream(path));
             color = sc.nextLine();
@@ -30,8 +31,9 @@ public class StyleWriter {
             radii = Double.valueOf(sc.nextLine());
             borderWidths = Double.valueOf(sc.nextLine());
             sc.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException | NumberFormatException e) {
+            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+                delete(true);
         }
 
 

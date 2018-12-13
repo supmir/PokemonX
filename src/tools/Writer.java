@@ -1,6 +1,8 @@
 package tools;
 
 
+import popups.ConfirmBox;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -15,28 +17,42 @@ public class Writer {
             pw.println(line);
             pw.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+                delete(true);
         }
     }
 
-    public static void saveObject(Serializable object, String filename)
-            throws IOException {
-        ObjectOutputStream OO = new ObjectOutputStream(
-                new FileOutputStream(filename));
+    public static void saveObject(Serializable object, String filename) {
 
-        OO.writeObject(object);
 
-        OO.close();
+        ObjectOutputStream OO;
+        try {
+            OO = new ObjectOutputStream(
+                    new FileOutputStream(filename));
+            OO.writeObject(object);
+            OO.close();
+
+
+        } catch (IOException e) {
+            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+                delete(true);
+        }
+
+
     }
 
-    public static Object loadObject(String filename) throws ClassNotFoundException, IOException {
-
-        ObjectInputStream OI = new ObjectInputStream(
-                new FileInputStream(filename));
-
-        Object object = OI.readObject();
-
-        OI.close();
+    public static Object loadObject(String filename) {
+        ObjectInputStream OI;
+        Object object = null;
+        try {
+            OI = new ObjectInputStream(
+                    new FileInputStream(filename));
+            object = OI.readObject();
+            OI.close();
+        } catch (IOException | ClassNotFoundException e) {
+            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+                delete(true);
+        }
 
         return object;
     }

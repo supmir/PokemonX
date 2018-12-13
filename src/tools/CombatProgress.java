@@ -4,7 +4,6 @@ import framework.Pokemon;
 import scenes.Combat;
 
 import java.io.File;
-import java.io.IOException;
 
 public class CombatProgress {
     public static void writePokemon(String line) {
@@ -20,23 +19,15 @@ public class CombatProgress {
     public static void writeProg() {
         String path = System.getProperty("user.home") + "/PokemonX/fight.bin";
 
-        try {
-            Writer.saveObject(Combat.getController(), path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Writer.saveObject(Combat.getController(), path);
+
 
     }
 
     public static Pokemon[][] getProg() {
         String path = System.getProperty("user.home") + "/PokemonX/fight.bin";
 
-        try {
-            return (Pokemon[][]) Writer.loadObject(path);
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return (Pokemon[][]) Writer.loadObject(path);
 
     }
 }

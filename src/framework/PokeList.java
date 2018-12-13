@@ -4,9 +4,13 @@ package framework;/*
  * and open the template in the editor.
  */
 
+import popups.ConfirmBox;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static tools.Writer.delete;
 
 /**
  * @author amir
@@ -29,7 +33,9 @@ public class PokeList {
         try {
             IS.close();
         } catch (IOException e) {
-            e.printStackTrace();
+
+            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+                delete(true);
         }
 
 
@@ -44,12 +50,15 @@ public class PokeList {
                     }
                 }
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+                    delete(true);
             }
             try {
                 IS.close();
             } catch (IOException e) {
-                e.printStackTrace();
+
+                if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+                    delete(true);
             }
         }
 

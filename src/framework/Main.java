@@ -35,16 +35,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        bgm.playAudio("Menu");
 
-
-        String path = System.getProperty("user.home") + "/PokemonX/userStyle.txt";
-        File temp = new File(path);
-        if (temp.exists()) {
-            System.out.println("hi");
-            tools.StyleWriter.setFields();
-            styles = new Styles(Color.valueOf(tools.StyleWriter.getColor()), tools.StyleWriter.getBorderStrokeStyle(), tools.StyleWriter.getRadii(), tools.StyleWriter.getBorderWidths());
-        }
         launch(args);
     }
 
@@ -68,6 +59,15 @@ public class Main extends Application {
         window.setTitle("Pokémon X");
 
 
+        bgm.playAudio("Menu");
+        String path = System.getProperty("user.home") + "/PokemonX/userStyle.txt";
+        File temp = new File(path);
+        if (temp.exists()) {
+            tools.StyleWriter.setFields();
+            styles = new Styles(Color.valueOf(tools.StyleWriter.getColor()), tools.StyleWriter.getBorderStrokeStyle(), tools.StyleWriter.getRadii(), tools.StyleWriter.getBorderWidths());
+        }
+
+
         window.show();
 
     }
@@ -77,12 +77,8 @@ public class Main extends Application {
         if (popups.ConfirmBox.display("Exit?", "Are you sure you want to exit?")) {
 
             if (inCombat) {
-                try {
-                    CombatProgress.writeProg();
-                    LRTStr.writeLRTStr();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                CombatProgress.writeProg();
+                LRTStr.writeLRTStr();
             }
 
             window.close();

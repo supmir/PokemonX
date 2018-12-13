@@ -4,11 +4,10 @@ import framework.Main;
 import framework.Pokemon;
 import tools.CombatProgress;
 import tools.LRTStr;
-import tools.Writer;
 import javafx.scene.Scene;
-
-import java.io.IOException;
 import java.util.ArrayList;
+
+import static tools.Writer.delete;
 
 
 public class SceneHandler {
@@ -60,7 +59,7 @@ public class SceneHandler {
     }
 
     static Scene endGame(String x) {
-        Writer.delete(false);
+        delete(false);
         Main.setInCombat(false);
 
         Main.bgm.stopAudio();
@@ -71,11 +70,7 @@ public class SceneHandler {
 
     static Scene cont() {
         Combat.setController(CombatProgress.getProg());
-        try {
-            LRTStr.readLRTStr();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        LRTStr.readLRTStr();
         Combat.setStr(LRTStr.getStr());
         Combat.setStrC(LRTStr.getStrC());
         return Combat.start(LRTStr.getL(), LRTStr.getR(), LRTStr.isT(), LRTStr.isM());

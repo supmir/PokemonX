@@ -52,7 +52,6 @@ class Settings {
 
         }
 
-        System.out.println(temp.getColor());
         ColorPicker colorPicker = new ColorPicker(temp.getColor());
         colorPicker.setPrefWidth(width * 4 / 6);
         ComboBox<BorderStrokeStyle> borderStrokeStyleComboBox = new ComboBox<>();

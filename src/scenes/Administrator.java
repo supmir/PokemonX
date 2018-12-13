@@ -148,7 +148,6 @@ class Administrator {
                 list.set(i, list.get(i).substring(0, list.get(i).length() - 8));
             str.append("|").append(list.get(i));
         }
-        System.out.println(str);
         return str.toString();
     }
 

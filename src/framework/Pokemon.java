@@ -4,6 +4,7 @@ package framework;/*
  * and open the template in the editor.
  */
 
+import popups.ConfirmBox;
 import scenes.Combat;
 import tools.getres.GetResource;
 
@@ -14,6 +15,8 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.Scanner;
+
+import static tools.Writer.delete;
 
 /**
  * @author amir
@@ -76,8 +79,10 @@ public class Pokemon implements Serializable {
                 this.power[skillCount] = Integer.parseInt(sc.nextLine());
                 this.accuracy[skillCount] = Integer.parseInt(sc.nextLine());
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (NumberFormatException | FileNotFoundException e) {
+
+            if (ConfirmBox.display("Fatal error found!", "Would you like to reset the game? \n(Please contact the developer @supmir on GitHub)"))
+                delete(true);
         }
     }
 
@@ -122,10 +127,7 @@ public class Pokemon implements Serializable {
     public void attacks(int skillN, Pokemon attacked, boolean turn, boolean notComputer) {
         Random r = new Random();
         GetResource sfx = new GetResource();
-        //todo @anis
-
-        System.out.println("Attack" + new DecimalFormat("00").format(r.nextInt(12)));
-//        sfx.playAudio("Attack" + new DecimalFormat("00").format(r.nextInt(12)));
+        sfx.playAudio("Attack" + new DecimalFormat("00").format(r.nextInt(12)));
 
         String line = name + " used " + skillName[skillN] + ". ";
 
